@@ -1,15 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {ItemDetail} from "../ItemDetail/ItemDetail"
 import {useParams} from "react-router-dom";
-import { UnidadList } from "../UnidadList/UnidadList";
+import { AreaList } from "../AreaList/AreaList";
 
 
-const UnidadListContainer = ({greeting}) =>{
+const AreaListContainer = ({greeting}) =>{
 
     const {id}= useParams();
 
-    const [listaUnidades,setListaUnidades]= useState([]);
+    const [listaAreas,setListaAreas]= useState([]);
     const [loading,setLoading]= useState(true);
 
     useEffect(() => { 
@@ -22,9 +21,9 @@ const UnidadListContainer = ({greeting}) =>{
       })
         .then(response => response.json())
         .then(data => {
-          const unidades= data.unidades
           console.log(data)
-          setListaUnidades(unidades)
+          const areas= data.areas
+          setListaAreas(areas)
 
         })
         .catch(error => console.error(error))
@@ -36,9 +35,9 @@ const UnidadListContainer = ({greeting}) =>{
     return (
         <>
           <h1 className="greeting">{greeting}</h1>
-          {loading ? <p>Cargando...</p> : <UnidadList pid={id} listaUnidades={listaUnidades}/>}
+          {loading ? <p>Cargando...</p> : <AreaList pid={id} listaAreas={listaAreas}/>}
         </>
     );
   } 
   
-export default UnidadListContainer;
+export default AreaListContainer;

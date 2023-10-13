@@ -3,7 +3,7 @@ import "../Edificio/Edificio.css";
 import { UnidadDetail } from "../UnidadDetail/UnidadDetail";
 
 const UnidadList = ({listaUnidades})=>{
-    console.log(listaUnidades)
+    console.log("unidadlist",listaUnidades)
     return (
         <div className="contenedorProductos">
             {listaUnidades.map(unidad => <UnidadDetail key={unidad.id} unidad={unidad}/>)}

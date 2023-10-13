@@ -11,6 +11,8 @@ import { ChangePass } from './UserPassword/ChangePass';
 import UnidadListContainer from './UnidadListContainer/UnidadListContainer';
 import { Home } from './Home/Home';
 import { Unidad } from './Unidad/Unidad';
+import AreaListContainer from './AreaListContainer/AreaListContainer';
+import { Area } from './Area/Area';
 
 
 export const App = () => {
@@ -25,6 +27,8 @@ export const App = () => {
           <Route path="/edificios" element={<EdificioListContainer greeting="Listado de Edificios"/>}/>
           <Route path="/edificios/:id/unidades" element={<UnidadListContainer greeting="Listado de Unidades del Edificio seleccionado"/>}/>
           <Route path="/edificios/:id/unidades/:id" element={<Unidad />}/> 
+          <Route path="/edificios/:id/areas" element={<AreaListContainer greeting="Listado de Areas Comunes del Edificio seleccionado"/>}/>
+          <Route path="/edificios/:id/areas/:id" element={<Area />}/> 
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 

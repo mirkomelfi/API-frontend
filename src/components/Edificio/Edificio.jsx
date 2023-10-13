@@ -11,11 +11,8 @@ const Edificio =({edificio})=>{
                 <h2>Numero: {edificio.numero}</h2>
                 <h2>Ciudad: {edificio.ciudad}</h2>
                 <h2>Codigo postal: {edificio.codPostal}</h2>
-                <div className="contenedorProductos">
-                    {edificio.unidades.map(unidad => console.log(unidad.id))}
-                </div>
                 <Link to={`${edificio.id}/unidades`}>Ver unidades</Link> 
-                <Link to={`${edificio.id}`}>Ver areas</Link> 
+                <Link to={`${edificio.id}/areas`}>Ver areas</Link> 
             </div>
         </>
     )
