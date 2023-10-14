@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import {useParams,Link} from "react-router-dom";
 import { AreaList } from "../AreaList/AreaList";
+import { getToken } from "../../utils/auth-utils";
 
 
 const AreaListContainer = ({greeting}) =>{
@@ -15,7 +16,8 @@ const AreaListContainer = ({greeting}) =>{
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
         }
         
       })

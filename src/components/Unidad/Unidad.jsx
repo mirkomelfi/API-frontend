@@ -2,6 +2,7 @@ import "./Unidad.css";
 import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
+import { getToken } from "../../utils/auth-utils";
 
 const Unidad =()=>{
     const {id}= useParams();
@@ -14,7 +15,8 @@ const Unidad =()=>{
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/unidades/${id}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
         }
         
       })

@@ -13,14 +13,12 @@ export const EdificioListContainer = ({greeting}) =>{
     let url=`${process.env.REACT_APP_DOMINIO_BACK}/edificios`
 
       useEffect(() => { 
-        const token= getToken()
         fetch(url, {
           method: "GET",
           headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-          },
-          credentials:"include" 
+              "Authorization": `Bearer ${getToken()}`
+          }
 
         })
           .then(response => response.json())

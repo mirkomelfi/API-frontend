@@ -2,6 +2,7 @@ import "./Area.css";
 import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
+import { getToken } from "../../utils/auth-utils";
 const Area =()=>{
     const {id}= useParams();
 
@@ -13,7 +14,9 @@ const Area =()=>{
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+            
         }
         
       })

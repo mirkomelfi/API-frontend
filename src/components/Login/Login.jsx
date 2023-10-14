@@ -64,7 +64,7 @@ export const Login = () => {
         if (!cliente.username||!cliente.password){
             console.log(cliente)
             setError(true)
-            setMensaje("faltan datos")
+            setMensaje("Faltan ingresar datos para el Login")
         }
        
         else{
@@ -78,16 +78,18 @@ export const Login = () => {
             })
 
             const data=await response.json();
-            setToken(data.token)
+            
             if(response.status == 200) {
                 setError(false)
                 setLoggeado(true)
+                setToken(data.token)
      
             } else {
 
                 if (response.status==401){
                     setError(true)
-                    setMensaje("credenciales invalidas")
+                    setMensaje("Credenciales invalidas")
+                    setLoggeado(false)
                 }
 
             }

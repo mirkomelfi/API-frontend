@@ -4,6 +4,7 @@ import {ItemDetail} from "../ItemDetail/ItemDetail"
 import {useParams} from "react-router-dom";
 import { UnidadList } from "../UnidadList/UnidadList";
 import { Link } from "react-router-dom";
+import { getToken } from "../../utils/auth-utils";
 
 
 const UnidadListContainer = ({greeting}) =>{
@@ -17,7 +18,8 @@ const UnidadListContainer = ({greeting}) =>{
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
         }
         
       })

@@ -3,6 +3,7 @@ import "./ReclamoListContainer.css";
 import { useState, useEffect } from "react";
 import {ReclamoList} from "../ReclamoList/ReclamoList"
 import { Link } from "react-router-dom";
+import { getToken } from "../../utils/auth-utils";
 
 
 export const ReclamoListContainer = ({greeting}) =>{
@@ -15,7 +16,8 @@ export const ReclamoListContainer = ({greeting}) =>{
         fetch(url, {
           method: "GET",
           headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getToken()}`
           }
 
         })

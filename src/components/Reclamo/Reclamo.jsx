@@ -2,6 +2,7 @@ import "./Reclamo.css";
 import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
+import { getToken } from "../../utils/auth-utils";
 
 const Reclamo =()=>{
     const {id}= useParams();
@@ -12,7 +13,8 @@ const Reclamo =()=>{
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
         }
         
       })
