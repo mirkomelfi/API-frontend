@@ -22,13 +22,13 @@ export const Register = () => {
        
         else{
 
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/auth/register`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(cliente),
-                credentials: "include"
+                //credentials: "include"
             })
 
             const data = await response.json()
@@ -64,12 +64,12 @@ export const Register = () => {
                     <input type="text" className="form-control" name="last_name" required />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input type="email" className="form-control" name="email" />
+                    <label htmlFor="username" className="form-label">Nombre de Usuario</label>
+                    <input type="username" className="form-control" name="username" />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="age" className="form-label">Edad</label>
-                    <input type="number" className="form-control" name="age" />
+                    <label htmlFor="dni" className="form-label">DNI</label>
+                    <input type="number" className="form-control" name="dni" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Contraseña</label>

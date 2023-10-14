@@ -10,7 +10,7 @@ export const Login = () => {
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef()
 
-    const consultarLoggeo=async()=>{
+    /*const consultarLoggeo=async()=>{
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/current`, {
             method: "GET",
             headers: {
@@ -27,7 +27,7 @@ export const Login = () => {
 
     useEffect(() => { 
         consultarLoggeo()
-    },[])
+    },[])*/
 
 
     const desloggear=async()=>{
@@ -51,22 +51,22 @@ export const Login = () => {
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const cliente = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
        
-        if (!cliente.email||!cliente.password){
+        if (!cliente.username||!cliente.password){
+            console.log(cliente)
             setError(true)
             setMensaje("faltan datos")
         }
        
         else{
 
-            const response =  await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/login`, {
+            const response =  await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(cliente),
-                credentials: "include"
+                credentials: "include" 
             })
-            const data = await response.json()
 
             if(response.status == 200) {
                 setError(false)
@@ -76,7 +76,7 @@ export const Login = () => {
 
                 if (response.status==401){
                     setError(true)
-                    setMensaje(data.message)
+                    setMensaje("credenciales invalidas")
                 }
 
             }
@@ -95,8 +95,8 @@ export const Login = () => {
                 <form onSubmit={consultarForm} ref={datForm}>
 
                     <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input type="email" className="form-control" name="email" />
+                        <label htmlFor="username" className="form-label">Nombre de Usuario</label>
+                        <input type="username" className="form-control" name="username" />
                     </div>
 
                     <div className="mb-3">
@@ -107,8 +107,8 @@ export const Login = () => {
                     <button type="submit" className="btn btn-primary">Iniciar Sesion</button>
                 </form>
                 {loggeado&&<button onClick={()=>desloggear()} className="btn btn-primary">Cerrar Sesion</button>}
-                {loggeado&&<Link to="/"><button>Ir a comprar</button></Link>}
-                {!loggeado&&<Link to="/password"><button>Olvide Mi contraseña</button></Link>}
+                {loggeado&&<Link to="/"><button>Volver a Inicio</button></Link>}
+                {/*!loggeado&&<Link to="/password"><button>Olvide Mi contraseña</button></Link>*/}
             </div>
         </>):<Mensaje msj={mensaje} />
         }
