@@ -3,6 +3,7 @@ import { useState,useEffect } from "react"
 import { Navigate } from "react-router-dom"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { Link } from "react-router-dom"
+import { deleteToken, getToken, setToken } from "../../utils/auth-utils"
 export const Login = () => {
     
     const[ loggeado,setLoggeado]=useState(false)
@@ -10,8 +11,13 @@ export const Login = () => {
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef()
 
-    /*const consultarLoggeo=async()=>{
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/current`, {
+    const consultarLoggeo=async()=>{
+        const token= getToken();
+        console.log("token consultarLoggeo",token)
+        if (token){
+            setLoggeado(true);
+        }
+       /* const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/current`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -21,17 +27,18 @@ export const Login = () => {
         const data = await response.json()
         if (response.status==200)setLoggeado(true)
         if (response.status==401)setLoggeado(false)
-        
+        */
 
     }
 
     useEffect(() => { 
         consultarLoggeo()
-    },[])*/
+    },[])
+
 
 
     const desloggear=async()=>{
-        const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/logout`, {
+        /*const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/logout`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -40,7 +47,10 @@ export const Login = () => {
         })
         const data = await response.json()
         if (response.status==200){setLoggeado(false)}
-        setMensaje(data.message)
+        setMensaje(data.message)        */
+
+        deleteToken()
+        setLoggeado(false);
 
     }
 
@@ -64,10 +74,11 @@ export const Login = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(cliente),
-                credentials: "include" 
+                body: JSON.stringify(cliente)
             })
 
+            const data=await response.json();
+            setToken(data.token)
             if(response.status == 200) {
                 setError(false)
                 setLoggeado(true)
