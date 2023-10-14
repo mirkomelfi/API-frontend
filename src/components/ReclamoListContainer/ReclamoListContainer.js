@@ -1,15 +1,15 @@
 import React from "react";
-import "./EdificioListContainer.css";
+import "./ReclamoListContainer.css";
 import { useState, useEffect } from "react";
-import {EdificioList} from "../EdificioList/EdificioList"
-import {useParams,Link} from "react-router-dom";
+import {ReclamoList} from "../ReclamoList/ReclamoList"
+import { Link } from "react-router-dom";
 
 
-export const EdificioListContainer = ({greeting}) =>{
+export const ReclamoListContainer = ({greeting}) =>{
 
-    const [listaEdificios,setListaEdificios]= useState([]);
+    const [listaReclamos,setListaReclamos]= useState([]);
     const [loading,setLoading]= useState(true);
-    let url=`${process.env.REACT_APP_DOMINIO_BACK}/edificios`
+    let url=`${process.env.REACT_APP_DOMINIO_BACK}/reclamos`
 
       useEffect(() => { 
         fetch(url, {
@@ -21,7 +21,7 @@ export const EdificioListContainer = ({greeting}) =>{
         })
           .then(response => response.json())
           .then(data => {
-              setListaEdificios(data)
+              setListaReclamos(data)
 
           })
           .catch(error => console.error(error))
@@ -33,8 +33,8 @@ export const EdificioListContainer = ({greeting}) =>{
     return (
       <div>
         <h1 className="greeting">{greeting}</h1>
-        {loading ? <p>cargando...</p> : <EdificioList listaEdificios={listaEdificios}/>}
-        <Link to={`/`}>Volver</Link>
+        {loading ? <p>cargando...</p> : <ReclamoList listaReclamos={listaReclamos}/>}
+        <Link to={`/`}>Volver</Link> 
       </div>
    
     );

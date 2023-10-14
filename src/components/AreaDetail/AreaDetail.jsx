@@ -9,7 +9,6 @@ const AreaDetail =({area})=>{
                 <h1>Area N°{area.id}</h1>
                 <h2>Nombre: {area.nombre}</h2>
                 <h2>Piso: {area.piso}</h2>
-                <h2>Num: {area.numero}</h2>
                 <Link to={`${area.id}`}>Ver area</Link>  
             </div>
         </>

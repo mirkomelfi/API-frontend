@@ -13,6 +13,8 @@ import { Home } from './Home/Home';
 import { Unidad } from './Unidad/Unidad';
 import AreaListContainer from './AreaListContainer/AreaListContainer';
 import { Area } from './Area/Area';
+import { ReclamoListContainer } from './ReclamoListContainer/ReclamoListContainer';
+import { Reclamo } from './Reclamo/Reclamo';
 
 
 export const App = () => {
@@ -25,10 +27,12 @@ export const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Home />} />
           <Route path="/edificios" element={<EdificioListContainer greeting="Listado de Edificios"/>}/>
+          <Route path="/reclamos" element={<ReclamoListContainer greeting="Listado de Reclamos"/>}/>
           <Route path="/edificios/:id/unidades" element={<UnidadListContainer greeting="Listado de Unidades del Edificio seleccionado"/>}/>
           <Route path="/edificios/:id/unidades/:id" element={<Unidad />}/> 
           <Route path="/edificios/:id/areas" element={<AreaListContainer greeting="Listado de Areas Comunes del Edificio seleccionado"/>}/>
           <Route path="/edificios/:id/areas/:id" element={<Area />}/> 
+          <Route path="/reclamos/:id" element={<Reclamo />}/> 
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 

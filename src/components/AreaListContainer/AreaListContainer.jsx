@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {useParams} from "react-router-dom";
+import {useParams,Link} from "react-router-dom";
 import { AreaList } from "../AreaList/AreaList";
 
 
@@ -21,8 +21,7 @@ const AreaListContainer = ({greeting}) =>{
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          const areas= data.areas
+          const areas= data.areasComunes
           setListaAreas(areas)
 
         })
@@ -36,6 +35,7 @@ const AreaListContainer = ({greeting}) =>{
         <>
           <h1 className="greeting">{greeting}</h1>
           {loading ? <p>Cargando...</p> : <AreaList pid={id} listaAreas={listaAreas}/>}
+          <Link to={`/edificios`}>Volver</Link>
         </>
     );
   } 

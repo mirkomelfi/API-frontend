@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {ItemDetail} from "../ItemDetail/ItemDetail"
 import {useParams} from "react-router-dom";
 import { UnidadList } from "../UnidadList/UnidadList";
+import { Link } from "react-router-dom";
 
 
 const UnidadListContainer = ({greeting}) =>{
@@ -23,7 +24,6 @@ const UnidadListContainer = ({greeting}) =>{
         .then(response => response.json())
         .then(data => {
           const unidades= data.unidades
-          console.log(data)
           setListaUnidades(unidades)
 
         })
@@ -37,6 +37,7 @@ const UnidadListContainer = ({greeting}) =>{
         <>
           <h1 className="greeting">{greeting}</h1>
           {loading ? <p>Cargando...</p> : <UnidadList pid={id} listaUnidades={listaUnidades}/>}
+          <Link to={`/edificios`}>Volver</Link>
         </>
     );
   } 

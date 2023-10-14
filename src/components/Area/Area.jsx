@@ -33,9 +33,10 @@ const Area =()=>{
             <div className="tarjetaProducto">
                 <h1>Area N°{area.id}</h1>
                 <h2>Nombre: {area.nombre}</h2>
-                <h2>Nombre: {area.descripcion}</h2>
-                <h2>piso {area.piso}</h2>
+                <h2>Piso {area.piso}</h2>
+                <h2>Descripcion: {area.descripcion}</h2>
             </div>
+            <Link to={`/edificios`}>Volver</Link>
         </>
     )
 }

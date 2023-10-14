@@ -53,6 +53,7 @@ const Unidad =()=>{
                 </>
                 } 
             </div>
+            <Link to={`/edificios`}>Volver</Link>
         </>
     )
 }
