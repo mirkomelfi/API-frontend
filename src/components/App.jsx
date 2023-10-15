@@ -17,7 +17,7 @@ import { ReclamoListContainer } from './ReclamoListContainer/ReclamoListContaine
 import { Reclamo } from './Reclamo/Reclamo';
 import UsuarioListContainer from './UsuarioListContainer/UsuarioListContainer';
 import { Usuario } from './Usuario/Usuario';
-
+import { UsuarioPut } from './Usuario/UsuarioPUT';
 
 export const App = () => {
   return (
@@ -37,6 +37,7 @@ export const App = () => {
           <Route path="/edificios/:id/areas/:id" element={<Area />}/> 
           <Route path="/reclamos/:id" element={<Reclamo />}/> 
           <Route path="/usuarios/:dni" element={<Usuario />}/> 
+          <Route path="/updateUsuario/:dni" element={<UsuarioPut />}/> 
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 

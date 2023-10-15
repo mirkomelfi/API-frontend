@@ -3,11 +3,39 @@ import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
+import { Mensaje } from "../Mensaje/Mensaje";
 
 const Reclamo =()=>{
     const {id}= useParams();
     const [reclamo,setReclamo]= useState([]);
     const [loading,setLoading]= useState(true);
+    const [mensaje,setMensaje]=useState(null)
+
+    const modificar=async()=>{
+
+  }
+
+    const cambiarEstado=async()=>{
+   
+  }
+
+    const eliminar=async()=>{
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
+          method: "DELETE",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getToken()}`
+          }
+      })
+      const data = await response.json()
+      console.log(data)
+      if (response.status==200){
+        setMensaje(data.msj)
+        return;
+      }
+
+  }
+
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
@@ -29,9 +57,9 @@ const Reclamo =()=>{
           setLoading(false)
         })
     },[])
-    return(
+    return( 
         <>
-            <div className="tarjetaProducto">
+            {!mensaje?(<div className="tarjetaProducto">
                 <h1>Reclamo N°{reclamo.id}</h1>
                 <h2>Id del Edificio: {reclamo.idEdificio}</h2>
                 <h2>Tipo: {reclamo.tipoReclamable}</h2>
@@ -41,10 +69,13 @@ const Reclamo =()=>{
                 <h2>Se inicio: {reclamo.fechaDeInicio}</h2>
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
-                <Link to={``}>Modificar</Link>
-                <Link to={``}>Cambiar estado</Link>
-                <Link to={``}>Eliminar Reclamo</Link>
-            </div>
+
+                <button onClick={()=>modificar()} className="btn btn-primary">Modificar</button>
+                <button onClick={()=>cambiarEstado()} className="btn btn-primary">Cambiar estado</button>
+                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
+                
+            </div>):(<Mensaje msj={mensaje} />)
+            }
             <Link to={`/reclamos`}>Volver</Link>
         </>
     )

@@ -13,21 +13,10 @@ export const Login = () => {
 
     const consultarLoggeo=async()=>{
         const token= getToken();
-        console.log("token consultarLoggeo",token)
+
         if (token){
             setLoggeado(true);
         }
-       /* const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/current`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials:"include"
-        })
-        const data = await response.json()
-        if (response.status==200)setLoggeado(true)
-        if (response.status==401)setLoggeado(false)
-        */
 
     }
 
@@ -38,16 +27,6 @@ export const Login = () => {
 
 
     const desloggear=async()=>{
-        /*const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/session/logout`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials:"include"
-        })
-        const data = await response.json()
-        if (response.status==200){setLoggeado(false)}
-        setMensaje(data.message)        */
 
         deleteToken()
         setLoggeado(false);
@@ -117,7 +96,7 @@ export const Login = () => {
                         <input type="password" className="form-control" name="password" />
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Iniciar Sesion</button>
+                    {!loggeado&&<button type="submit" className="btn btn-primary" >Iniciar Sesion</button>}
                 </form>
                 {loggeado&&<button onClick={()=>desloggear()} className="btn btn-primary">Cerrar Sesion</button>}
                 {loggeado&&<Link to="/"><button>Volver a Inicio</button></Link>}
