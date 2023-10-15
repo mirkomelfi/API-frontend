@@ -81,7 +81,7 @@ const Unidad =()=>{
                 <Link to={`/updateUnidad/${id}`}>Modificar</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
             </div>):(<Mensaje msj={mensaje} />)}
-            <Link to={`/edificios`}>Volver</Link>
+            <Link to={`/edificios/${unidad.idEdificio}/unidades`}>Volver</Link>
         </>
     )
 }

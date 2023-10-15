@@ -66,7 +66,7 @@ const Area =()=>{
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
             </div>):(<Mensaje msj={mensaje} />)}
             
-            <Link to={`/edificios`}>Volver</Link>
+            <Link to={`/edificios/${area.idEdificio}/areas`}>Volver</Link>
         </>
     )
 }
