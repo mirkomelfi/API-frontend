@@ -13,7 +13,11 @@ const Unidad =()=>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
 
-    const modificar=async()=>{
+    const cambiarPropietario=async()=>{
+
+    }
+
+    const cambiarInquilino=async()=>{
 
     }
 
@@ -56,8 +60,9 @@ const Unidad =()=>{
     },[])
     return(
         <>
-            {!mensaje?(<div className="tarjetaProducto">
+            <div className="tarjetaProducto">
                 <h1>Unidad N°{unidad.id}</h1>
+                {!mensaje?(<>
                 <h2>Nombre: {unidad.nombre}</h2>
                 <h2>piso {unidad.piso}</h2>
                 <h2>numero {unidad.numero}</h2>
@@ -79,8 +84,13 @@ const Unidad =()=>{
                 </>
                 } 
                 <Link to={`/updateUnidad/${id}`}>Modificar</Link>
+                <button onClick={()=>cambiarPropietario()} className="btn btn-primary">Cambiar propietario</button>
+                <button onClick={()=>cambiarInquilino()} className="btn btn-primary">Cambiar inquilino</button>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
-            </div>):(<Mensaje msj={mensaje} />)}
+                </>
+                
+                ):(<Mensaje msj={mensaje} />)}
+            </div>
             <Link to={`/edificios/${unidad.idEdificio}/unidades`}>Volver</Link>
         </>
     )

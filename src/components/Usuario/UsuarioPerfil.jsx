@@ -5,40 +5,16 @@ import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 
-const Usuario =()=>{
-    const {dni}= useParams();
+const UsuarioPerfil =()=>{
     console.log("Usuariodni",dni)
     const [usuario,setUsuario]= useState([]);
     console.log(usuario)
     const [loading,setLoading]= useState(true);
 
-
     const [mensaje,setMensaje]=useState(null)
 
-    const eliminar=async()=>{
-        console.log(dni)
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/${dni}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        const data = await response.json()
-        console.log(data)
-        setMensaje(data.msj)
-        
-  
-    }
-
     useEffect(() => { 
-        var url=``;
-        if (dni){
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/${dni}`
-        }else{
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/miperfil`
-        }
-        fetch(url, {
+        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/miperfil`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -48,8 +24,11 @@ const Usuario =()=>{
       })
         .then(response => response.json())
         .then(data => {
-          setUsuario(data)
-          console.log(usuario)
+            if (data.msj){
+                setMensaje(data.msj)
+            }else{
+                setUsuario(data)
+            }
 
         })
         .catch(error => console.error(error))
@@ -59,17 +38,17 @@ const Usuario =()=>{
     },[])
     return(
         <>
+            <h1>Mi perfil</h1>
             {!mensaje?(<div className="tarjetaProducto">
             <h1>DNI: {usuario.dni}</h1>
                 <h2>Nombre de usuario: {usuario.username}</h2>
                 <h2>Nombre: {usuario.nombre}</h2>
                 <h2>Apellido: {usuario.apellido}</h2>
-                {dni?<Link to={`/updateUsuario/${dni}`}>Modificar</Link>:<Link to={`/updateUsuario`}>Modificar</Link>}
-                {dni&&<button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>}
+                <Link to={`/updateUsuario`}>Modificar</Link>
             </div>):(<Mensaje msj={mensaje} />)}
-            {dni?<Link to={`/usuarios`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+            <Link to={`/home`}>Volver</Link>
         </>
     )
 }
 
-export {Usuario}
+export {UsuarioPerfil}

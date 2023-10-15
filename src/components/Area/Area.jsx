@@ -57,15 +57,18 @@ const Area =()=>{
     },[])
     return(
         <>
-            {!mensaje?(<div className="tarjetaProducto">
+            <div className="tarjetaProducto">
                 <h1>Area N°{area.id}</h1>
+                {!mensaje?(<>
                 <h2>Nombre: {area.nombre}</h2>
                 <h2>Piso: {area.piso}</h2>
                 <h2>Descripcion: {area.descripcion}</h2>
                 <Link to={`/updateArea/${id}`}>Modificar</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
-            </div>):(<Mensaje msj={mensaje} />)}
-            
+                </>
+                
+                ):(<Mensaje msj={mensaje} />)}
+            </div>
             <Link to={`/edificios/${area.idEdificio}/areas`}>Volver</Link>
         </>
     )

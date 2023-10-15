@@ -51,7 +51,7 @@ export const EdificioPost = () => {
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
                             <label htmlFor="calle" className="form-label">Calle</label>
-                            <input type="text" className="form-control" name="calle"required />
+                            <input type="text" className="form-control" name="calle" required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="numero" className="form-label">Numero</label>

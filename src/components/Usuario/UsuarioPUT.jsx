@@ -24,7 +24,13 @@ export const UsuarioPut = () => {
         if (cliente.password==""){cliente.password=null;}
         if (!cliente.nombre&&!cliente.apellido&&!cliente.username&&!cliente.password){ setMensaje("No se ingresaron valores para actualizar")}
         else{
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/${dni}`, {
+            var url=``;
+            if (dni){
+                url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/${dni}`
+            }else{
+                url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/cambiarPerfil`
+            }
+            const response= await fetch(url, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -32,7 +38,6 @@ export const UsuarioPut = () => {
                 },
                 body: JSON.stringify(cliente)
             })
-
             const data = await response.json()
             setMensaje(data.msj)
                 
@@ -74,7 +79,7 @@ export const UsuarioPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/usuarios`}>Volver</Link>
+        {dni?<Link to={`/usuarios`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
         </div>
         
     )

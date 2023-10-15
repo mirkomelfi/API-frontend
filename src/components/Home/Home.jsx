@@ -7,6 +7,7 @@ export const Home = () =>{
         <Link to={`reclamos`}>Reclamos</Link> 
         <Link to={`edificios`}>Edificios</Link> 
         <Link to={`usuarios`}>Usuarios</Link> 
+        <Link to={`usuario/current`}>Mi perfil</Link> 
       </>
     );
   }

@@ -11,9 +11,6 @@ const Reclamo =()=>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
 
-    const modificar=async()=>{
-
-  }
 
     const cambiarEstado=async()=>{
    

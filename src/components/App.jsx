@@ -49,6 +49,9 @@ export const App = () => {
           <Route path="/addEdificio" element={<EdificioPost />}/>
           <Route path="/updateArea/:id" element={<AreaPut />}/>
           <Route path="/updateUnidad/:id" element={<UnidadPut />}/>
+          <Route path="/usuario/current" element={<Usuario />}/> 
+          <Route path="/updateUsuario" element={<UsuarioPut />}/>
+          <Route path="/usuario/unidades" element={<UsuarioListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 
