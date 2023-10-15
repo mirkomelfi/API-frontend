@@ -10,8 +10,13 @@ export const EdificioListContainer = ({greeting}) =>{
 
     const [listaEdificios,setListaEdificios]= useState([]);
     const [loading,setLoading]= useState(true);
+  
     let url=`${process.env.REACT_APP_DOMINIO_BACK}/edificios`
 
+    const agregar= () =>{ 
+
+
+    }
       useEffect(() => { 
         fetch(url, {
           method: "GET",
@@ -33,8 +38,10 @@ export const EdificioListContainer = ({greeting}) =>{
       },[])
 
     return (
-      <div>
+      <div> 
+    
         <h1 className="greeting">{greeting}</h1>
+        <Link to={`/addEdificio`}>Agregar edificio</Link> 
         {loading ? <p>cargando...</p> : <EdificioList listaEdificios={listaEdificios}/>}
         <Link to={`/`}>Volver</Link>
       </div>

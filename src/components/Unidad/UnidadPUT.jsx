@@ -20,21 +20,23 @@ export const UnidadPut = () => {
         const unidad = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
         if (unidad.numero==""){unidad.numero=null;}
         if (unidad.piso==""){unidad.piso=null;}
+        if (!unidad.piso&&!unidad.numero){ setMensaje("No se ingresaron valores para actualizar")}
+        else{
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/unidades/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${getToken()}`
+                },
+                body: JSON.stringify(unidad)
+            })
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/unidades/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`
-            },
-            body: JSON.stringify(unidad)
-        })
-
-        const data = await response.json()
-        setMensaje(data.msj)
-            
-        e.target.reset() //Reset form
-            
+            const data = await response.json()
+            setMensaje(data.msj)
+                
+            e.target.reset() //Reset form
+                
+            }
         }
 
     return (
@@ -48,7 +50,7 @@ export const UnidadPut = () => {
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
                             <label htmlFor="numero" className="form-label">Numero</label>
-                            <input type="text" className="form-control" name="numero" />
+                            <input type="number" className="form-control" name="numero" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="piso" className="form-label">Piso</label>

@@ -6,8 +6,6 @@ const EdificioList = ({listaEdificios})=>{
     console.log()
     return (
         <>
-        <Link to={``}>Agregar edificio</Link> 
-    
         {listaEdificios&&
         <div className="contenedorProductos">
             {listaEdificios.map(edificio => <Edificio key={edificio.id} edificio={edificio}/>)}

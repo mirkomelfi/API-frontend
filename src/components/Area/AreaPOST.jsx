@@ -5,10 +5,10 @@ import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 
-export const AreaPut = () => {
+export const AreaPost = () => {
 
     const {id}= useParams();
-
+console.log(id)
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
@@ -18,27 +18,24 @@ export const AreaPut = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const area = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (area.piso==""){area.piso=null;}
-        if (area.descripcion==""){area.descripcion=null;}
-        if (area.nombre==""){area.nombre=null;}
-        if (!area.piso&&!area.descripcion&&!area.nombre){ setMensaje("No se ingresaron valores para actualizar")}
-        else{
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken()}`
-                },
-                body: JSON.stringify(area)
-            })
 
-            const data = await response.json()
-            setMensaje(data.msj)
-                
-            e.target.reset() //Reset form
-                
-            }
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/edificio/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+            },
+            body: JSON.stringify(area)
+        })
+
+        const data = await response.json()
+        console.log(data)
+        setMensaje(data.msj)
+            
+        e.target.reset() //Reset form
+            
         }
+        
 
     return (
 
@@ -46,30 +43,28 @@ export const AreaPut = () => {
             {!mensaje?(
                 
                 <div className="container divForm" >
-                    <h2>Cambio en los datos del Area</h2>
-                    <h3>Ingrese solo los campos que desea modificar</h3>
+                    <h2>Creacion de Area Comun</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
                             <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control" name="nombre" />
+                            <input type="text" className="form-control" name="nombre" required/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="piso" className="form-label">Piso</label>
-                            <input type="number" className="form-control" name="piso" />
+                            <input type="number" className="form-control" name="piso" required/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" />
+                            <input type="text" className="form-control" name="descripcion" required/>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="btn btn-primary">Crear</button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/edificios`}>Volver</Link>
         </div>
         
     )

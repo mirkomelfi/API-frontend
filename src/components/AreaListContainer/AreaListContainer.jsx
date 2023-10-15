@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {useParams,Link} from "react-router-dom";
 import { AreaList } from "../AreaList/AreaList";
 import { getToken } from "../../utils/auth-utils";
+import { AreaPost } from "../Area/AreaPOST";
 
 
 const AreaListContainer = ({greeting}) =>{
@@ -11,6 +12,11 @@ const AreaListContainer = ({greeting}) =>{
 
     const [listaAreas,setListaAreas]= useState([]);
     const [loading,setLoading]= useState(true);
+    const [add,setAdd]= useState(false);
+
+    const agregar= () =>{ 
+      setAdd(true)
+    }
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
@@ -35,9 +41,20 @@ const AreaListContainer = ({greeting}) =>{
 
     return (
         <>
-          <h1 className="greeting">{greeting}</h1>
-          {loading ? <p>Cargando...</p> : <AreaList pid={id} listaAreas={listaAreas}/>}
-          <Link to={`/edificios`}>Volver</Link>
+          {loading 
+          ? 
+          <p>Cargando...</p> 
+          : 
+          !add ?
+          (<>
+            <h1 className="greeting">{greeting}</h1>
+            <button onClick={()=>agregar()} className="btn btn-primary">Agregar Area comun</button>
+            <AreaList pid={id} listaAreas={listaAreas}/>
+          </>)
+          :
+          (<AreaPost/>)}
+           <Link to={`/edificios`}>Volver</Link>
+
         </>
     );
   } 

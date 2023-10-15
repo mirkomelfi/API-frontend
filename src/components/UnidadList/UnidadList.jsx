@@ -7,7 +7,6 @@ const UnidadList = ({listaUnidades})=>{
     console.log("unidadlist",listaUnidades)
     return (
         <>
-            <Link to={``}>Agregar Unidad</Link> 
            {listaUnidades&&
            
             <div className="contenedorProductos">

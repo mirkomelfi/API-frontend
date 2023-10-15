@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 
-export const EdificioPut = () => {
+export const EdificioPost = () => {
 
     const {id}= useParams();
 
@@ -17,30 +17,29 @@ export const EdificioPut = () => {
         e.preventDefault()
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
-        const edificio = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (edificio.calle==""){edificio.calle=null;}
-        if (edificio.ciudad==""){edificio.ciudad=null;}
-        if (edificio.numero==""){edificio.numero=null;}
-        if (edificio.codigoPostal==""){edificio.codigoPostal=null;}
-        if (!edificio.calle&&!edificio.ciudad&&!edificio.numero&&!edificio.codigoPostal){ setMensaje("No se ingresaron valores para actualizar")}
-        else{
+        const direccion = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken()}`
-                },
-                body: JSON.stringify(edificio)
-            })
-
-            const data = await response.json()
-            setMensaje(data.msj)
-                
-            e.target.reset() //Reset form
-                
-            }
+        const edificio={
+            direccion,
         }
+
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+            },
+            body: JSON.stringify(edificio)
+        })
+
+        const data = await response.json()
+        console.log(data)
+        setMensaje(data.msj)
+            
+        e.target.reset() //Reset form
+            
+        }
+        
 
     return (
 
@@ -48,27 +47,26 @@ export const EdificioPut = () => {
             {!mensaje?(
                 
                 <div className="container divForm" >
-                    <h2>Cambio en los datos del Edificio</h2>
-                    <h3>Ingrese solo los campos que desea modificar</h3>
+                    <h2>Creacion de Edificio</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
                             <label htmlFor="calle" className="form-label">Calle</label>
-                            <input type="text" className="form-control" name="calle" />
+                            <input type="text" className="form-control" name="calle"required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="numero" className="form-label">Numero</label>
-                            <input type="number" className="form-control" name="numero" />
+                            <input type="number" className="form-control" name="numero" required/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="ciudad" className="form-label">Ciudad</label>
-                            <input type="text" className="form-control" name="ciudad" />
+                            <input type="text" className="form-control" name="ciudad" required/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="codigoPostal" className="form-label">Codigo Postal</label>
-                            <input type="number" className="form-control" name="codigoPostal" />
+                            <input type="number" className="form-control" name="codigoPostal" required/>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="btn btn-primary">Crear</button>
                         </form>
 
                     </div>

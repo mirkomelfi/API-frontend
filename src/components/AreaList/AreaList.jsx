@@ -6,9 +6,7 @@ import { Link } from "react-router-dom";
 const AreaList = ({listaAreas})=>{
     console.log(listaAreas)
     return (
-        <>
-            <Link to={``}>Agregar Area</Link> 
-        
+        <>        
             {listaAreas&&
 
             <div className="contenedorProductos">

@@ -5,7 +5,8 @@ const UsuarioList = ({listaUsuarios})=>{
     console.log("usuariolist",listaUsuarios)
     return (
         <> 
-            <Link to={``}>Agregar Usuario</Link> 
+           {// <Link to={``}>Agregar Usuario</Link>
+            }
 
             <div className="contenedorProductos">
                 {listaUsuarios&&listaUsuarios.map(usuario => <UsuarioDetail key={usuario.dni} usuario={usuario}/>)}

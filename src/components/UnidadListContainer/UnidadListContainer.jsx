@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import { UnidadList } from "../UnidadList/UnidadList";
 import { Link } from "react-router-dom";
 import { getToken } from "../../utils/auth-utils";
+import { UnidadPost } from "../Unidad/UnidadPOST";
 
 
 const UnidadListContainer = ({greeting}) =>{
@@ -12,6 +13,12 @@ const UnidadListContainer = ({greeting}) =>{
 
     const [listaUnidades,setListaUnidades]= useState([]);
     const [loading,setLoading]= useState(true);
+    const [add,setAdd]= useState(false);
+
+
+    const agregar= () =>{ 
+      setAdd(true)
+    }
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
@@ -31,13 +38,25 @@ const UnidadListContainer = ({greeting}) =>{
         .catch(error => console.error(error))
         .finally(()=>{
           setLoading(false)
+          setAdd(false)
         })
     },[])
 
     return (
-        <>
-          <h1 className="greeting">{greeting}</h1>
-          {loading ? <p>Cargando...</p> : <UnidadList pid={id} listaUnidades={listaUnidades}/>}
+        <> 
+          {loading 
+          ? 
+          <p>Cargando...</p> 
+          : 
+          !add ?
+          (<>
+            <h1 className="greeting">{greeting}</h1>
+            <button onClick={()=>agregar()} className="btn btn-primary">Agregar unidad</button>
+            <UnidadList pid={id} listaUnidades={listaUnidades}/>
+          </>)
+          :
+          (<UnidadPost/>)}
+ 
           <Link to={`/edificios`}>Volver</Link>
         </>
     );
