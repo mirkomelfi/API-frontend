@@ -22,13 +22,12 @@ export const Register = () => {
        
         else{
 
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(cliente),
-                //credentials: "include"
+                body: JSON.stringify(cliente)
             })
 
             const data = await response.json()
@@ -56,16 +55,16 @@ export const Register = () => {
             <h3>Formulario de registro</h3>
             <form onSubmit={consultarForm} ref={datForm}>
                 <div className="mb-3">
-                    <label htmlFor="first_name" className="form-label">Nombre</label>
-                    <input type="text" className="form-control" name="first_name" required />
+                    <label htmlFor="nombre" className="form-label">Nombre</label>
+                    <input type="text" className="form-control" name="nombre" required />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="last_name" className="form-label">Apellido</label>
-                    <input type="text" className="form-control" name="last_name" required />
+                    <label htmlFor="apellido" className="form-label">Apellido</label>
+                    <input type="text" className="form-control" name="apellido" required />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="username" className="form-label">Nombre de Usuario</label>
-                    <input type="username" className="form-control" name="username" />
+                    <input type="text" className="form-control" name="username" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="dni" className="form-label">DNI</label>

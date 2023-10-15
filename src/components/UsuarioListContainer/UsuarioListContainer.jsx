@@ -1,20 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import {useParams} from "react-router-dom";
-import { UnidadList } from "../UnidadList/UnidadList";
+import { UsuarioList } from "../UsuarioList/UsuarioList";
 import { Link } from "react-router-dom";
 import { getToken } from "../../utils/auth-utils";
 
 
-const UnidadListContainer = ({greeting}) =>{
+const UsuarioListContainer = ({greeting}) =>{
 
     const {id}= useParams();
 
-    const [listaUnidades,setListaUnidades]= useState([]);
+    const [listaUsuarios,setListaUsuarios]= useState([]);
     const [loading,setLoading]= useState(true);
 
     useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
+        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -24,8 +24,7 @@ const UnidadListContainer = ({greeting}) =>{
       })
         .then(response => response.json())
         .then(data => {
-          const unidades= data.unidades
-          setListaUnidades(unidades)
+          setListaUsuarios(data)
 
         })
         .catch(error => console.error(error))
@@ -37,10 +36,10 @@ const UnidadListContainer = ({greeting}) =>{
     return (
         <>
           <h1 className="greeting">{greeting}</h1>
-          {loading ? <p>Cargando...</p> : <UnidadList pid={id} listaUnidades={listaUnidades}/>}
-          <Link to={`/edificios`}>Volver</Link>
+          {loading ? <p>Cargando...</p> : <UsuarioList pid={id} listaUsuarios={listaUsuarios}/>}
+          <Link to={`/`}>Volver</Link>
         </>
     );
   } 
   
-export default UnidadListContainer;
+export default UsuarioListContainer;

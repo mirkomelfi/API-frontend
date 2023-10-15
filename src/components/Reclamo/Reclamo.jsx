@@ -41,6 +41,9 @@ const Reclamo =()=>{
                 <h2>Se inicio: {reclamo.fechaDeInicio}</h2>
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
+                <Link to={``}>Modificar</Link>
+                <Link to={``}>Cambiar estado</Link>
+                <Link to={``}>Eliminar Reclamo</Link>
             </div>
             <Link to={`/reclamos`}>Volver</Link>
         </>

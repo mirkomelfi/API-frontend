@@ -11,7 +11,6 @@ export const ReclamoListContainer = ({greeting}) =>{
     const [listaReclamos,setListaReclamos]= useState([]);
     const [loading,setLoading]= useState(true);
     let url=`${process.env.REACT_APP_DOMINIO_BACK}/reclamos`
-
       useEffect(() => { 
         fetch(url, {
           method: "GET",

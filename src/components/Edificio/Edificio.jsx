@@ -13,6 +13,9 @@ const Edificio =({edificio})=>{
                 <h2>Codigo postal: {edificio.codPostal}</h2>
                 <Link to={`${edificio.id}/unidades`}>Ver unidades</Link> 
                 <Link to={`${edificio.id}/areas`}>Ver areas</Link> 
+                <Link to={``}>Modificar edificio</Link> 
+                <Link to={``}>Eliminar edificio</Link> 
+                
             </div>
         </>
     )

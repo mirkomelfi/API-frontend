@@ -55,6 +55,8 @@ const Unidad =()=>{
                     <h3>apellido: {unidad.inquilino.apellido}</h3>
                 </>
                 } 
+                <Link to={``}>Modificar Unidad</Link>
+                <Link to={``}>Eliminar Unidad</Link>
             </div>
             <Link to={`/edificios`}>Volver</Link>
         </>

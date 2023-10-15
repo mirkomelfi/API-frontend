@@ -15,6 +15,8 @@ import AreaListContainer from './AreaListContainer/AreaListContainer';
 import { Area } from './Area/Area';
 import { ReclamoListContainer } from './ReclamoListContainer/ReclamoListContainer';
 import { Reclamo } from './Reclamo/Reclamo';
+import UsuarioListContainer from './UsuarioListContainer/UsuarioListContainer';
+import { Usuario } from './Usuario/Usuario';
 
 
 export const App = () => {
@@ -26,6 +28,7 @@ export const App = () => {
          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Home />} />
+          <Route path="/usuarios" element={<UsuarioListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/edificios" element={<EdificioListContainer greeting="Listado de Edificios"/>}/>
           <Route path="/reclamos" element={<ReclamoListContainer greeting="Listado de Reclamos"/>}/>
           <Route path="/edificios/:id/unidades" element={<UnidadListContainer greeting="Listado de Unidades del Edificio seleccionado"/>}/>
@@ -33,6 +36,7 @@ export const App = () => {
           <Route path="/edificios/:id/areas" element={<AreaListContainer greeting="Listado de Areas Comunes del Edificio seleccionado"/>}/>
           <Route path="/edificios/:id/areas/:id" element={<Area />}/> 
           <Route path="/reclamos/:id" element={<Reclamo />}/> 
+          <Route path="/usuarios/:dni" element={<Usuario />}/> 
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 
