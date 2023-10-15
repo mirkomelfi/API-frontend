@@ -60,9 +60,9 @@ const Area =()=>{
             {!mensaje?(<div className="tarjetaProducto">
                 <h1>Area N°{area.id}</h1>
                 <h2>Nombre: {area.nombre}</h2>
-                <h2>Piso {area.piso}</h2>
+                <h2>Piso: {area.piso}</h2>
                 <h2>Descripcion: {area.descripcion}</h2>
-                <button onClick={()=>modificar()} className="btn btn-primary">Modificar</button>
+                <Link to={`/updateArea/${id}`}>Modificar</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
             </div>):(<Mensaje msj={mensaje} />)}
             

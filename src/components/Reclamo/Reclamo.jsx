@@ -70,7 +70,7 @@ const Reclamo =()=>{
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
 
-                <button onClick={()=>modificar()} className="btn btn-primary">Modificar</button>
+                <Link to={`/updateReclamo/${id}`}>Modificar</Link>
                 <button onClick={()=>cambiarEstado()} className="btn btn-primary">Cambiar estado</button>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 

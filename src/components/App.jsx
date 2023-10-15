@@ -18,6 +18,10 @@ import { Reclamo } from './Reclamo/Reclamo';
 import UsuarioListContainer from './UsuarioListContainer/UsuarioListContainer';
 import { Usuario } from './Usuario/Usuario';
 import { UsuarioPut } from './Usuario/UsuarioPUT';
+import { ReclamoPut } from './Reclamo/ReclamoPUT';
+import { EdificioPut } from './Edificio/EdificioPUT';
+import { AreaPut } from './Area/AreaPUT';
+import { UnidadPut } from './Unidad/UnidadPUT';
 
 export const App = () => {
   return (
@@ -38,6 +42,10 @@ export const App = () => {
           <Route path="/reclamos/:id" element={<Reclamo />}/> 
           <Route path="/usuarios/:dni" element={<Usuario />}/> 
           <Route path="/updateUsuario/:dni" element={<UsuarioPut />}/> 
+          <Route path="/updateReclamo/:id" element={<ReclamoPut />}/> 
+          <Route path="/updateEdificio/:id" element={<EdificioPut />}/>
+          <Route path="/updateArea/:id" element={<AreaPut />}/>
+          <Route path="/updateUnidad/:id" element={<UnidadPut />}/>
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 

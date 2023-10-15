@@ -22,11 +22,9 @@ const Edificio =({edificio})=>{
         })
         const data = await response.json()
         console.log(data)
-        if (response.status==200){
-          setMensaje(data.msj)
-          return;
-        }
-  
+
+        setMensaje(data.msj)
+        return;
     }
 
     return(
@@ -37,11 +35,11 @@ const Edificio =({edificio})=>{
                 <h2>Calle: {edificio.calle}</h2>
                 <h2>Numero: {edificio.numero}</h2>
                 <h2>Ciudad: {edificio.ciudad}</h2>
-                <h2>Codigo postal: {edificio.codPostal}</h2>
+                <h2>Codigo postal: {edificio.codigoPostal}</h2>
                 <Link to={`${edificio.id}/unidades`}>Ver unidades</Link> 
                 <Link to={`${edificio.id}/areas`}>Ver areas</Link> 
             
-                <button onClick={()=>modificar()} className="btn btn-primary">Modificar</button>
+                <Link to={`/updateEdificio/${edificio.id}`}>Modificar</Link>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button></>
                 
                 ):(<Mensaje msj={mensaje} />)}
