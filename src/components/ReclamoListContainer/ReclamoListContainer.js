@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import {ReclamoList} from "../ReclamoList/ReclamoList"
 import { Link } from "react-router-dom";
 import { getToken } from "../../utils/auth-utils";
+import { Mensaje } from "../Mensaje/Mensaje";
 
 
 export const ReclamoListContainer = ({greeting}) =>{
 
     const [listaReclamos,setListaReclamos]= useState([]);
     const [loading,setLoading]= useState(true);
+    const [mensaje,setMensaje]=useState(null)
     let url=`${process.env.REACT_APP_DOMINIO_BACK}/reclamos`
       useEffect(() => { 
         fetch(url, {
@@ -22,7 +24,13 @@ export const ReclamoListContainer = ({greeting}) =>{
         })
           .then(response => response.json())
           .then(data => {
+            if (data.msj){
+              setMensaje(data.msj)
+            }else{
               setListaReclamos(data)
+              setMensaje(null)
+            }
+
 
           })
           .catch(error => console.error(error))
@@ -32,12 +40,14 @@ export const ReclamoListContainer = ({greeting}) =>{
       },[])
 
     return (
+      <>
+      <h1 className="greeting">{greeting}</h1>
+      {!mensaje?(
       <div>
-        <h1 className="greeting">{greeting}</h1>
         {loading ? <p>cargando...</p> : <ReclamoList listaReclamos={listaReclamos}/>}
-        <Link to={`/`}>Volver</Link> 
-      </div>
-   
+      </div>):<Mensaje msj={mensaje}/>}
+      <Link to={`/`}>Volver</Link>
+    </>
     );
   }
   

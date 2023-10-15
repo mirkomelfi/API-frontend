@@ -2,11 +2,15 @@ import {ReclamoDetail} from "../ReclamoDetail/ReclamoDetail"
 import "../ReclamoDetail/ReclamoDetail.css";
 
 const ReclamoList = ({listaReclamos})=>{
+    console.log("ReclamoList",listaReclamos)
     return (
-
-        <div className="contenedorProductos">
-            {listaReclamos.map(reclamo => <ReclamoDetail key={reclamo.id} reclamo={reclamo}/>)}
-        </div>
+        <>
+        {listaReclamos&&
+            <div className="contenedorProductos">
+                {listaReclamos.map(reclamo => <ReclamoDetail key={reclamo.id} reclamo={reclamo}/>)}
+            </div>
+        }
+        </>
 
     )
 }

@@ -47,7 +47,6 @@ export const App = () => {
           <Route path="/updateReclamo/:id" element={<ReclamoPut />}/> 
           <Route path="/updateEdificio/:id" element={<EdificioPut />}/>
           <Route path="/addEdificio" element={<EdificioPost />}/>
-          <Route path="/addunidad" element={<UnidadPost />}/>
           <Route path="/updateArea/:id" element={<AreaPut />}/>
           <Route path="/updateUnidad/:id" element={<UnidadPut />}/>
           <Route path="/cart" element={<Cart />}/> 
