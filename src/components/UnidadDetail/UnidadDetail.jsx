@@ -1,8 +1,10 @@
 import "./UnidadDetail.css";
 import {Link} from "react-router-dom";
 
-const UnidadDetail =({unidad})=>{
+const UnidadDetail =({unidad,isAdmin})=>{
     console.log(unidad)
+    
+    console.log("UnidadDetail",isAdmin)
     return(
         <>
             <div className="tarjetaProducto">
@@ -10,7 +12,11 @@ const UnidadDetail =({unidad})=>{
                 <h2>Nombre: {unidad.nombre}</h2>
                 <h2>Piso: {unidad.piso}</h2>
                 <h2>Num: {unidad.numero}</h2>
+                {isAdmin?
                 <Link to={`${unidad.id}`}>Ver unidad</Link>  
+                :
+                <Link to={`${unidad.id}`}>Ver unidad</Link>  
+                }
             </div>
         </>
     )

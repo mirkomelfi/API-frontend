@@ -8,22 +8,15 @@ import { UnidadPost } from "../Unidad/UnidadPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
 
 
-const UnidadListContainer = ({greeting}) =>{
-
-    const {id}= useParams();
+const UserUnidadListContainer = ({greeting}) =>{
 
     const [listaUnidades,setListaUnidades]= useState([]);
     const [loading,setLoading]= useState(true);
-    const [add,setAdd]= useState(false);
     const [mensaje,setMensaje]= useState(null);
 
 
-    const agregar= () =>{ 
-      setAdd(true)
-    }
-
     useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
+        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/misUnidades`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -33,21 +26,20 @@ const UnidadListContainer = ({greeting}) =>{
       })
         .then(response => response.json())
         .then(data => {
-
+          console.log("data",data)
           if (data.msj){
             console.log("data",data)
             setMensaje(data.msj)
           }else{
             
-          const unidades= data.unidades
-          setListaUnidades(unidades)
+
+          setListaUnidades(data)
           }
 
         })
         .catch(error => console.error(error))
         .finally(()=>{
           setLoading(false)
-          setAdd(false)
         })
     },[])
 
@@ -56,19 +48,17 @@ const UnidadListContainer = ({greeting}) =>{
           {loading 
           ? 
           <p>Cargando...</p> 
-          : 
-          !add ?
-          (!mensaje?<>
+          : (!mensaje?
+         (
+          <>
             <h1 className="greeting">{greeting}</h1>
-            <button onClick={()=>agregar()} className="btn btn-primary">Agregar unidad</button>
-            <UnidadList pid={id} listaUnidades={listaUnidades} isAdmin={true}/>
-          </>:<Mensaje msj={mensaje}/>)
-          :
-          (<UnidadPost/>)}
+            <UnidadList listaUnidades={listaUnidades} isAdmin={false} />
+          </>):<Mensaje msj={mensaje}/>)
+          }
  
-          <Link to={`/edificios`}>Volver</Link>
+          <Link to={`/`}>Volver</Link>
         </>
     );
   } 
   
-export default UnidadListContainer;
+export default UserUnidadListContainer;

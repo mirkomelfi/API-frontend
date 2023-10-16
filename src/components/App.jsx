@@ -24,6 +24,8 @@ import { AreaPut } from './Area/AreaPUT';
 import { UnidadPut } from './Unidad/UnidadPUT';
 import { EdificioPost } from './Edificio/EdificioPOST';
 import { UnidadPost } from './Unidad/UnidadPOST';
+import UserUnidadListContainer from './UserUnidadListContainer/UserUnidadListContainer';
+import { UnidadUser } from './Unidad/UnidadUser';
 
 export const App = () => {
   return (
@@ -51,7 +53,8 @@ export const App = () => {
           <Route path="/updateUnidad/:id" element={<UnidadPut />}/>
           <Route path="/usuario/current" element={<Usuario />}/> 
           <Route path="/updateUsuario" element={<UsuarioPut />}/>
-          <Route path="/usuario/unidades" element={<UsuarioListContainer greeting="Listado de Usuarios"/>}/>
+          <Route path="/usuario/unidades" element={<UserUnidadListContainer/>}/>
+          <Route path="/usuario/unidades/:id" element={<UnidadUser />}/> 
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 

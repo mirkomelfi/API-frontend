@@ -17,7 +17,7 @@ const Reclamo =()=>{
   }
 
     const eliminar=async()=>{
-      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}`, {
           method: "DELETE",
           headers: {
               "Content-Type": "application/json",

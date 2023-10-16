@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 
-export const ReclamoPut = () => {
+export const ReclamoPost = ({isUnit}) => {
 
     const {id}= useParams();
 
@@ -20,7 +20,16 @@ export const ReclamoPut = () => {
         const reclamo = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
         if (reclamo.descripcion==""){reclamo.descripcion=null;}
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}`, { // /areas/id/addReclamo /unidades/id/addReclamo /admin/reclamos/{reclamoId}/estado/{estadoId}
+        var url=``;
+        console.log("id reclamable", id)
+        if (!isUnit){
+            console.log("isUnit",isUnit)
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}/addReclamo`
+        }else{
+            console.log("isUnit",isUnit)
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/unidades/${id}/addReclamo`
+        }
+        const response= await fetch(url, { //  /admin/reclamos/{reclamoId}/estado/{estadoId}
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -51,14 +60,13 @@ export const ReclamoPut = () => {
                             <input type="text" className="form-control" name="descripcion" required/>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="btn btn-primary">Crear</button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/reclamos`}>Volver</Link>
         </div>
         
     )
