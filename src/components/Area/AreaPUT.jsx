@@ -23,7 +23,7 @@ export const AreaPut = () => {
         if (area.nombre==""){area.nombre=null;}
         if (!area.piso&&!area.descripcion&&!area.nombre){ setMensaje("No se ingresaron valores para actualizar")}
         else{
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/areas/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

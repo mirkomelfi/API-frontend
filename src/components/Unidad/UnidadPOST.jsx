@@ -19,7 +19,7 @@ console.log(id)
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const unidad = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/unidades/edificio/${id}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios/${id}/addUnit`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

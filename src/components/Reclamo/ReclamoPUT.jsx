@@ -20,7 +20,7 @@ export const ReclamoPut = () => {
         const reclamo = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
         if (reclamo.descripcion==""){reclamo.descripcion=null;}
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

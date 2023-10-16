@@ -13,7 +13,7 @@ const Edificio =({edificio})=>{
     }
 
     const eliminar=async()=>{
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${edificio.id}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios/${edificio.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

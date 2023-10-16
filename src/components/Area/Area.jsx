@@ -18,7 +18,7 @@ const Area =()=>{
     }
     
     const eliminar=async()=>{
-      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/areas/${id}`, {
           method: "DELETE",
           headers: {
               "Content-Type": "application/json",

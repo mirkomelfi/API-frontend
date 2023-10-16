@@ -14,7 +14,7 @@ const UsuarioListContainer = ({greeting}) =>{
     const [loading,setLoading]= useState(true);
 
     useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios`, {
+        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

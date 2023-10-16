@@ -25,7 +25,7 @@ export const EdificioPut = () => {
         if (!edificio.calle&&!edificio.ciudad&&!edificio.numero&&!edificio.codigoPostal){ setMensaje("No se ingresaron valores para actualizar")}
         else{
 
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

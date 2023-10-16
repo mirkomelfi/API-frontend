@@ -22,7 +22,7 @@ const Unidad =()=>{
     }
 
     const eliminar=async()=>{
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/unidades/${id}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/unidades/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

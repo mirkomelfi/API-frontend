@@ -23,7 +23,7 @@ export const EdificioPost = () => {
             direccion,
         }
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

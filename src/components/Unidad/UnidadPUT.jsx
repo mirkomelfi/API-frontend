@@ -22,7 +22,7 @@ export const UnidadPut = () => {
         if (unidad.piso==""){unidad.piso=null;}
         if (!unidad.piso&&!unidad.numero){ setMensaje("No se ingresaron valores para actualizar")}
         else{
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/unidades/${id}`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/unidades/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

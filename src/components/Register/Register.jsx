@@ -22,7 +22,7 @@ export const Register = () => {
        
         else{
 
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/register`, {
+            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

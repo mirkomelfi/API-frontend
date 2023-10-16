@@ -26,9 +26,9 @@ export const UsuarioPut = () => {
         else{
             var url=``;
             if (dni){
-                url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/${dni}`
+                url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios/${dni}`
             }else{
-                url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/cambiarPerfil`
+                url=`${process.env.REACT_APP_DOMINIO_BACK}/cambiarPerfil`
             }
             const response= await fetch(url, {
                 method: "PUT",

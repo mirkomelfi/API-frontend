@@ -17,7 +17,7 @@ const Usuario =()=>{
 
     const eliminar=async()=>{
         console.log(dni)
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/${dni}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios/${dni}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -34,9 +34,9 @@ const Usuario =()=>{
     useEffect(() => { 
         var url=``;
         if (dni){
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/${dni}`
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios/${dni}`
         }else{
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/miperfil`
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/miPerfil`
         }
         fetch(url, {
         method: "GET",

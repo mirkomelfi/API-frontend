@@ -13,7 +13,7 @@ export const EdificioListContainer = ({greeting}) =>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
   
-    let url=`${process.env.REACT_APP_DOMINIO_BACK}/edificios`
+    let url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios`
 
       useEffect(() => { 
         fetch(url, {
