@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+import { UnidadResponsable } from "./UnidadResponsable";
 
 const Unidad =()=>{
     const {id}= useParams();
@@ -11,14 +12,17 @@ const Unidad =()=>{
     const [unidad,setUnidad]= useState([]);
     console.log(unidad)
     const [loading,setLoading]= useState(true);
-    const [mensaje,setMensaje]=useState(null)
+    const [mensaje,setMensaje]=useState(null);
+    const [updateResponsable,setUpdateResponsable]=useState(null)
 
-    const cambiarPropietario=async()=>{
-
+    const cambiarPropietario=()=>{
+        setUpdateResponsable("propietario")
+        return;
     }
 
-    const cambiarInquilino=async()=>{
-
+    const cambiarInquilino=()=>{
+        setUpdateResponsable("inquilino")
+        return;
     }
 
     const eliminar=async()=>{
@@ -60,7 +64,7 @@ const Unidad =()=>{
     },[])
     return(
         <>
-            <div className="tarjetaProducto">
+            {!updateResponsable?<div className="tarjetaProducto">
                 <h1>Unidad N°{unidad.id}</h1>
                 {!mensaje?(<>
                 <h2>Nombre: {unidad.nombre}</h2>
@@ -90,7 +94,7 @@ const Unidad =()=>{
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
-            </div>
+            </div>:<UnidadResponsable responsable={updateResponsable} />}
             <Link to={`/edificios/${unidad.idEdificio}/unidades`}>Volver</Link>
         </>
     )
