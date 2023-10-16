@@ -26,6 +26,7 @@ import { EdificioPost } from './Edificio/EdificioPOST';
 import { UnidadPost } from './Unidad/UnidadPOST';
 import UserUnidadListContainer from './UserUnidadListContainer/UserUnidadListContainer';
 import { UnidadUser } from './Unidad/UnidadUser';
+import { HomeAdmin } from './Home/HomeAdmin';
 
 export const App = () => {
   return (
@@ -36,6 +37,8 @@ export const App = () => {
          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Home />} />
+          <Route path='/admin' element={<HomeAdmin/>} /> {// temporal para probar rutas roles
+          }
           <Route path="/usuarios" element={<UsuarioListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/edificios" element={<EdificioListContainer greeting="Listado de Edificios"/>}/>
           <Route path="/reclamos" element={<ReclamoListContainer greeting="Listado de Reclamos"/>}/>
