@@ -4,16 +4,18 @@ import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+import { ReclamoEstado } from "./ReclamoEstado";
 
 const Reclamo =()=>{
     const {id}= useParams();
     const [reclamo,setReclamo]= useState([]);
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
+    const [estado,setEstado]=useState(null)
 
 
     const cambiarEstado=async()=>{
-   
+   setEstado(true)
   }
 
     const eliminar=async()=>{
@@ -56,7 +58,9 @@ const Reclamo =()=>{
     },[])
     return( 
         <>
-            {!mensaje?(<div className="tarjetaProducto">
+            {!mensaje?
+            (!estado?
+            (<div className="tarjetaProducto">
                 <h1>Reclamo N°{reclamo.id}</h1>
                 <h2>Id del Edificio: {reclamo.idEdificio}</h2>
                 <h2>Tipo: {reclamo.tipoReclamable}</h2>
@@ -71,7 +75,9 @@ const Reclamo =()=>{
                 <button onClick={()=>cambiarEstado()} className="btn btn-primary">Cambiar estado</button>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 
-            </div>):(<Mensaje msj={mensaje} />)
+            </div>):<ReclamoEstado />)
+            
+            :(<Mensaje msj={mensaje} />)
             }
             <Link to={`/reclamos`}>Volver</Link>
         </>

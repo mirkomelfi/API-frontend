@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 
-export const ReclamoPut = () => {
+export const ReclamoEstado = () => {
 
     const {id}= useParams();
 
@@ -18,9 +18,9 @@ export const ReclamoPut = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const reclamo = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (reclamo.descripcion==""){reclamo.descripcion=null;}
+        if (reclamo.estado==""){reclamo.estado=null;}
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}/estado/${reclamo.estado}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -42,13 +42,12 @@ export const ReclamoPut = () => {
             {!mensaje?(
                 
                 <div className="container divForm" >
-                    <h2>Cambio en los datos del Reclamo</h2>
-                    <h3>Ingrese solo los campos que desea modificar</h3>
+                    <h2>Cambio en el Estado del Reclamo</h2>
                     <form onSubmit={consultarForm} ref={datForm}>
 
                         <div className="mb-3">
-                            <label htmlFor="descripcion" className="form-label">Descripcion</label>
-                            <input type="text" className="form-control" name="descripcion" required/>
+                            <label htmlFor="estado" className="form-label">N° Estado</label>
+                            <input type="number" className="form-control" name="estado" required/>
                         </div>
 
                         <button type="submit" className="btn btn-primary">Actualizar</button>
@@ -58,7 +57,6 @@ export const ReclamoPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/reclamos/${id} `}>Volver</Link>
         </div>
         
     )
