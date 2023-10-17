@@ -4,37 +4,20 @@ import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
-import { ReclamoEstado } from "./ReclamoEstado";
+import { ReclamoPost } from "./ReclamoPOST";
 
-const Reclamo =()=>{
+const ReclamoUser =()=>{
     const {id}= useParams();
+
     const [reclamo,setReclamo]= useState([]);
+    console.log(reclamo)
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
-    const [estado,setEstado]=useState(null)
+    const [add,setAdd]=useState(null)
 
-
-    const cambiarEstado=async()=>{
-   setEstado(true)
-  }
-
-    const eliminar=async()=>{
-      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}`, {
-          method: "DELETE",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${getToken()}`
-          }
-      })
-      const data = await response.json()
-      console.log(data)
-      if (response.status==200){
-        setMensaje(data.msj)
-        return;
-      }
-
-  }
-
+     const generarReclamo= ()=>{
+        setAdd(true)
+    }
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
@@ -47,7 +30,11 @@ const Reclamo =()=>{
       })
         .then(response => response.json())
         .then(data => {
-          setReclamo(data)
+            if (data.msj){
+                setMensaje(data.msj)
+            }else{
+                setReclamo(data)
+            }
           console.log(reclamo)
 
         })
@@ -56,12 +43,12 @@ const Reclamo =()=>{
           setLoading(false)
         })
     },[])
-    return( 
+    return(
         <>
-            {!mensaje?
-            (!estado?
+        {!mensaje?
+
             (<div className="tarjetaProducto">
-                <h1>Reclamo N°{reclamo.id}</h1>
+               <h1>Reclamo N°{reclamo.id}</h1>
                 <h2>Id del Edificio: {reclamo.idEdificio}</h2>
                 <h2>Tipo: {reclamo.tipoReclamable}</h2>
                 <h2>Id del Reclamable: {reclamo.idReclamable}</h2>
@@ -70,19 +57,14 @@ const Reclamo =()=>{
                 <h2>Se inicio: {reclamo.fechaDeInicio}</h2>
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
-                <h2>Estado: {reclamo.estado}</h2>
-
-                <Link to={`/updateReclamo/${id}`}>Modificar</Link>
-                <button onClick={()=>cambiarEstado()} className="btn btn-primary">Cambiar estado</button>
-                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 
-            </div>):<ReclamoEstado />)
-            
-            :(<Mensaje msj={mensaje} />)
-            }
-            <Link to={`/reclamos`}>Volver</Link>
+            </div>)
+            :
+            (<Mensaje msj={mensaje} />)
+        }
+            <Link to={`/usuario/reclamos`}>Volver</Link>
         </>
     )
 }
 
-export {Reclamo}
+export {ReclamoUser}

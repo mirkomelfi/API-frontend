@@ -52,7 +52,7 @@ const UserUnidadListContainer = ({greeting}) =>{
          (
           <>
             <h1 className="greeting">{greeting}</h1>
-            <UnidadList listaUnidades={listaUnidades} isAdmin={false} />
+            <UnidadList listaUnidades={listaUnidades} />
           </>):<Mensaje msj={mensaje}/>)
           }
  

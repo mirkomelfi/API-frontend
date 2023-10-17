@@ -10,7 +10,7 @@ const AreaList = ({listaAreas})=>{
             {listaAreas&&
 
             <div className="contenedorProductos">
-                {listaAreas.map(area => <AreaDetail key={area.id} area={area}/>)}
+                {listaAreas.map(area => <AreaDetail key={area.id} area={area} />)}
             </div>
             }
         </>

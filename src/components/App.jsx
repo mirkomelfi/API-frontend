@@ -23,10 +23,12 @@ import { EdificioPut } from './Edificio/EdificioPUT';
 import { AreaPut } from './Area/AreaPUT';
 import { UnidadPut } from './Unidad/UnidadPUT';
 import { EdificioPost } from './Edificio/EdificioPOST';
-import { UnidadPost } from './Unidad/UnidadPOST';
 import UserUnidadListContainer from './UserUnidadListContainer/UserUnidadListContainer';
 import { UnidadUser } from './Unidad/UnidadUser';
-import { HomeAdmin } from './Home/HomeAdmin';
+import UserAreaListContainer from './UserAreaListContainer copy/UserAreaListContainer';
+import { AreaUser } from './Area/AreaUser';
+import UserReclamoListContainer from './UserReclamoListContainer/UserReclamoListContainer';
+import { ReclamoUser } from './Reclamo/ReclamoUser';
 
 export const App = () => {
   return (
@@ -37,8 +39,6 @@ export const App = () => {
          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Home />} />
-          <Route path='/admin' element={<HomeAdmin/>} /> {// temporal para probar rutas roles
-          }
           <Route path="/usuarios" element={<UsuarioListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/edificios" element={<EdificioListContainer greeting="Listado de Edificios"/>}/>
           <Route path="/reclamos" element={<ReclamoListContainer greeting="Listado de Reclamos"/>}/>
@@ -58,6 +58,10 @@ export const App = () => {
           <Route path="/updateUsuario" element={<UsuarioPut />}/>
           <Route path="/usuario/unidades" element={<UserUnidadListContainer/>}/>
           <Route path="/usuario/unidades/:id" element={<UnidadUser />}/> 
+          <Route path="/usuario/areas" element={<UserAreaListContainer/>}/>
+          <Route path="/usuario/areas/:id" element={<AreaUser />}/> 
+          <Route path="/usuario/reclamos" element={<UserReclamoListContainer/>}/>
+          <Route path="/usuario/reclamos/:id" element={<ReclamoUser />}/> 
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 
