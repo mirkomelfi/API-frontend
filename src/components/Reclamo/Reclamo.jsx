@@ -12,6 +12,7 @@ const Reclamo =()=>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
     const [estado,setEstado]=useState(null)
+    const [medidas,setMedidas]=useState(null)
 
 
     const cambiarEstado=async()=>{
@@ -49,6 +50,8 @@ const Reclamo =()=>{
         .then(data => {
           setReclamo(data)
           console.log(reclamo)
+          console.log(data.medidas.length)
+          if (data.medidas.length!=0){setMedidas(true)}
 
         })
         .catch(error => console.error(error))
@@ -71,7 +74,8 @@ const Reclamo =()=>{
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
                 <h2>Estado: {reclamo.estado}</h2>
-
+                <h2>Medidas: </h2>
+                {medidas?(reclamo.medidas.map(medida => <h2>{medida}</h2>)):<h2>Aun no hay medidas tomadas</h2>}
                 <Link to={`/updateReclamo/${id}`}>Modificar</Link>
                 <button onClick={()=>cambiarEstado()} className="btn btn-primary">Cambiar estado</button>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>

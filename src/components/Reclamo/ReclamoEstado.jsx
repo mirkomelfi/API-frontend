@@ -18,7 +18,7 @@ export const ReclamoEstado = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const reclamo = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (reclamo.estado==""){reclamo.estado=null;}
+        console.log(reclamo)
 
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}/estado/${reclamo.estado}`, {
             method: "PUT",
@@ -26,7 +26,7 @@ export const ReclamoEstado = () => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`
             },
-            body: JSON.stringify(reclamo)
+            body: reclamo.medida
         })
 
         const data = await response.json()
@@ -48,6 +48,10 @@ export const ReclamoEstado = () => {
                         <div className="mb-3">
                             <label htmlFor="estado" className="form-label">N° Estado</label>
                             <input type="number" className="form-control" name="estado" required/>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="medida" className="form-label">Medida tomada</label>
+                            <input type="text" className="form-control" name="medida" required/>
                         </div>
 
                         <button type="submit" className="btn btn-primary">Actualizar</button>

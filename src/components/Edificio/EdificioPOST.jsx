@@ -19,17 +19,13 @@ export const EdificioPost = () => {
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const direccion = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
-        const edificio={
-            direccion,
-        }
-
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`
             },
-            body: JSON.stringify(edificio)
+            body: JSON.stringify(direccion)
         })
 
         const data = await response.json()
