@@ -13,11 +13,8 @@ const ReclamoUser =()=>{
     console.log(reclamo)
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
-    const [add,setAdd]=useState(null)
 
-     const generarReclamo= ()=>{
-        setAdd(true)
-    }
+
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
@@ -57,7 +54,8 @@ const ReclamoUser =()=>{
                 <h2>Se inicio: {reclamo.fechaDeInicio}</h2>
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
-                
+                <Link to={`/addImage/${id}`}>Agregar imagen</Link>
+                <Link to={`/verImagenes/${id}`}>Ver imagenes</Link>
             </div>)
             :
             (<Mensaje msj={mensaje} />)

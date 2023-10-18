@@ -4,7 +4,6 @@ import Navbar from './Navbar/Navbar';
 import { Register } from './Register/Register';
 import { Login } from './Login/Login';
 import {EdificioListContainer} from './EdificioListContainer/EdificioListContainer';
-import Cart from './Cart/Cart';
 import { CreacionUser } from './CreacionUser/CreacionUser';
 import { UserPassword } from './UserPassword/UserPassword';
 import { ChangePass } from './UserPassword/ChangePass';
@@ -29,6 +28,8 @@ import UserAreaListContainer from './UserAreaListContainer copy/UserAreaListCont
 import { AreaUser } from './Area/AreaUser';
 import UserReclamoListContainer from './UserReclamoListContainer/UserReclamoListContainer';
 import { ReclamoUser } from './Reclamo/ReclamoUser';
+import ImagenPost from './Imagen/ImagenPOST';
+import { Imagen } from './Imagen/Imagen';
 
 export const App = () => {
   return (
@@ -49,7 +50,9 @@ export const App = () => {
           <Route path="/reclamos/:id" element={<Reclamo />}/> 
           <Route path="/usuarios/:dni" element={<Usuario />}/> 
           <Route path="/updateUsuario/:dni" element={<UsuarioPut />}/> 
-          <Route path="/updateReclamo/:id" element={<ReclamoPut />}/> 
+          <Route path="/updateReclamo/:id" element={<ReclamoPut />}/>
+          <Route path="/verImagenes/:id" element={<Imagen num={1} />}/> 
+          <Route path="/addImage/:id" element={<ImagenPost />}/> 
           <Route path="/updateEdificio/:id" element={<EdificioPut />}/>
           <Route path="/addEdificio" element={<EdificioPost />}/>
           <Route path="/updateArea/:id" element={<AreaPut />}/>
@@ -62,7 +65,6 @@ export const App = () => {
           <Route path="/usuario/areas/:id" element={<AreaUser />}/> 
           <Route path="/usuario/reclamos" element={<UserReclamoListContainer/>}/>
           <Route path="/usuario/reclamos/:id" element={<ReclamoUser />}/> 
-          <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 
           <Route path="/newpassword"element={<ChangePass />}/> 
