@@ -9,11 +9,19 @@ import { Mensaje } from "../Mensaje/Mensaje";
 
 export const ReclamoListContainer = ({greeting}) =>{
 
+  const {estado}= useParams();
+
     const [listaReclamos,setListaReclamos]= useState([]);
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
-    let url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos`
+    let url="";
+
       useEffect(() => { 
+        if (estado){
+          url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/filter?estado=${estado}`
+        }else{
+          url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos`
+        }
         fetch(url, {
           method: "GET",
           headers: {
@@ -41,6 +49,7 @@ export const ReclamoListContainer = ({greeting}) =>{
 
     return (
       <>
+      <Link to={`/filtrarReclamos`}>Filtrar segun estado</Link>
       <h1 className="greeting">{greeting}</h1>
       {!mensaje?(
       <div>
