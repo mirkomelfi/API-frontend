@@ -57,7 +57,7 @@ const Edificio =({edificio})=>{
                 <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/unidades`)}><span class="btnText">Ver unidades</span></button>
                 <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/areas`)}><span class="btnText">Ver areas</span></button>
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/updateEdificio/${edificio.id}`)}><span class="btnText">Modificar</span></button>
-                <button onClick={()=>eliminar()} className="btn btn-primary"><span class="btnText">Eliminar</span></button></>
+                <button onClick={()=>eliminar()}  class="button btnPrimary"><span class="btnText">Eliminar</span></button></>
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>

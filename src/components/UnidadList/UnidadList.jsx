@@ -4,7 +4,7 @@ import { UnidadDetail } from "../UnidadDetail/UnidadDetail";
 import { Link } from "react-router-dom";
 
 const UnidadList = ({listaUnidades})=>{
-
+    
     return (
         <>
            {listaUnidades&&

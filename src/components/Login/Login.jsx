@@ -102,9 +102,9 @@ export const Login = () => {
                         <input type="password" className="form-control" name="password" />
                     </div>
 
-                    {!loggeado&&<button type="submit" className="btn btn-primary" ><span class="btnText">niciar Sesion</span></button>}
+                    {!loggeado&&<button type="submit"  class="button btnPrimary" ><span class="btnText">Iniciar Sesion</span></button>}
                 </form>
-                {loggeado&&<button onClick={()=>desloggear()} className="btn btn-primary"><span class="btnText">Cerrar Sesion</span></button>}
+                {loggeado&&<button onClick={()=>desloggear()}  class="button btnPrimary"><span class="btnText">Cerrar Sesion</span></button>}
                 {loggeado&&
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver a Inicio</span></button>
                 }

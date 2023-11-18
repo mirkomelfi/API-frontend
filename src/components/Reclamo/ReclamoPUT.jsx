@@ -72,7 +72,7 @@ export const ReclamoPut = () => {
                             <input type="text" className="form-control" name="descripcion" required/>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit"  class="button btnPrimary">Actualizar</button>
                         </form>
 
                     </div>

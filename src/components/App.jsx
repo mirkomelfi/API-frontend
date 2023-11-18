@@ -27,6 +27,8 @@ import UserReclamoListContainer from './UserReclamoListContainer/UserReclamoList
 import { ReclamoUser } from './Reclamo/ReclamoUser';
 import ImagenPost from './Imagen/ImagenPOST';
 import { Imagen } from './Imagen/Imagen';
+import { Logout } from './Logout/Logout';
+import { ReclamoEstado } from './Reclamo/ReclamoEstado';
 
 export const App = () => {
   return (
@@ -36,6 +38,7 @@ export const App = () => {
         <Routes>
          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout />} />
           <Route path='/' element={<Home />} />
           <Route path="/usuarios" element={<UsuarioListContainer greeting="Listado de Usuarios"/>}/>
           <Route path="/edificios" element={<EdificioListContainer greeting="Listado de Edificios"/>}/>
@@ -62,6 +65,7 @@ export const App = () => {
           <Route path="/usuario/areas/:id" element={<AreaUser />}/> 
           <Route path="/usuario/reclamos" element={<UserReclamoListContainer/>}/>
           <Route path="/usuario/reclamos/:id" element={<ReclamoUser />}/> 
+
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
         

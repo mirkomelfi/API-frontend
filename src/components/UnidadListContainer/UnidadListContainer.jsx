@@ -16,7 +16,7 @@ const UnidadListContainer = ({greeting}) =>{
 
     const [listaUnidades,setListaUnidades]= useState([]);
     const [loading,setLoading]= useState(true);
-    const [add,setAdd]= useState(false);
+    const [add,setAdd]= useState(undefined);
     const [mensaje,setMensaje]= useState(null);
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
@@ -50,7 +50,8 @@ const UnidadListContainer = ({greeting}) =>{
           if(data.msj){
               setMensaje(data.msj)
           }else{
-            setListaUnidades(data)
+            const unidades= data.unidades
+            setListaUnidades(unidades)
           }
       }
   }

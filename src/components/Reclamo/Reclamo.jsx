@@ -112,8 +112,8 @@ useEffect(() => {
                 {medidas?(reclamo.medidas.map(medida => <h2>{medida}</h2>)):<h2>Aun no hay medidas tomadas</h2>}
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/verImagenes/${id}`)}><span class="btnText">Ver imagenes</span></button>
-                <button onClick={()=>cambiarEstado()} className="btn btn-primary">Cambiar estado</button>
-                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
+                <button onClick={()=>cambiarEstado()}  class="button btnPrimary">Cambiar estado</button>
+                <button onClick={()=>eliminar()}  class="button btnPrimary">Eliminar</button>
                 
             </div>):<ReclamoEstado />)
             

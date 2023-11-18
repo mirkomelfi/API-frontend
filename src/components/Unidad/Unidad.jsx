@@ -121,9 +121,9 @@ const Unidad =()=>{
                 </>
                 } 
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUnidad/${id}`)}><span class="btnText">Modificar</span></button>
-                <button onClick={()=>cambiarPropietario()} className="btn btn-primary"><span class="btnText">Cambiar propietario</span></button>
-                <button onClick={()=>cambiarInquilino()} className="btn btn-primary"><span class="btnText">Cambiar inquilino</span></button>
-                <button onClick={()=>eliminar()} className="btn btn-primary"><span class="btnText">Eliminar</span></button>
+                <button onClick={()=>cambiarPropietario()}class="button btnPrimary"><span class="btnText">Cambiar propietario</span></button>
+                <button onClick={()=>cambiarInquilino()} class="button btnPrimary"><span class="btnText">Cambiar inquilino</span></button>
+                <button onClick={()=>eliminar()} class="button btnPrimary"><span class="btnText">Eliminar</span></button>
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}

@@ -77,7 +77,7 @@ export const ReclamoPost = ({isUnit}) => {
                             <input type="text" className="form-control" name="descripcion" required/>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Crear</button>
+                        <button type="submit"  class="button btnPrimary">Crear</button>
                         </form>
 
                     </div>

@@ -89,7 +89,7 @@ export const EdificioPut = () => {
                             <input type="number" className="form-control" name="codigoPostal" />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" class="button btnPrimary">Actualizar</button>
                         </form>
 
                     </div>
