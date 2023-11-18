@@ -34,6 +34,7 @@ const UserAreaListContainer = ({greeting}) =>{
       
       const rol=validateRol(response)
       if (!rol){
+        console.log(rol)
           deleteToken()
           navigate("/login")
           

@@ -21,9 +21,14 @@ const Imagen =()=>{
     }
 
     const siguienteImg=()=>{
+        console.log(num+1)
       setNum(num+1)
-
-  }
+    }
+    const anteriorImg=()=>{
+        console.log(num-1)
+        setNum(num-1)
+  
+    }
 
   const eliminarImg=async()=>{
     
@@ -91,11 +96,12 @@ const Imagen =()=>{
             (<div className="tarjetaProducto">
                 <h1>Imagen N°{num}</h1>
                 <img src={`data:image/jpeg;base64,${bytes}`} alt="" />
-                <button onClick={()=>eliminarImg()} className="btn btn-primary"><span class="btnText">Eliminar imagen</span></button>
+                <button onClick={()=>eliminarImg()} className="button btnPrimary"><span class="btnText">Eliminar imagen</span></button>
             </div>
-            <>
-            <button onClick={()=>siguienteImg()} className="btn btn-primary"><span class="btnText">Siguiente imagen</span></button>
-            </>)</>
+            <div class="contenedorBotones-img">
+            {num!=1&&<button onClick={()=>anteriorImg()} className="button btnPrimary"><span class="btnText">Anterior imagen</span></button>}
+            <button onClick={()=>siguienteImg()} className="button btnPrimary"><span class="btnText">Siguiente imagen</span></button>
+            </div>)</>
             
             :<Mensaje msj={mensaje} />
             }

@@ -7,6 +7,7 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import {useNavigate, useParams} from "react-router-dom";
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { ReclamoFilter } from "../Reclamo/ReclamoFilter";
 
 export const ReclamoListContainer = ({greeting}) =>{
 
@@ -14,10 +15,16 @@ export const ReclamoListContainer = ({greeting}) =>{
 
     const [listaReclamos,setListaReclamos]= useState([]);
     const [loading,setLoading]= useState(true);
+    const [filtrar,setFiltrar]= useState(null);
     const [mensaje,setMensaje]=useState(null)
     let url="";
     
     const navigate= useNavigate()
+
+
+    const filtrarReclamo = () =>{
+      setFiltrar(true)
+      }
 
     const ejecutarFetch = async() =>{
       if (estado){
@@ -73,13 +80,18 @@ export const ReclamoListContainer = ({greeting}) =>{
 
     return (
       <>
-      <button class="button btnPrimary" onClick={()=>navigateTo(`/filtrarReclamos`)}><span class="btnText">Filtrar segun estado</span></button>
+      {!filtrar?
+      <>
+      <button class="button btnPrimary" onClick={()=>filtrarReclamo()}><span class="btnText">Filtrar segun estado</span></button>
       <h1 className="greeting">{greeting}</h1>
       {!mensaje?(
       <div>
         {loading ? <p>cargando...</p> : <ReclamoList listaReclamos={listaReclamos}/>}
       </div>):<Mensaje msj={mensaje}/>}
       <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
+      </>
+      :<ReclamoFilter/>
+      }
     </>
     );
   }

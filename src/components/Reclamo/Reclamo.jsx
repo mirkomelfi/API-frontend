@@ -8,6 +8,7 @@ import { ReclamoEstado } from "./ReclamoEstado";
 
 import {useNavigate} from "react-router-dom";
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { Medidas } from "../Medidas/Medidas";
 
 const Reclamo =()=>{
     const {id}= useParams();
@@ -16,15 +17,19 @@ const Reclamo =()=>{
     const [mensaje,setMensaje]=useState(null)
     const [estado,setEstado]=useState(null)
     const [medidas,setMedidas]=useState(null)
+    const [vistaMedidas,setVistaMedidas]=useState(null)
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
     const navigateTo=(url)=>{
         navigate(url)
     }
 
-    const cambiarEstado=async()=>{
+    const cambiarEstado=()=>{
    setEstado(true)
   }
+  const cambiarVistaMedidas=()=>{
+    setVistaMedidas(true)
+   }
 
     const eliminar=async()=>{
       const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}`, {
@@ -97,6 +102,7 @@ useEffect(() => {
         <>
             {!mensaje?
             (!estado?
+              (!vistaMedidas?
             (<div className="tarjetaProducto">
                 <h1>Reclamo N°{reclamo.id}</h1>
                 <h2>Id del Edificio: {reclamo.idEdificio}</h2>
@@ -108,14 +114,16 @@ useEffect(() => {
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
                 <h2>Estado: {reclamo.estado}</h2>
-                <h2>Medidas: </h2>
-                {medidas?(reclamo.medidas.map(medida => <h2>{medida}</h2>)):<h2>Aun no hay medidas tomadas</h2>}
-                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
+                {medidas?<button onClick={()=>cambiarVistaMedidas()}  class="button btnPrimary">Ver Medidas</button>:<h2>Aun no hay medidas tomadas</h2>}
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/verImagenes/${id}`)}><span class="btnText">Ver imagenes</span></button>
                 <button onClick={()=>cambiarEstado()}  class="button btnPrimary">Cambiar estado</button>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
                 <button onClick={()=>eliminar()}  class="button btnPrimary">Eliminar</button>
                 
-            </div>):<ReclamoEstado />)
+            </div>)
+            :<Medidas medidas={reclamo.medidas} />)
+            
+            :<ReclamoEstado />)
             
             :(<Mensaje msj={mensaje} />)
             }
