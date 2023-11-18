@@ -101,10 +101,20 @@ const Usuario =()=>{
                 <h2>Nombre de usuario: {usuario.username}</h2>
                 <h2>Nombre: {usuario.nombre}</h2>
                 <h2>Apellido: {usuario.apellido}</h2>
-                {dni?<Link to={`/updateUsuario/${dni}`}>Modificar</Link>:<Link to={`/updateUsuario`}>Modificar</Link>}
-                {dni&&<button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>}
+                {dni?
+                 <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUsuario/${dni}`)}><span class="btnText">Modificar</span></button>
+                :
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUsuario`)}><span class="btnText">Modificar</span></button>
+                }
+                {dni&&<button class="button btnPrimary" onClick={()=>eliminar()}><span class="btnText">Eliminar</span></button>}
             </div>):(<Mensaje msj={mensaje} />)}
-            {dni?<Link to={`/usuarios`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+            {dni?
+             <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios`)}><span class="btnText">Volver</span></button>
+            
+            :
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
+          
+            }
         </>
     )
 }

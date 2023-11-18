@@ -71,8 +71,8 @@ const UserUnidadListContainer = ({greeting}) =>{
             <UnidadList listaUnidades={listaUnidades} />
           </>):<Mensaje msj={mensaje}/>)
           }
- 
-          <Link to={`/`}>Volver</Link>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
+
         </>
     );
   } 

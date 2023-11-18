@@ -91,15 +91,16 @@ const Imagen =()=>{
             (<div className="tarjetaProducto">
                 <h1>Imagen N°{num}</h1>
                 <img src={`data:image/jpeg;base64,${bytes}`} alt="" />
-                <button onClick={()=>eliminarImg()} className="btn btn-primary">Eliminar imagen</button>
+                <button onClick={()=>eliminarImg()} className="btn btn-primary"><span class="btnText">Eliminar imagen</span></button>
             </div>
             <>
-            <button onClick={()=>siguienteImg()} className="btn btn-primary">Siguiente imagen</button>
+            <button onClick={()=>siguienteImg()} className="btn btn-primary"><span class="btnText">Siguiente imagen</span></button>
             </>)</>
             
             :<Mensaje msj={mensaje} />
             }
-            <Link to={`/reclamos`}>Volver</Link>
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos`)}><span class="btnText">Volver</span></button>
+           
         </>
     )
 }

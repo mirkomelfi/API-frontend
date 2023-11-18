@@ -54,11 +54,10 @@ const Edificio =({edificio})=>{
                 <h2>Numero: {edificio.numero}</h2>
                 <h2>Ciudad: {edificio.ciudad}</h2>
                 <h2>Codigo postal: {edificio.codigoPostal}</h2>
-                <Link to={`${edificio.id}/unidades`}>Ver unidades</Link> 
-                <Link to={`${edificio.id}/areas`}>Ver areas</Link> 
-            
-                <Link to={`/updateEdificio/${edificio.id}`}>Modificar</Link>
-                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button></>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/unidades`)}><span class="btnText">Ver unidades</span></button>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/areas`)}><span class="btnText">Ver areas</span></button>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateEdificio/${edificio.id}`)}><span class="btnText">Modificar</span></button>
+                <button onClick={()=>eliminar()} className="btn btn-primary"><span class="btnText">Eliminar</span></button></>
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>

@@ -30,6 +30,7 @@ export const EdificioListContainer = ({greeting}) =>{
         }
 
       })
+      console.log(response)
       const rol=validateRol(response)
       if (!rol){
         if (isRolUser(getToken())){
@@ -67,13 +68,14 @@ export const EdificioListContainer = ({greeting}) =>{
     return (
       <>
       <h1 className="greeting">{greeting}</h1>
-        <Link to={`/addEdificio`}>Agregar edificio</Link> 
+      <button class="button btnPrimary" onClick={()=>navigateTo(`/addEdificio`)}><span class="btnText">Agregar edificio</span></button>
       {!mensaje?(
       <div> 
 
         {loading ? <p>cargando...</p> : <EdificioList listaEdificios={listaEdificios}/>}
       </div>):<Mensaje msj={mensaje}/>}
-      <Link to={`/`}>Volver</Link>
+      <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
+
       </>
     );
   }

@@ -3,7 +3,7 @@ import "../Edificio/Edificio.css";
 import { Link } from "react-router-dom";
 
 const EdificioList = ({listaEdificios})=>{
-    console.log()
+
     return (
         <>
         {listaEdificios&&

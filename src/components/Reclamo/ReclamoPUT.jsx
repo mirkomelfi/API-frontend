@@ -79,7 +79,7 @@ export const ReclamoPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/reclamos/${id} `}>Volver</Link>
+         <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos/${id}`)}><span class="btnText">Volver</span></button>
         </div>
         
     )

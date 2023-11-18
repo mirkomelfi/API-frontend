@@ -73,13 +73,13 @@ export const ReclamoListContainer = ({greeting}) =>{
 
     return (
       <>
-      <Link to={`/filtrarReclamos`}>Filtrar segun estado</Link>
+      <button class="button btnPrimary" onClick={()=>navigateTo(`/filtrarReclamos`)}><span class="btnText">Filtrar segun estado</span></button>
       <h1 className="greeting">{greeting}</h1>
       {!mensaje?(
       <div>
         {loading ? <p>cargando...</p> : <ReclamoList listaReclamos={listaReclamos}/>}
       </div>):<Mensaje msj={mensaje}/>}
-      <Link to={`/`}>Volver</Link>
+      <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
     </>
     );
   }

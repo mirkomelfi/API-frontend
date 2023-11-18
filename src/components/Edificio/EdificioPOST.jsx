@@ -26,7 +26,7 @@ export const EdificioPost = () => {
 
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const direccion = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-
+        console.log(direccion)
         const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios`, {
             method: "POST",
             headers: {
@@ -47,7 +47,9 @@ export const EdificioPost = () => {
           }
         }else{
         const data = await response.json()
+       
         if (data.msj){
+          
           setMensaje(data.msj)
         }
         }
@@ -89,7 +91,8 @@ export const EdificioPost = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/edificios`}>Volver</Link>
+         <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
+
         </div>
         
     )

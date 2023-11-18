@@ -71,13 +71,14 @@ const AreaUser =()=>{
                 <h2>Nombre: {area.nombre}</h2>
                 <h2>piso {area.piso}</h2>
                 <h2>numero {area.descripcion}</h2>
-                <button onClick={()=>generarReclamo()} className="btn btn-primary">Generar reclamo</button>
+                <button onClick={()=>generarReclamo()} className="btn btn-primary"><span class="btnText">Generar reclamo</span></button>
                 
             </div>)
             :
             (<ReclamoPost isUnit={false} />)
         }
-            <Link to={`/usuario/areas`}>Volver</Link>
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/areas`)}><span class="btnText">Volver</span></button>
+
         </>
     )
 }

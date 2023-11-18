@@ -97,7 +97,13 @@ export const UsuarioPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        {dni?<Link to={`/usuarios`}>Volver</Link>:<Link to={`/`}>Volver</Link>}
+        {dni?
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios`)}><span class="btnText">Volver</span></button>
+        
+        :
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
+       
+        }
         </div>
         
     )

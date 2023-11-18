@@ -63,9 +63,9 @@ const UsuarioListContainer = ({greeting}) =>{
           ?
           <>
           <h1 className="greeting">{greeting}</h1>
-          <Link to="/register">Register</Link>
+          <button class="button btnPrimary" onClick={()=>navigateTo(`/register`)}><span class="btnText">Register</span></button>
           {loading ? <p>Cargando...</p> : <UsuarioList pid={id} listaUsuarios={listaUsuarios}/>}
-          <Link to={`/`}>Volver</Link>
+          <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
           </>
           : <Mensaje msj={mensaje}/>
         }

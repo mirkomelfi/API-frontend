@@ -110,8 +110,8 @@ useEffect(() => {
                 <h2>Estado: {reclamo.estado}</h2>
                 <h2>Medidas: </h2>
                 {medidas?(reclamo.medidas.map(medida => <h2>{medida}</h2>)):<h2>Aun no hay medidas tomadas</h2>}
-                <Link to={`/updateReclamo/${id}`}>Modificar</Link>
-                <Link to={`/verImagenes/${id}`}>Ver imagenes</Link>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/verImagenes/${id}`)}><span class="btnText">Ver imagenes</span></button>
                 <button onClick={()=>cambiarEstado()} className="btn btn-primary">Cambiar estado</button>
                 <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
                 
@@ -119,7 +119,7 @@ useEffect(() => {
             
             :(<Mensaje msj={mensaje} />)
             }
-            <Link to={`/reclamos`}>Volver</Link>
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos`)}><span class="btnText">Volver</span></button>
         </>
     )
 }

@@ -91,7 +91,9 @@ export const Register = () => {
                 </form>
 
             </div>
-        </>):<><Mensaje msj={mensaje} /><Link to="/"><button>Ir a comprar</button></Link></>
+        </>):<><Mensaje msj={mensaje} />
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios`)}><span class="btnText">Volver</span></button>
+        </>
         }
         </div>
     )

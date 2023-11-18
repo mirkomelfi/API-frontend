@@ -120,15 +120,15 @@ const Unidad =()=>{
                     <h3>apellido: {unidad.inquilino.apellido}</h3>
                 </>
                 } 
-                <Link to={`/updateUnidad/${id}`}>Modificar</Link>
-                <button onClick={()=>cambiarPropietario()} className="btn btn-primary">Cambiar propietario</button>
-                <button onClick={()=>cambiarInquilino()} className="btn btn-primary">Cambiar inquilino</button>
-                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUnidad/${id}`)}><span class="btnText">Modificar</span></button>
+                <button onClick={()=>cambiarPropietario()} className="btn btn-primary"><span class="btnText">Cambiar propietario</span></button>
+                <button onClick={()=>cambiarInquilino()} className="btn btn-primary"><span class="btnText">Cambiar inquilino</span></button>
+                <button onClick={()=>eliminar()} className="btn btn-primary"><span class="btnText">Eliminar</span></button>
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>:<UnidadResponsable responsable={updateResponsable} />}
-            <Link to={`/edificios/${unidad.idEdificio}/unidades`}>Volver</Link>
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${unidad.idEdificio}/unidades`)}><span class="btnText">Volver</span></button>
         </>
     )
 }

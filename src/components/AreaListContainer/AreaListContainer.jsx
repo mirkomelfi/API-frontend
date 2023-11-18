@@ -77,14 +77,16 @@ const AreaListContainer = ({greeting}) =>{
           !add ?
           (<>
             <h1 className="greeting">{greeting}</h1>
-            <button onClick={()=>agregar()} className="btn btn-primary">Agregar Area comun</button>
+            <button onClick={()=>agregar()} className="btn btn-primary"><span class="btnText">Agregar Area comun</span></button>
             <AreaList pid={id} listaAreas={listaAreas}/>
           </>)
           :
           (<AreaPost/>)
           : <Mensaje msj={mensaje} />
           }
-           <Link to={`/edificios`}>Volver</Link>
+          
+          <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
+          
 
         </>
     );

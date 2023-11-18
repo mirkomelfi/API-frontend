@@ -95,13 +95,15 @@ useEffect(() => {
                 <h2>Nombre: {area.nombre}</h2>
                 <h2>Piso: {area.piso}</h2>
                 <h2>Descripcion: {area.descripcion}</h2>
-                <Link to={`/updateArea/${id}`}>Modificar</Link>
-                <button onClick={()=>eliminar()} className="btn btn-primary">Eliminar</button>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateArea/${id}`)}><span class="btnText">Modificar</span></button>
+                
+                <button onClick={()=>eliminar()} className="btn btn-primary"><span class="btnText">Eliminar</span></button>
                 </>
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>
-            <Link to={`/edificios/${area.idEdificio}/areas`}>Volver</Link>
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
+
         </>
     )
 }

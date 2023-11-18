@@ -5,11 +5,11 @@ import { validateRol,isRolUser,getToken,deleteToken } from "../../utils/auth-uti
 import { useState,useEffect } from "react";
 
 export const Home = () =>{
-  const [rolUser,setRolUser]=useState(true)
+  const [rolUser,setRolUser]=useState(undefined)
   const navigate=useNavigate()
 
 const ejecutarFetch = async () =>{
-  let url=`${process.env.REACT_APP_DOMINIO_BACK}/profile`
+  let url=`${process.env.REACT_APP_DOMINIO_BACK}/miPerfil`
   const response= await  fetch(url, {
     method: "GET",
     headers: {
@@ -19,9 +19,11 @@ const ejecutarFetch = async () =>{
   })
 
   const rol=validateRol(response)
+  console.log(rol)
   if (!rol){
     navigate("/login")
   }else{
+    console.log(isRolUser(getToken()))
     setRolUser(isRolUser(getToken()))
   }
 
@@ -30,27 +32,32 @@ const navigateTo=(url)=>{
   navigate(url)
 }
   useEffect(()=>{
+    console.log(getToken())
     ejecutarFetch()
     .catch(error => console.error(error))
   },[])
     return (
-      <>
-      {!rolUser??
+      <div className="home">
+      {!rolUser?
          <>
+        <button class="button button-home  btnPrimary" onClick={()=>navigateTo(`reclamos`)}><span class="btnText">Reclamos</span></button>
+        <button class="button button-home  btnPrimary" onClick={()=>navigateTo(`edificios`)}><span class="btnText">Edificios</span></button>
+        <button class="button button-home btnPrimary" onClick={()=>navigateTo(`usuarios`)}><span class="btnText">Usuarios</span></button>
+        <button class="button button-home btnPrimary" onClick={()=>navigateTo(`usuario/current`)}><span class="btnText">Mi perfil</span></button>
+
+        </>
+        : 
+
+        <>
+        <button class="button button-home btnPrimary" onClick={()=>navigateTo(`usuario/reclamos`)}><span class="btnText">Mis Reclamos</span></button>
+        <button class="button button-home btnPrimary" onClick={()=>navigateTo(`usuario/unidades`)}><span class="btnText">Mis unidades</span></button>
+        <button class="button button-home btnPrimary" onClick={()=>navigateTo(`usuario/areas`)}><span class="btnText">Mis areas</span></button>
+        <button class="button button-home btnPrimary" onClick={()=>navigateTo(`usuario/current`)}><span class="btnText">Mi perfil</span></button>
+
+        </>
+      }
+       </div> 
         
-        <Link to={`reclamos`}>Reclamos</Link> 
-        <Link to={`edificios`}>Edificios</Link> 
-        <Link to={`usuarios`}>Usuarios</Link>
-        <Link to={`usuario/current`}>Mi perfil</Link> 
-       
-: <Link to={`usuario/current`}>Mi perfil</Link> 
-<Link to={`usuario/unidades`}>Mis unidades</Link> 
-<Link to={`usuario/areas`}>Mis areas</Link> 
-<Link to={`usuario/reclamos`}>Mis reclamos</Link> </>
-        }
-        
-        
-      </>
     );
   }
   

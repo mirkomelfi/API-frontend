@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { useState,useEffect } from "react"
-import { Navigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { Link } from "react-router-dom"
 import { deleteToken, getToken, setToken } from "../../utils/auth-utils"
@@ -9,6 +9,11 @@ export const Login = () => {
     const[ loggeado,setLoggeado]=useState(false)
     const[ error,setError]=useState(false)
     const [mensaje,setMensaje]=useState(null)
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
+
     const datForm = useRef()
 
     const consultarLoggeo=async()=>{
@@ -61,6 +66,7 @@ export const Login = () => {
             if(response.status == 200) {
                 setError(false)
                 setLoggeado(true)
+                navigate("/")
                 setToken(data.token)
      
             } else {
@@ -96,11 +102,13 @@ export const Login = () => {
                         <input type="password" className="form-control" name="password" />
                     </div>
 
-                    {!loggeado&&<button type="submit" className="btn btn-primary" >Iniciar Sesion</button>}
+                    {!loggeado&&<button type="submit" className="btn btn-primary" ><span class="btnText">niciar Sesion</span></button>}
                 </form>
-                {loggeado&&<button onClick={()=>desloggear()} className="btn btn-primary">Cerrar Sesion</button>}
-                {loggeado&&<Link to="/"><button>Volver a Inicio</button></Link>}
-                {/*!loggeado&&<Link to="/password"><button>Olvide Mi contraseña</button></Link>*/}
+                {loggeado&&<button onClick={()=>desloggear()} className="btn btn-primary"><span class="btnText">Cerrar Sesion</span></button>}
+                {loggeado&&
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver a Inicio</span></button>
+                }
+               
             </div>
         </>):<Mensaje msj={mensaje} />
         }

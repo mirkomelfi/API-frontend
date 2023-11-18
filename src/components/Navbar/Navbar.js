@@ -8,7 +8,6 @@ import { CartWidget } from "../CartWidget/CartWidget";
 const Navbar = () =>{
     return (
         <header>
-            
             <Link to="/"><h1>Sistema de Reclamos</h1></Link>
             <Link to="/login">Login</Link>
             

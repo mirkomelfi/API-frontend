@@ -85,7 +85,7 @@ export const UnidadPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/edificios`}>Volver</Link>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
         </div>
         
     )

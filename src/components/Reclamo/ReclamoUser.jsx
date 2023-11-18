@@ -71,13 +71,13 @@ const ReclamoUser =()=>{
                 <h2>Se inicio: {reclamo.fechaDeInicio}</h2>
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
-                <Link to={`/addImage/${id}`}>Agregar imagen</Link>
-                <Link to={`/verImagenes/${id}`}>Ver imagenes</Link>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/addImage/${id}`)}><span class="btnText">Agregar imagen</span></button>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/verImagenes/${id}`)}><span class="btnText">Ver imagenes</span></button>
             </div>)
             :
             (<Mensaje msj={mensaje} />)
         }
-            <Link to={`/usuario/reclamos`}>Volver</Link>
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/reclamos`)}><span class="btnText">Volver</span></button>
         </>
     )
 }

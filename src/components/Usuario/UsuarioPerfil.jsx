@@ -58,9 +58,9 @@ const UsuarioPerfil =()=>{
                 <h2>Nombre de usuario: {usuario.username}</h2>
                 <h2>Nombre: {usuario.nombre}</h2>
                 <h2>Apellido: {usuario.apellido}</h2>
-                <Link to={`/updateUsuario`}>Modificar</Link>
+                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUsuario`)}><span class="btnText">Modificar</span></button>
             </div>):(<Mensaje msj={mensaje} />)}
-            <Link to={`/home`}>Volver</Link>
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
         </>
     )
 }

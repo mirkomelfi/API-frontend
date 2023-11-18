@@ -1,9 +1,13 @@
 import "./UnidadDetail.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const UnidadDetail =({unidad})=>{
     console.log(unidad)
-    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
+
     return(
         <>
             <div className="tarjetaProducto">
@@ -11,8 +15,7 @@ const UnidadDetail =({unidad})=>{
                 <h2>Nombre: {unidad.nombre}</h2>
                 <h2>Piso: {unidad.piso}</h2>
                 <h2>Num: {unidad.numero}</h2>
-                
-                <Link to={`${unidad.id}`}>Ver unidad</Link>  
+                <button class="button btnPrimary" onClick={()=>navigateTo(`${unidad.id}`)}><span class="btnText">Ver unidad</span></button> 
 
             </div>
         </>

@@ -73,13 +73,13 @@ const UnidadUser =()=>{
                 <h2>piso {unidad.piso}</h2>
                 <h2>numero {unidad.numero}</h2>
                 <h2>estado {unidad.estado}</h2>
-                <button onClick={()=>generarReclamo()} className="btn btn-primary">Generar reclamo</button>
+                <button onClick={()=>generarReclamo()} className="btn btn-primary"><span class="btnText">Generar reclamo</span></button>
                 
             </div>)
             :
             (<ReclamoPost isUnit={true} />)
         }
-            <Link to={`/usuario/unidades`}>Volver</Link>
+         <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/unidades`)}><span class="btnText">Volver</span></button>
         </>
     )
 }

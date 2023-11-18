@@ -87,7 +87,7 @@ const ImagenPost = () =>{
                 ):    <Mensaje msj={mensaje} />
                     
         }
-         <Link to={`/reclamos`}>Volver</Link>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos`)}><span class="btnText">Volver</span></button>
         </div>
         
     )
