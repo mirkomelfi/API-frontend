@@ -99,7 +99,9 @@ const Imagen =()=>{
             
             :<Mensaje msj={mensaje} />
             }
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos`)}><span class="btnText">Volver</span></button>
+            {rol?<button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/reclamos/${id}`)}><span class="btnText">Volver</span></button>
+            :<button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos`)}><span class="btnText">Volver</span></button>
+            }
            
         </>
     )

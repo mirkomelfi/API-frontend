@@ -56,6 +56,7 @@ const ImagenPost = () =>{
         }else{
             const data = await response.json()
             setRol(isRolUser(getToken()))
+            console.log(rol)
             if(data.msj){
                 setMensaje(data.msj)
             }
@@ -65,6 +66,10 @@ const ImagenPost = () =>{
             
         }
         
+        useEffect(()=>{
+            setRol(isRolUser(getToken()))
+        },[])
+
 
     return (
 
@@ -87,7 +92,9 @@ const ImagenPost = () =>{
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos`)}><span class="btnText">Volver</span></button>
+        {rol?<button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/reclamos/${id}`)}><span class="btnText">Volver</span></button>
+            :<button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos`)}><span class="btnText">Volver</span></button>
+            }
         </div>
         
     )

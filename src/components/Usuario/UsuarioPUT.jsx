@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { validateRol,isRolUser,deleteToken,getToken } from "../../utils/auth-utils";
 
-export const UsuarioPut = () => {
+export const UsuarioPut = ({fromPerfil}) => {
 
     const {dni}= useParams();
 
@@ -54,9 +54,16 @@ export const UsuarioPut = () => {
               }
             }else{
             const data = await response.json()
-            if (data.msj){
-              setMensaje(data.msj)
-            }
+            if (fromPerfil){
+                if (cliente.username!=null){
+                    console.log("username",cliente.username)
+                    alert("Se modificó el username. Debe volver a iniciar sesion")
+                    deleteToken()
+                    navigate("/login")
+                }}
+                if (data.msj){
+                    setMensaje(data.msj)
+                }
             }
                 
             e.target.reset() //Reset form

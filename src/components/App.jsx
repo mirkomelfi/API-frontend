@@ -58,7 +58,7 @@ export const App = () => {
           <Route path="/updateArea/:id" element={<AreaPut />}/>
           <Route path="/updateUnidad/:id" element={<UnidadPut />}/>
           <Route path="/usuario/current" element={<Usuario />}/> 
-          <Route path="/updateUsuario" element={<UsuarioPut />}/>
+          <Route path="/updateUsuario" element={<UsuarioPut  fromPerfil={true}  />}/>
           <Route path="/usuario/unidades" element={<UserUnidadListContainer/>}/>
           <Route path="/usuario/unidades/:id" element={<UnidadUser />}/> 
           <Route path="/usuario/areas" element={<UserAreaListContainer/>}/>
