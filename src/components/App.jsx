@@ -4,9 +4,6 @@ import Navbar from './Navbar/Navbar';
 import { Register } from './Register/Register';
 import { Login } from './Login/Login';
 import {EdificioListContainer} from './EdificioListContainer/EdificioListContainer';
-import { CreacionUser } from './CreacionUser/CreacionUser';
-import { UserPassword } from './UserPassword/UserPassword';
-import { ChangePass } from './UserPassword/ChangePass';
 import UnidadListContainer from './UnidadListContainer/UnidadListContainer';
 import { Home } from './Home/Home';
 import { Unidad } from './Unidad/Unidad';
@@ -65,9 +62,6 @@ export const App = () => {
           <Route path="/usuario/areas/:id" element={<AreaUser />}/> 
           <Route path="/usuario/reclamos" element={<UserReclamoListContainer/>}/>
           <Route path="/usuario/reclamos/:id" element={<ReclamoUser />}/> 
-          <Route path="/admin" element={<CreacionUser />}/> 
-          <Route path="/password"element={<UserPassword />}/> 
-          <Route path="/newpassword"element={<ChangePass />}/> 
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
         

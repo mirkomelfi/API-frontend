@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+import {useNavigate} from "react-router-dom";
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 const Imagen =()=>{
     const {id}= useParams();
@@ -12,6 +14,11 @@ const Imagen =()=>{
     const [mensaje,setMensaje]=useState(null)
     const [bytes,setBytes]=useState(null)
     let [num,setNum]=useState(1)
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
 
     const siguienteImg=()=>{
       setNum(num+1)
@@ -27,18 +34,25 @@ const Imagen =()=>{
             "Authorization": `Bearer ${getToken()}`
         }
     })
-    const data = await response.json()
-    console.log(data)
-    setMensaje(data.msj)
+    const rol=validateRol(response)
+        if (!rol){
+            deleteToken()
+            navigate("/login")
+            
+        }else{
+            const data = await response.json()
+            setRol(isRolUser(getToken()))
+            if(data.msj){
+                setMensaje(data.msj)
+            }
+        }
+
+  }
 
 
-
-}
-
-    useEffect(() => { 
-      
-      console.log("entre al usefec, img 1")
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}/imagenes/${num}`, {
+  const ejecutarFetch=async () =>{ 
+    
+      const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}/imagenes/${num}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,24 +60,31 @@ const Imagen =()=>{
         }
         
       })
-        .then(response => response.json())
-        .then(data => {
-          if (data.msj){
-            
-            setMensaje(data.msj)
-            }else{
-              
+      
+      const rol=validateRol(response)
+      if (!rol){
+          deleteToken()
+          navigate("/login")
+          
+      }else{
+          const data = await response.json()
+          setRol(isRolUser(getToken()))
+          if(data.msj){
+              setMensaje(data.msj)
+          }else{
             setBytes(data.datosImagen)
-            }
-       
-        })
-        
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
+          }
+      }
+    }
 
+    useEffect(() => { 
+    ejecutarFetch()
+    .catch(error => console.error(error))
+    .finally(()=>{
+      setLoading(false)
+    })
     },[num])
+
     return( 
         <>
             {!mensaje? <>

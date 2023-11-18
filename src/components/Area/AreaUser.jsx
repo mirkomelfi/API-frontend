@@ -5,6 +5,8 @@ import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { ReclamoPost } from "../Reclamo/ReclamoPOST";
+import {useNavigate} from "react-router-dom";
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 const AreaUser =()=>{
     const {id}= useParams();
@@ -14,31 +16,52 @@ const AreaUser =()=>{
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
     const [add,setAdd]=useState(null)
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
 
      const generarReclamo= ()=>{
         setAdd(true)
     }
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-        }
+    const ejecutarFetch=async () =>{ 
+    
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+            }
+            
+          })
         
-      })
-        .then(response => response.json())
-        .then(data => {
-          setArea(data)
-          console.log(area)
+        const rol=validateRol(response)
+        if (!rol){
+            deleteToken()
+            navigate("/login")
+            
+        }else{
+            const data = await response.json()
+            setRol(isRolUser(getToken()))
+            if(data.msj){
+                setMensaje(data.msj)
+            }else{
+                setArea(data)
+            }
+        }
+    }
 
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
+    useEffect(() => { 
+      ejecutarFetch()
+      .catch(error => console.error(error))
+      .finally(()=>{
+        setLoading(false)
+      })
     },[])
+
+    
     return(
         <>
         {!add?

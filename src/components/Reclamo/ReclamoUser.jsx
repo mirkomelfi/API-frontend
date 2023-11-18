@@ -1,10 +1,12 @@
 import "./Reclamo.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { ReclamoPost } from "./ReclamoPOST";
+
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 const ReclamoUser =()=>{
     const {id}= useParams();
@@ -13,33 +15,48 @@ const ReclamoUser =()=>{
     console.log(reclamo)
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
 
-
-
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-        }
+    const ejecutarFetch=async () =>{ 
+    
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/reclamos/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+            }
+            
+          })
         
-      })
-        .then(response => response.json())
-        .then(data => {
-            if (data.msj){
+        const rol=validateRol(response)
+        if (!rol){
+            deleteToken()
+            navigate("/login")
+            
+        }else{
+            const data = await response.json()
+            setRol(isRolUser(getToken()))
+            if(data.msj){
                 setMensaje(data.msj)
             }else{
                 setReclamo(data)
             }
-          console.log(reclamo)
+        }
+    }
 
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
+    useEffect(() => { 
+      ejecutarFetch()
+      .catch(error => console.error(error))
+      .finally(()=>{
+        setLoading(false)
+      })
     },[])
+
+
     return(
         <>
         {!mensaje?

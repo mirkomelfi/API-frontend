@@ -1,11 +1,19 @@
 import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+
+import { validateRol,isRolUser,deleteToken,getToken } from "../../utils/auth-utils";
 
 export const Register = () => {
 
     const [mensaje,setMensaje]=useState(null)
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
+
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
     const consultarForm = async(e) => {
@@ -25,23 +33,27 @@ export const Register = () => {
             const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/register`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(cliente)
             })
 
-            const data = await response.json()
-
-                if(response.status == 200) {
-                    setMensaje("Cuenta creada. Fuiste loggeado automaticamente")
-        
-                } else {
-
-                    if (response.status==401){
-                        setMensaje(data.message)
-                    }
-
+            const rol=validateRol(response)
+            if (!rol){
+                if (isRolUser(getToken())){
+                console.log("rol user")
+                    setMensaje("No posee los permisos necesarios")
+                }else{
+                deleteToken()
+                navigate("/login")
                 }
+            }else{
+            const data = await response.json()
+            if (data.msj){
+                setMensaje(data.msj)
+            }
+            }
                 
                 
             e.target.reset() //Reset form

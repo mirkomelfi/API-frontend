@@ -4,12 +4,20 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
+import {useNavigate} from "react-router-dom";
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 export const EdificioPut = () => {
 
     const {id}= useParams();
 
     const [mensaje,setMensaje]=useState(null)
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
+
     const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
     const consultarForm = async(e) => {
@@ -34,8 +42,21 @@ export const EdificioPut = () => {
                 body: JSON.stringify(edificio)
             })
 
-            const data = await response.json()
-            setMensaje(data.msj)
+            const rol=validateRol(response)
+      if (!rol){
+        if (isRolUser(getToken())){
+          console.log("rol user")
+            setMensaje("No posee los permisos necesarios")
+        }else{
+          deleteToken()
+          navigate("/login")
+        }
+      }else{
+      const data = await response.json()
+      if (data.msj){
+        setMensaje(data.msj)
+      }
+      }
                 
             e.target.reset() //Reset form
                 

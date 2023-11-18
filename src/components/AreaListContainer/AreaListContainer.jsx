@@ -6,20 +6,32 @@ import { getToken } from "../../utils/auth-utils";
 import { AreaPost } from "../Area/AreaPOST";
 
 
+import {useNavigate} from "react-router-dom";
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { Mensaje } from "../Mensaje/Mensaje";
+
 const AreaListContainer = ({greeting}) =>{
 
     const {id}= useParams();
-
+    const [mensaje,setMensaje]=useState(null)
     const [listaAreas,setListaAreas]= useState([]);
     const [loading,setLoading]= useState(true);
     const [add,setAdd]= useState(false);
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
+
 
     const agregar= () =>{ 
       setAdd(true)
     }
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
+
+    const ejecutarFetch=async () =>{ 
+    
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -27,17 +39,33 @@ const AreaListContainer = ({greeting}) =>{
         }
         
       })
-        .then(response => response.json())
-        .then(data => {
-          const areas= data.areasComunes
-          setListaAreas(areas)
+      
+      const rol=validateRol(response)
+      if (!rol){
+          deleteToken()
+          navigate("/login")
+          
+      }else{
+          const data = await response.json()
+          setRol(isRolUser(getToken()))
+          if(data.msj){
+              setMensaje(data.msj)
+          }else{
+            const areas= data.areasComunes
+            setListaAreas(areas)
+          }
+      }
+  }
 
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
-    },[])
+  useEffect(() => { 
+    ejecutarFetch()
+    .catch(error => console.error(error))
+    .finally(()=>{
+      setLoading(false)
+    })
+  },[])
+
+
 
     return (
         <>
@@ -45,6 +73,7 @@ const AreaListContainer = ({greeting}) =>{
           ? 
           <p>Cargando...</p> 
           : 
+          !mensaje?
           !add ?
           (<>
             <h1 className="greeting">{greeting}</h1>
@@ -52,7 +81,9 @@ const AreaListContainer = ({greeting}) =>{
             <AreaList pid={id} listaAreas={listaAreas}/>
           </>)
           :
-          (<AreaPost/>)}
+          (<AreaPost/>)
+          : <Mensaje msj={mensaje} />
+          }
            <Link to={`/edificios`}>Volver</Link>
 
         </>

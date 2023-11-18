@@ -63,6 +63,7 @@ const UsuarioListContainer = ({greeting}) =>{
           ?
           <>
           <h1 className="greeting">{greeting}</h1>
+          <Link to="/register">Register</Link>
           {loading ? <p>Cargando...</p> : <UsuarioList pid={id} listaUsuarios={listaUsuarios}/>}
           <Link to={`/`}>Volver</Link>
           </>

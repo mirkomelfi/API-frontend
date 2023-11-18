@@ -1,11 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { UnidadList } from "../UnidadList/UnidadList";
 import { Link } from "react-router-dom";
 import { getToken } from "../../utils/auth-utils";
 import { UnidadPost } from "../Unidad/UnidadPOST";
 import { Mensaje } from "../Mensaje/Mensaje";
+
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 
 const UnidadListContainer = ({greeting}) =>{
@@ -16,14 +18,19 @@ const UnidadListContainer = ({greeting}) =>{
     const [loading,setLoading]= useState(true);
     const [add,setAdd]= useState(false);
     const [mensaje,setMensaje]= useState(null);
-
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
 
     const agregar= () =>{ 
       setAdd(true)
     }
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
+    const ejecutarFetch=async () =>{ 
+    
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/edificios/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -31,25 +38,32 @@ const UnidadListContainer = ({greeting}) =>{
         }
         
       })
-        .then(response => response.json())
-        .then(data => {
-
-          if (data.msj){
-            console.log("data",data)
-            setMensaje(data.msj)
+      
+      const rol=validateRol(response)
+      if (!rol){
+          deleteToken()
+          navigate("/login")
+          
+      }else{
+          const data = await response.json()
+          setRol(isRolUser(getToken()))
+          if(data.msj){
+              setMensaje(data.msj)
           }else{
-            
-          const unidades= data.unidades
-          setListaUnidades(unidades)
+            setListaUnidades(data)
           }
+      }
+  }
 
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-          setAdd(false)
-        })
-    },[])
+  useEffect(() => { 
+    ejecutarFetch()
+    .catch(error => console.error(error))
+    .finally(()=>{
+      setLoading(false)
+    })
+  },[])
+
+  
 
     return (
         <> 

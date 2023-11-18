@@ -3,10 +3,17 @@ import {Link} from "react-router-dom";
 import { useState } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+import {useNavigate} from "react-router-dom";
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 const Edificio =({edificio})=>{
     console.log(edificio)
     const [mensaje,setMensaje]=useState(null)
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
 
     const modificar=async()=>{
 
@@ -20,10 +27,21 @@ const Edificio =({edificio})=>{
                 "Authorization": `Bearer ${getToken()}`
             }
         })
+        const rol=validateRol(response)
+        if (!rol){
+          if (isRolUser(getToken())){
+            console.log("rol user")
+              setMensaje("No posee los permisos necesarios")
+          }else{
+            deleteToken()
+            navigate("/login")
+          }
+        }else{
         const data = await response.json()
-        console.log(data)
-
-        setMensaje(data.msj)
+        if (data.msj){
+          setMensaje(data.msj)
+        }
+        }
         return;
     }
 

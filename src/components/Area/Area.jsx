@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+import {useNavigate} from "react-router-dom";
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 const Area =()=>{
     const {id}= useParams();
@@ -12,6 +14,11 @@ const Area =()=>{
     console.log(area)
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
+    const [rol,setRol]=useState(undefined);    
+    const navigate=useNavigate()
+    const navigateTo=(url)=>{
+        navigate(url)
+    }
 
     const modificar=async()=>{
 
@@ -25,36 +32,61 @@ const Area =()=>{
               "Authorization": `Bearer ${getToken()}`
           }
       })
+      const rol=validateRol(response)
+      if (!rol){
+        if (isRolUser(getToken())){
+          console.log("rol user")
+            setMensaje("No posee los permisos necesarios")
+        }else{
+          deleteToken()
+          navigate("/login")
+        }
+      }else{
       const data = await response.json()
-      console.log(data)
-      if (response.status==200){
+      if (data.msj){
         setMensaje(data.msj)
-        return;
+      }
       }
 
   }
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-            
-        }
-        
-      })
-        .then(response => response.json())
-        .then(data => {
-          setArea(data)
-          console.log(area)
 
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
-    },[])
+  const ejecutarFetch=async () =>{ 
+    
+    const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${getToken()}`
+          
+      }
+      
+    })
+    
+    const rol=validateRol(response)
+    if (!rol){
+        deleteToken()
+        navigate("/login")
+        
+    }else{
+        const data = await response.json()
+        setRol(isRolUser(getToken()))
+        if(data.msj){
+            setMensaje(data.msj)
+        }else{
+          setArea(data)
+        }
+    }
+}
+
+useEffect(() => { 
+  ejecutarFetch()
+  .catch(error => console.error(error))
+  .finally(()=>{
+    setLoading(false)
+  })
+},[])
+
     return(
         <>
             <div className="tarjetaProducto">
