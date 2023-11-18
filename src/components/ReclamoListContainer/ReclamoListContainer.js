@@ -5,7 +5,7 @@ import {ReclamoList} from "../ReclamoList/ReclamoList"
 import { Link } from "react-router-dom";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
-
+import { useParams } from "react-router-dom";
 
 export const ReclamoListContainer = ({greeting}) =>{
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { UsuarioList } from "../UsuarioList/UsuarioList";
 import { Link } from "react-router-dom";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
-
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 const UsuarioListContainer = ({greeting}) =>{
 
@@ -14,9 +14,11 @@ const UsuarioListContainer = ({greeting}) =>{
     const [listaUsuarios,setListaUsuarios]= useState([]);
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]= useState(null);
+    const navigate= useNavigate()
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios`, {
+    const ejecutarFetch = async() =>{
+
+      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -24,21 +26,37 @@ const UsuarioListContainer = ({greeting}) =>{
         }
         
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          if (data.msj){
-            setMensaje(data.msj)
-          }else{
-            setListaUsuarios(data)
-          }
-
-        })
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
+      const rol=validateRol(response)
+      if (!rol){
+        if (isRolUser(getToken())){
+          console.log("rol user")
+            setMensaje("No posee los permisos necesarios")
+        }else{
+          deleteToken()
+          navigate("/login")
+        }
+      }else{
+      const data = await response.json()
+      if (data.msj){
+        setMensaje(data.msj)
+      }else{
+        setListaUsuarios(data)
+      }
+      }
+    }
+  
+    const navigateTo=(url)=>{
+      navigate(url)
+    }
+  
+    useEffect(() => { 
+      ejecutarFetch()
+      .catch(error => console.error(error))
+      .finally(()=>{
+        setLoading(false)
+      })
     },[])
+
 
     return (
         <>{!mensaje

@@ -13,29 +13,43 @@ const UsuarioPerfil =()=>{
 
     const [mensaje,setMensaje]=useState(null)
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/miperfil`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-        }
+    const ejecutarFetch=async () =>{ 
+    
+        const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/miperfil`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`
+            }
+            
+          })
         
-      })
-        .then(response => response.json())
-        .then(data => {
-            if (data.msj){
+        const rol=validateRol(response)
+        if (!rol){
+            deleteToken()
+            navigate("/login",{state:{from:actualLocation}} )
+            
+        }else{
+            const data = await response.json()
+            setRol(isRolUser(getToken()))
+            if(data.msj){
                 setMensaje(data.msj)
             }else{
                 setUsuario(data)
             }
+        }
+    }
 
-        })
+    useEffect(() => { 
+        ejecutarFetch()
         .catch(error => console.error(error))
         .finally(()=>{
           setLoading(false)
         })
-    },[])
+      },[])
+
+
+
     return(
         <>
             <h1>Mi perfil</h1>

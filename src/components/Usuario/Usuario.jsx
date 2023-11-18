@@ -1,9 +1,11 @@
 import "./Usuario.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
+
+import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
 const Usuario =()=>{
     const {dni}= useParams();
@@ -11,9 +13,46 @@ const Usuario =()=>{
     const [usuario,setUsuario]= useState([]);
     console.log(usuario)
     const [loading,setLoading]= useState(true);
-
-
     const [mensaje,setMensaje]=useState(null)
+    
+    const [rol,setRol]=useState(undefined);
+
+    const navigate=useNavigate()
+
+    const ejecutarFetch=async () =>{ 
+    
+        var url=``;
+        if (dni){
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios/${dni}`
+        }else{
+            url=`${process.env.REACT_APP_DOMINIO_BACK}/miPerfil`
+        }
+
+        const response= await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        }
+        
+      })
+        
+        const rol=validateRol(response)
+        if (!rol){
+            deleteToken()
+            navigate("/login" )
+            
+        }else{
+            const data = await response.json()
+            setRol(isRolUser(getToken()))
+            if(data.msj){
+                setMensaje(data.msj)
+            }else{
+                setUsuario(data)
+            }
+        }
+    }
+
 
     const eliminar=async()=>{
         console.log(dni)
@@ -24,39 +63,37 @@ const Usuario =()=>{
                 "Authorization": `Bearer ${getToken()}`
             }
         })
-        const data = await response.json()
-        console.log(data)
-        setMensaje(data.msj)
+        const rol=validateRol(response)
+        if (!rol){
+            if (isRolUser(getToken())){
+              console.log("rol user")
+                setMensaje("No posee los permisos necesarios")
+            }else{
+                deleteToken()
+                navigate("/login")
+                
+            }
+        }else{
+            const data = await response.json()
+            if (data.msj){
+                setMensaje(data.msj)
+            }
+        }
+        return;
         
-  
     }
 
-    useEffect(() => { 
-        var url=``;
-        if (dni){
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/admin/usuarios/${dni}`
-        }else{
-            url=`${process.env.REACT_APP_DOMINIO_BACK}/miPerfil`
-        }
-        fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`
-        }
-        
-      })
-        .then(response => response.json())
-        .then(data => {
-          setUsuario(data)
-          console.log(usuario)
+    const navigateTo=(url)=>{
+        navigate(url)
+      }
 
-        })
+    useEffect(() => { 
+        ejecutarFetch()
         .catch(error => console.error(error))
         .finally(()=>{
-          setLoading(false)
         })
     },[])
+
     return(
         <>
             {!mensaje?(<div className="tarjetaProducto">
