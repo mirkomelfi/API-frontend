@@ -7,6 +7,7 @@ import { Mensaje } from "../Mensaje/Mensaje";
 import { ReclamoPost } from "./ReclamoPOST";
 
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { Medidas } from "../Medidas/Medidas";
 
 const ReclamoUser =()=>{
     const {id}= useParams();
@@ -17,6 +18,11 @@ const ReclamoUser =()=>{
     const [mensaje,setMensaje]=useState(null)
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
+    const [medidas,setMedidas]=useState(null)
+  const [vistaMedidas,setVistaMedidas]=useState(null)
+  const cambiarVistaMedidas=()=>{
+    setVistaMedidas(true)
+   }
     const navigateTo=(url)=>{
         navigate(url)
     }
@@ -44,6 +50,7 @@ const ReclamoUser =()=>{
                 setMensaje(data.msj)
             }else{
                 setReclamo(data)
+                if (data.medidas.length!=0){setMedidas(true)}
             }
         }
     }
@@ -60,20 +67,23 @@ const ReclamoUser =()=>{
     return(
         <>
         {!mensaje?
-
+            (!vistaMedidas?
             (<div className="tarjetaProducto">
                <h1>Reclamo N°{reclamo.id}</h1>
                 <h2>Id del Edificio: {reclamo.idEdificio}</h2>
-                <h2>Tipo: {reclamo.tipoReclamable}</h2>
+                <h2>Tipo de reclamable: {reclamo.tipoReclamable}</h2>
                 <h2>Id del Reclamable: {reclamo.idReclamable}</h2>
 
-                <h2>Autor del Reclamo: {reclamo.dniUsuario}</h2>
-                <h2>Se inicio: {reclamo.fechaDeInicio}</h2>
+                <h2>DNI del usuario: {reclamo.dniUsuario}</h2>
+                <h2>Fecha de inicio: {reclamo.fechaDeInicio}</h2>
                 
                 <h2>Descripcion: {reclamo.descripcion}</h2>
+                <h2>Estado: {reclamo.estado}</h2>
+                {medidas?<button onClick={()=>cambiarVistaMedidas()}  class="button btnPrimary">Ver Medidas</button>:<h2>Aun no hay medidas tomadas</h2>}
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/addImage/${id}`)}><span class="btnText">Agregar imagen</span></button>
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/verImagenes/${id}`)}><span class="btnText">Ver imagenes</span></button>
             </div>)
+             :<Medidas medidas={reclamo.medidas} />)
             :
             (<Mensaje msj={mensaje} />)
         }

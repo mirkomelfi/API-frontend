@@ -16,6 +16,22 @@ export const ReclamoEstado = () => {
     const [mensaje,setMensaje]=useState(null)
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
+
+    const options = [
+        {value: 1, text: 'Nuevo'},
+        {value: 2, text: 'Abierto'},
+        {value: 3, text: 'En proceso'},
+        {value: 4, text: 'Anulado'},
+        {value: 5, text: 'Desestimado'},
+        {value: 6, text: 'Terminado'}
+        ];
+      
+    const [estado, setEstado] = useState(options[0].value);
+    
+    const handleChange = event => {
+        setEstado(event.target.value);
+    };
+
     const navigateTo=(url)=>{
         navigate(url)
     }
@@ -29,7 +45,7 @@ export const ReclamoEstado = () => {
         const reclamo = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
         console.log(reclamo)
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}/estado/${reclamo.estado}`, {
+        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}/estado/${estado}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -64,22 +80,27 @@ export const ReclamoEstado = () => {
             {!mensaje?(
                 
                 <div className="container divForm" >
-                    <h2>Cambio en el Estado del Reclamo</h2>
-                    <form onSubmit={consultarForm} ref={datForm}>
-
-                        <div className="mb-3">
-                            <label htmlFor="estado" className="form-label">N° Estado</label>
-                            <input type="number" className="form-control" name="estado" required/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="medida" className="form-label">Medida tomada</label>
-                            <input type="text" className="form-control" name="medida" required/>
-                        </div>
-
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
-                        </form>
-
+                    <h1>Cambio en el estado del Reclamo</h1>
+                    <div>
+                        <h3>Seleccione el nuevo estado del reclamo</h3>
+                        <select value={estado} onChange={handleChange}>
+                            {options.map(option => (
+                            <option key={option.value} value={option.value}>
+                                {option.text}
+                            </option>
+                            ))}
+                        </select>
                     </div>
+                        <form onSubmit={consultarForm} ref={datForm}>
+
+                            <div className="mb-3">
+                                <label htmlFor="medida" className="form-label">Medida tomada</label>
+                                <input type="text" className="form-control" name="medida" required/>
+                            </div>
+
+                            <button type="submit" className="button btnPrimary" >Actualizar</button>
+                        </form>
+                </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }

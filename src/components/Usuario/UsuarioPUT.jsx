@@ -54,7 +54,7 @@ export const UsuarioPut = ({fromPerfil}) => {
               }
             }else{
             const data = await response.json()
-            if (fromPerfil){
+            if (fromPerfil&&isRolUser(getToken())){
                 if (cliente.username!=null){
                     console.log("username",cliente.username)
                     alert("Se modificó el username. Debe volver a iniciar sesion")
@@ -89,11 +89,11 @@ export const UsuarioPut = ({fromPerfil}) => {
                             <input type="text" className="form-control" name="apellido" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="username" className="form-label">Nombre de Usuario</label>
+                            <label htmlFor="username" className="form-label">Username</label>
                             <input type="text" className="form-control" name="username" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Contraseña</label>
+                            <label htmlFor="password" className="form-label">Password</label>
                             <input type="password" className="form-control" name="password" />
                         </div>
 

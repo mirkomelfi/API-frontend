@@ -69,9 +69,9 @@ const AreaUser =()=>{
             (<div className="tarjetaProducto">
                 <h1>Area N°{area.id}</h1>
                 <h2>Nombre: {area.nombre}</h2>
-                <h2>piso {area.piso}</h2>
-                <h2>numero {area.descripcion}</h2>
-                <button onClick={()=>generarReclamo()} className="btn btn-primary"><span class="btnText">Generar reclamo</span></button>
+                <h2>Piso: {area.piso}</h2>
+                <h2>Descripcion: {area.descripcion}</h2>
+                <button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
                 
             </div>)
             :

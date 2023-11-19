@@ -14,15 +14,37 @@ const UserReclamoListContainer = ({greeting}) =>{
     const [listaReclamos,setListaReclamos]= useState([]);
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]= useState(null);
-    const [rol,setRol]=useState(undefined);    
+    const [rol,setRol]=useState(undefined);   
+    let url=""; 
     const navigate=useNavigate()
+
     const navigateTo=(url)=>{
         navigate(url)
     }
 
-    const ejecutarFetch=async () =>{ 
+    const options = [
+      {value: 0, text: 'Mostrar todos'},
+      {value: 1, text: 'Nuevo'},
+      {value: 2, text: 'Abierto'},
+      {value: 3, text: 'En proceso'},
+      {value: 4, text: 'Anulado'},
+      {value: 5, text: 'Desestimado'},
+      {value: 6, text: 'Terminado'}
+      ];
     
-      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/misReclamos`, {
+      const [estado, setEstado] = useState(options[0].value);
+    
+      const handleChange = event => {
+        setEstado(event.target.value);
+      };
+
+    const ejecutarFetch=async () =>{ 
+      if (estado!=0){
+        url=`${process.env.REACT_APP_DOMINIO_BACK}/misReclamos/filter?estado=${estado}`
+      }else{
+        url=`${process.env.REACT_APP_DOMINIO_BACK}/misReclamos`
+      }
+      const response= await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -65,7 +87,17 @@ const UserReclamoListContainer = ({greeting}) =>{
           : (!mensaje?
          (
           <>
+            
             <h1 className="greeting">{greeting}</h1>
+            <div>
+                  <select value={estado} onChange={handleChange}>
+                      {options.map(option => (
+                      <option key={option.value} value={option.value}>
+                          {option.text}
+                      </option>
+                      ))}
+                  </select>
+            </div>
             <ReclamoList listaReclamos={listaReclamos}/>
           </>):<Mensaje msj={mensaje}/>)
           }
