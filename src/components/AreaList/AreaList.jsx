@@ -4,7 +4,7 @@ import { AreaDetail } from "../AreaDetail/AreaDetail";
 import { Link } from "react-router-dom";
 
 const AreaList = ({listaAreas})=>{
-    console.log(listaAreas)
+    console.log(listaAreas,"listaAreas")
     return (
         <>        
             {listaAreas&&

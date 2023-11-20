@@ -72,27 +72,21 @@ const AreaListContainer = ({greeting}) =>{
 
 
     return (
-        <>
-          {loading 
-          ? 
-          <p>Cargando...</p> 
-          : 
-          !mensaje?
-          !add ?
-          (<>
-            <h1 className="greeting">{greeting}</h1>
-            <button onClick={()=>agregar()} className="btn btn-primary"><span class="btnText">Agregar Area comun</span></button>
-            <AreaList pid={id} listaAreas={listaAreas}/>
-          </>)
-          :
-          (<AreaPost/>)
-          : <Mensaje msj={mensaje} />
-          }
-          
-          <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
-          
+      <>
+      {!add ?
+  <>
+      <h1 className="greeting">{greeting}</h1>
+      <button onClick={()=>agregar()} className="btn btn-primary"><span class="btnText">Agregar Area Comun</span></button>
+      {!mensaje?(
+      <div> 
 
-        </>
+        {loading ? <p>cargando...</p> : <AreaList pid={id} listaAreas={listaAreas} isAdmin={true}/>}
+      </div>):<Mensaje msj={mensaje}/>}
+
+      </>:
+      <AreaPost/>}
+       <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
+      </>
     );
   } 
   

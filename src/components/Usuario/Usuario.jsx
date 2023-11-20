@@ -7,7 +7,7 @@ import { Mensaje } from "../Mensaje/Mensaje";
 
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
-const Usuario =()=>{
+const Usuario =({fromPerfil})=>{
     const {dni}= useParams();
     console.log("Usuariodni",dni)
     const [usuario,setUsuario]= useState([]);
@@ -96,17 +96,22 @@ const Usuario =()=>{
 
     return(
         <>
-            {!mensaje?(<div className="tarjetaProducto">
-            <h1>DNI: {usuario.dni}</h1>
+            {!mensaje?
+            (<div className="tarjetaProducto">
+                <div>
+                <h1>DNI: {usuario.dni}</h1>
                 <h2>Username: {usuario.username}</h2>
                 <h2>Nombre: {usuario.nombre}</h2>
                 <h2>Apellido: {usuario.apellido}</h2>
+                </div>
+                <div class="button-view" >
                 {dni?
                  <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUsuario/${dni}`)}><span class="btnText">Modificar</span></button>
                 :
                 <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUsuario`)}><span class="btnText">Modificar</span></button>
                 }
                 {dni&&<button class="button btnPrimary" onClick={()=>eliminar()}><span class="btnText">Eliminar</span></button>}
+                </div>
             </div>):(<Mensaje msj={mensaje} />)}
             {dni?
              <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios`)}><span class="btnText">Volver</span></button>

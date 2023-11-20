@@ -71,22 +71,22 @@ const UnidadListContainer = ({greeting}) =>{
   
 
     return (
-        <> 
-          {loading 
-          ? 
-          <p>Cargando...</p> 
-          : 
-          !add ?
-          (!mensaje?<>
-            <h1 className="greeting">{greeting}</h1>
-            <button onClick={()=>agregar()} className="button btnPrimary"><span class="btnText">Agregar unidad</span></button>
-            <UnidadList pid={id} listaUnidades={listaUnidades} isAdmin={true}/>
-          </>:<Mensaje msj={mensaje}/>)
-          :
-          (<UnidadPost/>)}
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
 
-        </>
+      <>
+      {!add ?
+  <>
+      <h1 className="greeting">{greeting}</h1>
+      <button onClick={()=>agregar()} className="btn btn-primary"><span class="btnText">Agregar Unidad</span></button>
+      {!mensaje?(
+      <div> 
+
+        {loading ? <p>cargando...</p> : <UnidadList pid={id} listaUnidades={listaUnidades} isAdmin={true}/>}
+      </div>):<Mensaje msj={mensaje}/>}
+
+      </>:
+      <UnidadPost/>}
+       <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
+      </>
     );
   } 
   

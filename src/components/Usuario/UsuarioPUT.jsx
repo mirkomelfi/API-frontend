@@ -105,7 +105,7 @@ export const UsuarioPut = ({fromPerfil}) => {
                     
         }
         {dni?
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios`)}><span class="btnText">Volver</span></button>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios/${dni}`)}><span class="btnText">Volver</span></button>
         
         :
         <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
