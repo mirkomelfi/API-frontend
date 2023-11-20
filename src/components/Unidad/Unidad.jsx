@@ -155,6 +155,9 @@ const Unidad =({fromReclamo,fromPerfil})=>{
             !fromReclamo?
             <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${unidad.idEdificio}/unidades`)}><span class="btnText">Volver</span></button>
             :
+            rol?
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
+            :
             <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
             }
         </>

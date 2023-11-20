@@ -47,20 +47,26 @@ const Edificio =({edificio})=>{
 
     return(
         <>
+        {!mensaje?
             <div className="tarjetaProducto">
-                <h1>Edificio N°{edificio.id}</h1>
-                {!mensaje?(  <>
-                <h2>Calle: {edificio.calle}</h2>
-                <h2>Numero: {edificio.numero}</h2>
-                <h2>Ciudad: {edificio.ciudad}</h2>
-                <h2>Codigo postal: {edificio.codigoPostal}</h2>
-                <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/unidades`)}><span class="btnText">Ver unidades</span></button>
-                <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/areas`)}><span class="btnText">Ver areas</span></button>
-                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateEdificio/${edificio.id}`)}><span class="btnText">Modificar</span></button>
-                <button onClick={()=>eliminar()}  class="button btnPrimary"><span class="btnText">Eliminar</span></button></>
-                
-                ):(<Mensaje msj={mensaje} />)}
+                <div>
+                    <h1>Edificio N°{edificio.id}</h1>
+                    <h2>Calle: {edificio.calle}</h2>
+                    <h2>Numero: {edificio.numero}</h2>
+                    <h2>Ciudad: {edificio.ciudad}</h2>
+                    <h2>Codigo postal: {edificio.codigoPostal}</h2>
+                </div>
+                <div class="button-view">
+                    <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/unidades`)}><span class="btnText">Ver unidades</span></button>
+                    <button class="button btnPrimary" onClick={()=>navigateTo(`${edificio.id}/areas`)}><span class="btnText">Ver areas</span></button>
+                    <button class="button btnPrimary" onClick={()=>navigateTo(`/updateEdificio/${edificio.id}`)}><span class="btnText">Modificar</span></button>
+                    <button onClick={()=>eliminar()}  class="button btnPrimary"><span class="btnText">Eliminar</span></button>
+                </div>
+               
             </div>
+            
+            :(<Mensaje msj={mensaje} />)}
+            
         </>
     )
 }

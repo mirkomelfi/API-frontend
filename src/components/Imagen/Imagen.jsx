@@ -94,9 +94,11 @@ const Imagen =()=>{
         <>
             {!mensaje? <>
             (<div className="tarjetaProducto">
+                <div>
                 <h1>Imagen N°{num}</h1>
                 <img src={`data:image/jpeg;base64,${bytes}`} alt="" />
                 <button onClick={()=>eliminarImg()} className="button btnPrimary"><span class="btnText">Eliminar imagen</span></button>
+                </div>
             </div>
             <div class="contenedorBotones-img">
             {num!=1&&<button onClick={()=>anteriorImg()} className="button btnPrimary"><span class="btnText">Anterior imagen</span></button>}
