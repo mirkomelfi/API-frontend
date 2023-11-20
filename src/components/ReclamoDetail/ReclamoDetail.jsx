@@ -9,7 +9,7 @@ const ReclamoDetail =({reclamo})=>{
 
     return(
         <>
-            <div className="tarjetaProducto">
+            <div className="tarjetaListado">
                 <h1>Reclamo N°{reclamo.id}</h1>
                 <h2>Tipo de reclamable: {reclamo.tipoReclamable}</h2>
                 <h2>Id del Reclamable: {reclamo.idReclamable}</h2>
