@@ -7,8 +7,8 @@ import { Mensaje } from "../Mensaje/Mensaje";
 import {useNavigate} from "react-router-dom";
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
-const Area =()=>{
-    const {id}= useParams();
+const Area =({fromReclamo})=>{
+    const {idRec,id}= useParams();
 
     const [area,setArea]= useState([]);
     console.log(area)
@@ -102,8 +102,10 @@ useEffect(() => {
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
-
+            {!fromReclamo?<button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
+            :
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
+            }
         </>
     )
 }
