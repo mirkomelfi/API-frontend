@@ -133,7 +133,7 @@ const Unidad =({fromReclamo,fromPerfil})=>{
                     }
                 </div>
                 <div className="button-view">
-                    {rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
+                    {fromPerfil||rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
                     :
                     <div>
                         <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUnidad/${id}`)}><span class="btnText">Modificar</span></button>
@@ -150,7 +150,7 @@ const Unidad =({fromReclamo,fromPerfil})=>{
             :<UnidadResponsable responsable={updateResponsable} />}
 
             {
-            rol? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/unidades`)}><span class="btnText">Volver</span></button>
+            fromPerfil? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/unidades`)}><span class="btnText">Volver</span></button>
             :
             !fromReclamo?
             <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${unidad.idEdificio}/unidades`)}><span class="btnText">Volver</span></button>

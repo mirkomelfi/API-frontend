@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 import {useNavigate} from "react-router-dom";
@@ -14,6 +14,7 @@ export const AreaPut = () => {
     const [mensaje,setMensaje]=useState(null)
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
+    const {state}=useLocation();
     const navigateTo=(url)=>{
         navigate(url)
     }
@@ -89,7 +90,7 @@ export const AreaPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${state}/unidades/${id}`)}><span class="btnText">Volver</span></button>
 
         </div>
         

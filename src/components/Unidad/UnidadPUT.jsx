@@ -8,7 +8,7 @@ import { getToken } from "../../utils/auth-utils"
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 import { useEffect } from "react"
 
-export const UnidadPut = ({idEdificio}) => {
+export const UnidadPut = () => {
 
     const {id}= useParams();
     const {state}=useLocation();

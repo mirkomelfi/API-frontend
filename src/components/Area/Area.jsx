@@ -19,7 +19,7 @@ const Area =({fromReclamo,fromPerfil})=>{
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
     const navigateTo=(url)=>{
-        navigate(url)
+      navigate(url,{state:area.idEdificio})
     }
 
     const generarReclamo= ()=>{
@@ -102,7 +102,7 @@ useEffect(() => {
                 <h2>Descripcion: {area.descripcion}</h2>
               </div>
               <div className="button-view">
-                {rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
+                {fromPerfil||rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
                 :
                 <div>
                   <button class="button btnPrimary" onClick={()=>navigateTo(`/updateArea/${id}`)}><span class="btnText">Modificar</span></button>
@@ -117,7 +117,7 @@ useEffect(() => {
           (<ReclamoPost isUnit={false} />)
       }
             {
-            rol? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/areas`)}><span class="btnText">Volver</span></button>
+            fromPerfil? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/areas`)}><span class="btnText">Volver</span></button>
             :
             !fromReclamo?<button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
             :
