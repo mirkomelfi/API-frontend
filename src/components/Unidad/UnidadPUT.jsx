@@ -1,19 +1,22 @@
 import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { getToken } from "../../utils/auth-utils"
 
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { useEffect } from "react"
 
-export const UnidadPut = () => {
+export const UnidadPut = ({idEdificio}) => {
 
     const {id}= useParams();
-
+    const {state}=useLocation();
     const [mensaje,setMensaje]=useState(null)
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
+    
+
     const navigateTo=(url)=>{
         navigate(url)
     }
@@ -60,6 +63,9 @@ export const UnidadPut = () => {
             }
         }
 
+
+
+
     return (
 
         <div>
@@ -78,14 +84,14 @@ export const UnidadPut = () => {
                             <input type="number" className="form-control" name="piso" />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="button btnPrimary">Actualizar</button>
                         </form>
 
                     </div>
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${state}/unidades/${id}`)}><span class="btnText">Volver</span></button>
         </div>
         
     )

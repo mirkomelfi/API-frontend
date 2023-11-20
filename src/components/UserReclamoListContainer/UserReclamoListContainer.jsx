@@ -40,6 +40,7 @@ const UserReclamoListContainer = ({greeting}) =>{
 
     const ejecutarFetch=async () =>{ 
       if (estado!=0){
+        console.log(estado)
         url=`${process.env.REACT_APP_DOMINIO_BACK}/misReclamos/filter?estado=${estado}`
       }else{
         url=`${process.env.REACT_APP_DOMINIO_BACK}/misReclamos`
@@ -75,7 +76,7 @@ const UserReclamoListContainer = ({greeting}) =>{
     .finally(()=>{
       setLoading(false)
     })
-  },[])
+  },[estado])
 
 
   

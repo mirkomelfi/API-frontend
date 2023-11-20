@@ -7,9 +7,9 @@ import { Mensaje } from "../Mensaje/Mensaje";
 import { UnidadResponsable } from "./UnidadResponsable";
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 
-const Unidad =()=>{
-    const {id}= useParams();
-
+const Unidad =({fromReclamo})=>{
+    const {idRec,id}= useParams();
+    console.log(idRec,id," IDS", fromReclamo)
     const [unidad,setUnidad]= useState([]);
     console.log(unidad)
     const [loading,setLoading]= useState(true);
@@ -17,8 +17,10 @@ const Unidad =()=>{
     const [updateResponsable,setUpdateResponsable]=useState(null)
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
+    const actualLocation=window.location.href
+
     const navigateTo=(url)=>{
-        navigate(url)
+        navigate(url,{state:unidad.idEdificio})
     }
     const cambiarPropietario=()=>{
         setUpdateResponsable("propietario")
@@ -101,7 +103,7 @@ const Unidad =()=>{
                 <h1>Unidad N°{unidad.id}</h1>
                 {!mensaje?(<>
                 <h2>Nombre: {unidad.nombre}</h2>
-                <h2>Psio: {unidad.piso}</h2>
+                <h2>Piso: {unidad.piso}</h2>
                 <h2>Numero: {unidad.numero}</h2>
                 <h2>Estado: {unidad.estado}</h2>
                 {unidad.propietario&&
@@ -128,7 +130,11 @@ const Unidad =()=>{
                 
                 ):(<Mensaje msj={mensaje} />)}
             </div>:<UnidadResponsable responsable={updateResponsable} />}
+            {!fromReclamo?
             <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${unidad.idEdificio}/unidades`)}><span class="btnText">Volver</span></button>
+            :
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
+            }
         </>
     )
 }

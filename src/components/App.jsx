@@ -47,6 +47,7 @@ export const App = () => {
           <Route path="/edificios/:id/unidades/:id" element={<Unidad />}/> 
           <Route path="/edificios/:id/areas" element={<AreaListContainer greeting="Listado de Areas Comunes del Edificio seleccionado"/>}/>
           <Route path="/edificios/:id/areas/:id" element={<Area />}/> 
+          <Route path="/reclamos/:idRec/verReclamable/Unidad/:id" element={<Unidad fromReclamo={true} />}/> 
           <Route path="/reclamos/:id" element={<Reclamo />}/> 
           <Route path="/usuarios/:dni" element={<Usuario />}/> 
           <Route path="/updateUsuario/:dni" element={<UsuarioPut />}/> 

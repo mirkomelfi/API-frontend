@@ -7,7 +7,6 @@ import { deleteToken, getToken, setToken } from "../../utils/auth-utils"
 export const Login = () => {
     
     const[ loggeado,setLoggeado]=useState(false)
-    const[ error,setError]=useState(false)
     const [mensaje,setMensaje]=useState(null)
     const navigate=useNavigate()
     const navigateTo=(url)=>{
@@ -44,49 +43,37 @@ export const Login = () => {
         e.preventDefault()
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const cliente = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-       
-        if (!cliente.username||!cliente.password){
-            console.log(cliente)
-            setError(true)
-            setMensaje("Faltan ingresar datos para el Login")
-        }
-       
-        else{
+    
+        const response =  await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cliente)
+        })
 
-            const response =  await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(cliente)
-            })
+        const data=await response.json();
+        
+        if(!data.msj) {
+            setLoggeado(true)
+            navigate("/")
+            setToken(data.token)
+    
+        } else {
 
-            const data=await response.json();
+            setMensaje(data.msj)
+            setLoggeado(false)
             
-            if(response.status == 200) {
-                setError(false)
-                setLoggeado(true)
-                navigate("/")
-                setToken(data.token)
-     
-            } else {
 
-                if (response.status==401){
-                    setError(true)
-                    setMensaje("Credenciales invalidas")
-                    setLoggeado(false)
-                }
-
-            }
-
-            e.target.reset() //Reset form
         }
+
+        e.target.reset() //Reset form
     }
     
     return (
 
         <div>
-            {!error?(
+            {!mensaje?(
         <>
             <div className="container divForm" >
                 <h3>Formulario de Inicio de Sesion</h3>
@@ -110,7 +97,11 @@ export const Login = () => {
                 }
                
             </div>
-        </>):<Mensaje msj={mensaje} />
+        </>):
+        <>
+        <Mensaje msj={mensaje} />
+        <button class="button btnPrimary"  onClick={()=>navigateTo(`/`)}><span class="btnText">Volver a Login</span></button> 
+        </>
         }
         </div>
     )
