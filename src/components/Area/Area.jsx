@@ -117,7 +117,7 @@ useEffect(() => {
           (<ReclamoPost isUnit={false} />)
       }
             {
-            fromPerfil? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/areas`)}><span class="btnText">Volver</span></button>
+            rol? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/areas`)}><span class="btnText">Volver</span></button>
             :
             !fromReclamo?<button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
             :

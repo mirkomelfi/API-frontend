@@ -20,7 +20,6 @@ import { AreaPut } from './Area/AreaPUT';
 import { UnidadPut } from './Unidad/UnidadPUT';
 import { EdificioPost } from './Edificio/EdificioPOST';
 import UserUnidadListContainer from './UserUnidadListContainer/UserUnidadListContainer';
-import { UnidadUser } from './Unidad/UnidadUser';
 import UserAreaListContainer from './UserAreaListContainer copy/UserAreaListContainer';
 import UserReclamoListContainer from './UserReclamoListContainer/UserReclamoListContainer';
 import ImagenPost from './Imagen/ImagenPOST';

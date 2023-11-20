@@ -118,7 +118,7 @@ useEffect(() => {
                   <h2>Descripcion: {reclamo.descripcion}</h2>
                   <h2>Estado: {reclamo.estado}</h2>
                   {!medidas&&<h2>Aun no hay medidas tomadas</h2>}
-                  {!fromPerfil&&
+                  {!rol&&
                     <div class="button-card">
                       <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
                       <button onClick={()=>eliminar()}  class="button btnPrimary">Eliminar</button>
@@ -128,7 +128,7 @@ useEffect(() => {
                 <div class="button-view">
                   {medidas&&<button onClick={()=>cambiarVistaMedidas()}  class="button btnPrimary">Ver Medidas</button>}
 
-                  {fromPerfil?
+                  {rol?
                   <button class="button btnPrimary" onClick={()=>navigateTo(`/addImage/${id}`)}><span class="btnText">Agregar imagen</span></button>
                   :
                   <button onClick={()=>cambiarEstado()}  class="button btnPrimary">Cambiar estado</button>

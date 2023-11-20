@@ -79,7 +79,7 @@ const UnidadListContainer = ({greeting}) =>{
           !add ?
           (!mensaje?<>
             <h1 className="greeting">{greeting}</h1>
-            <button onClick={()=>agregar()} className="btn btn-primary"><span class="btnText">Agregar unidad</span></button>
+            <button onClick={()=>agregar()} className="button btnPrimary"><span class="btnText">Agregar unidad</span></button>
             <UnidadList pid={id} listaUnidades={listaUnidades} isAdmin={true}/>
           </>:<Mensaje msj={mensaje}/>)
           :

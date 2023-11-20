@@ -148,7 +148,11 @@ const Unidad =({fromReclamo,fromPerfil})=>{
             :(<Mensaje msj={mensaje} />)
             :(<ReclamoPost isUnit={true} />)
             :<UnidadResponsable responsable={updateResponsable} />}
-            {!fromReclamo?
+
+            {
+            rol? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/unidades`)}><span class="btnText">Volver</span></button>
+            :
+            !fromReclamo?
             <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${unidad.idEdificio}/unidades`)}><span class="btnText">Volver</span></button>
             :
             <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
