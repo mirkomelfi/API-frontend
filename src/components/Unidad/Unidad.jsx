@@ -133,7 +133,7 @@ const Unidad =({fromReclamo,fromPerfil})=>{
                     }
                 </div>
                 <div className="button-view">
-                    {fromPerfil?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
+                    {rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
                     :
                     <div>
                         <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUnidad/${id}`)}><span class="btnText">Modificar</span></button>

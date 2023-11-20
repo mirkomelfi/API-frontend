@@ -102,7 +102,7 @@ useEffect(() => {
                 <h2>Descripcion: {area.descripcion}</h2>
               </div>
               <div className="button-view">
-                {fromPerfil?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
+                {rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
                 :
                 <div>
                   <button class="button btnPrimary" onClick={()=>navigateTo(`/updateArea/${id}`)}><span class="btnText">Modificar</span></button>
