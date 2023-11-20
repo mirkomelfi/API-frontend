@@ -51,7 +51,11 @@ const UnidadListContainer = ({greeting}) =>{
               setMensaje(data.msj)
           }else{
             const unidades= data.unidades
-            setListaUnidades(unidades)
+            if (unidades.length==0){
+              setMensaje("No se encontraron unidades para este edificio")
+            }else{
+              setListaUnidades(unidades)
+            }
           }
       }
   }

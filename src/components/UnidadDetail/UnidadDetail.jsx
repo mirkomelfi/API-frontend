@@ -10,7 +10,7 @@ const UnidadDetail =({unidad})=>{
 
     return(
         <>
-            <div className="tarjetaProducto">
+            <div className="tarjetaListado">
                 <h1>Unidad N°{unidad.id}</h1>
                 <h2>Identificación: {unidad.nombre}</h2>
                 <h2>Piso: {unidad.piso}</h2>

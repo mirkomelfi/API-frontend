@@ -10,8 +10,9 @@ import {useNavigate} from "react-router-dom";
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 import { Medidas } from "../Medidas/Medidas";
 
-const Reclamo =()=>{
+const Reclamo =({fromPerfil})=>{
     const {id}= useParams();
+    console.log(fromPerfil,"fromPerfil")
     const [reclamo,setReclamo]= useState([]);
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
@@ -117,19 +118,28 @@ useEffect(() => {
                   <h2>Descripcion: {reclamo.descripcion}</h2>
                   <h2>Estado: {reclamo.estado}</h2>
                   {!medidas&&<h2>Aun no hay medidas tomadas</h2>}
-                  <div class="button-card">
-                    <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
-                    <button onClick={()=>eliminar()}  class="button btnPrimary">Eliminar</button>
-                  </div>
+                  {!fromPerfil&&
+                    <div class="button-card">
+                      <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
+                      <button onClick={()=>eliminar()}  class="button btnPrimary">Eliminar</button>
+                    </div>
+                  }
                 </div>
                 <div class="button-view">
                   {medidas&&<button onClick={()=>cambiarVistaMedidas()}  class="button btnPrimary">Ver Medidas</button>}
+
+                  {fromPerfil?
+                  <button class="button btnPrimary" onClick={()=>navigateTo(`/addImage/${id}`)}><span class="btnText">Agregar imagen</span></button>
+                  :
+                  <button onClick={()=>cambiarEstado()}  class="button btnPrimary">Cambiar estado</button>
+                  }
+
                   <button class="button btnPrimary" onClick={()=>navigateTo(`/verImagenes/${id}`)}><span class="btnText">Ver imagenes</span></button>
+
                   {reclamo.tipoReclamable=="Unidad"?<button class="button btnPrimary" onClick={()=>navigateTo(`verReclamable/unidad/${reclamo.idReclamable}`)}><span class="btnText">Ver reclamable</span></button>
                   :
                   <button class="button btnPrimary" onClick={()=>navigateTo(`verReclamable/area/${reclamo.idReclamable}`)}><span class="btnText">Ver reclamable</span></button>
                   }
-                  <button onClick={()=>cambiarEstado()}  class="button btnPrimary">Cambiar estado</button>
                 </div>
             </div>)
             :<Medidas medidas={reclamo.medidas} />)

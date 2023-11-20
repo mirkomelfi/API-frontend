@@ -6,8 +6,9 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { UnidadResponsable } from "./UnidadResponsable";
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { ReclamoPost } from "../Reclamo/ReclamoPOST";
 
-const Unidad =({fromReclamo})=>{
+const Unidad =({fromReclamo,fromPerfil})=>{
     const {idRec,id}= useParams();
     console.log(idRec,id," IDS", fromReclamo)
     const [unidad,setUnidad]= useState([]);
@@ -16,6 +17,7 @@ const Unidad =({fromReclamo})=>{
     const [mensaje,setMensaje]=useState(null);
     const [updateResponsable,setUpdateResponsable]=useState(null)
     const [rol,setRol]=useState(undefined);    
+    const [add,setAdd]=useState(null);  
     const navigate=useNavigate()
     const actualLocation=window.location.href
 
@@ -30,6 +32,10 @@ const Unidad =({fromReclamo})=>{
     const cambiarInquilino=()=>{
         setUpdateResponsable("inquilino")
         return;
+    }
+
+    const generarReclamo= ()=>{
+        setAdd(true)
     }
 
     const ejecutarFetch=async () =>{ 
@@ -99,37 +105,49 @@ const Unidad =({fromReclamo})=>{
 
     return(
         <>
-            {!updateResponsable?<div className="tarjetaProducto">
-                <h1>Unidad N°{unidad.id}</h1>
-                {!mensaje?(<>
-                <h2>Nombre: {unidad.nombre}</h2>
-                <h2>Piso: {unidad.piso}</h2>
-                <h2>Numero: {unidad.numero}</h2>
-                <h2>Estado: {unidad.estado}</h2>
-                {unidad.propietario&&
-                <>
-                    <h2>Propietario:</h2>
-                    <h3>DNI: {unidad.propietario.dni}</h3>
-                    <h3>Nombre: {unidad.propietario.nombre}</h3>
-                    <h3>Apellido: {unidad.propietario.apellido}</h3>
-                </>
+        {!updateResponsable?
+            !add?
+            !mensaje?
+            <div className="tarjetaProducto">
+                <div>
+                    <h1>Unidad N°{unidad.id}</h1>
+                    <h2>Nombre: {unidad.nombre}</h2>
+                    <h2>Piso: {unidad.piso}</h2>
+                    <h2>Numero: {unidad.numero}</h2>
+                    <h2>Estado: {unidad.estado}</h2>
+                    {unidad.propietario&&
+                    <>
+                        <h2>Propietario:</h2>
+                        <h3>DNI: {unidad.propietario.dni}</h3>
+                        <h3>Nombre: {unidad.propietario.nombre}</h3>
+                        <h3>Apellido: {unidad.propietario.apellido}</h3>
+                    </>
+                    }
+                    {unidad.inquilino&&
+                    <>
+                    <h2>Inquilino:</h2>
+                        <h3>DNI: {unidad.inquilino.dni}</h3>
+                        <h3>Nombre: {unidad.inquilino.nombre}</h3>
+                        <h3>Apellido: {unidad.inquilino.apellido}</h3>
+                    </>
+                    }
+                </div>
+                <div className="button-view">
+                    {fromPerfil?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
+                    :
+                    <div>
+                        <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUnidad/${id}`)}><span class="btnText">Modificar</span></button>
+                        <button onClick={()=>cambiarPropietario()}class="button btnPrimary"><span class="btnText">Cambiar propietario</span></button>
+                        <button onClick={()=>cambiarInquilino()} class="button btnPrimary"><span class="btnText">Cambiar inquilino</span></button>
+                        <button onClick={()=>eliminar()} class="button btnPrimary"><span class="btnText">Eliminar</span></button>
+                    </div>
                 }
-                {unidad.inquilino&&
-                <>
-                   <h2>Inquilino:</h2>
-                    <h3>DNI: {unidad.inquilino.dni}</h3>
-                    <h3>Nombre: {unidad.inquilino.nombre}</h3>
-                    <h3>Apellido: {unidad.inquilino.apellido}</h3>
-                </>
-                } 
-                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUnidad/${id}`)}><span class="btnText">Modificar</span></button>
-                <button onClick={()=>cambiarPropietario()}class="button btnPrimary"><span class="btnText">Cambiar propietario</span></button>
-                <button onClick={()=>cambiarInquilino()} class="button btnPrimary"><span class="btnText">Cambiar inquilino</span></button>
-                <button onClick={()=>eliminar()} class="button btnPrimary"><span class="btnText">Eliminar</span></button>
-                </>
+                </div>
                 
-                ):(<Mensaje msj={mensaje} />)}
-            </div>:<UnidadResponsable responsable={updateResponsable} />}
+            </div>
+            :(<Mensaje msj={mensaje} />)
+            :(<ReclamoPost isUnit={true} />)
+            :<UnidadResponsable responsable={updateResponsable} />}
             {!fromReclamo?
             <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${unidad.idEdificio}/unidades`)}><span class="btnText">Volver</span></button>
             :

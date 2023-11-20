@@ -6,23 +6,25 @@ import { getToken } from "../../utils/auth-utils";
 import { Mensaje } from "../Mensaje/Mensaje";
 import {useNavigate} from "react-router-dom";
 import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { ReclamoPost } from "../Reclamo/ReclamoPOST";
 
-const Area =({fromReclamo})=>{
+const Area =({fromReclamo,fromPerfil})=>{
     const {idRec,id}= useParams();
 
     const [area,setArea]= useState([]);
     console.log(area)
     const [loading,setLoading]= useState(true);
     const [mensaje,setMensaje]=useState(null)
+    const [add,setAdd]=useState(null)
     const [rol,setRol]=useState(undefined);    
     const navigate=useNavigate()
     const navigateTo=(url)=>{
         navigate(url)
     }
 
-    const modificar=async()=>{
-
-    }
+    const generarReclamo= ()=>{
+      setAdd(true)
+  }
     
     const eliminar=async()=>{
       const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/areas/${id}`, {
@@ -89,22 +91,38 @@ useEffect(() => {
 
     return(
         <>
+        {
+         !add?
+         !mensaje?
             <div className="tarjetaProducto">
+              <div>
                 <h1>Area N°{area.id}</h1>
-                {!mensaje?(<>
                 <h2>Nombre: {area.nombre}</h2>
                 <h2>Piso: {area.piso}</h2>
                 <h2>Descripcion: {area.descripcion}</h2>
-                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateArea/${id}`)}><span class="btnText">Modificar</span></button>
-                
-                <button onClick={()=>eliminar()} className="button btnPrimary"><span class="btnText">Eliminar</span></button>
-                </>
-                
-                ):(<Mensaje msj={mensaje} />)}
+              </div>
+              <div className="button-view">
+                {fromPerfil?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
+                :
+                <div>
+                  <button class="button btnPrimary" onClick={()=>navigateTo(`/updateArea/${id}`)}><span class="btnText">Modificar</span></button>
+                  <button onClick={()=>eliminar()} className="button btnPrimary"><span class="btnText">Eliminar</span></button>
+                </div>
+                }
+              </div>
             </div>
-            {!fromReclamo?<button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
+                 
+                :(<Mensaje msj={mensaje} />)
+          :
+          (<ReclamoPost isUnit={false} />)
+      }
+            {
+            fromPerfil? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/areas`)}><span class="btnText">Volver</span></button>
+            :
+            !fromReclamo?<button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
             :
             <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
+
             }
         </>
     )

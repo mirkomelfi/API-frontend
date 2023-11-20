@@ -52,7 +52,11 @@ const AreaListContainer = ({greeting}) =>{
               setMensaje(data.msj)
           }else{
             const areas= data.areasComunes
-            setListaAreas(areas)
+            if (areas.length==0){
+              setMensaje("No se encontraron areas comunes para este edificio")
+            }else{
+              setListaAreas(areas)
+            }
           }
       }
   }

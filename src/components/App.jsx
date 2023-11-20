@@ -22,13 +22,10 @@ import { EdificioPost } from './Edificio/EdificioPOST';
 import UserUnidadListContainer from './UserUnidadListContainer/UserUnidadListContainer';
 import { UnidadUser } from './Unidad/UnidadUser';
 import UserAreaListContainer from './UserAreaListContainer copy/UserAreaListContainer';
-import { AreaUser } from './Area/AreaUser';
 import UserReclamoListContainer from './UserReclamoListContainer/UserReclamoListContainer';
-import { ReclamoUser } from './Reclamo/ReclamoUser';
 import ImagenPost from './Imagen/ImagenPOST';
 import { Imagen } from './Imagen/Imagen';
 import { Logout } from './Logout/Logout';
-import { ReclamoEstado } from './Reclamo/ReclamoEstado';
 
 export const App = () => {
   return (
@@ -61,12 +58,12 @@ export const App = () => {
           <Route path="/updateUnidad/:id" element={<UnidadPut />}/>
           <Route path="/usuario/current" element={<Usuario />}/> 
           <Route path="/updateUsuario" element={<UsuarioPut  fromPerfil={true}  />}/>
-          <Route path="/usuario/unidades" element={<UserUnidadListContainer/>}/>
-          <Route path="/usuario/unidades/:id" element={<UnidadUser />}/> 
-          <Route path="/usuario/areas" element={<UserAreaListContainer/>}/>
-          <Route path="/usuario/areas/:id" element={<AreaUser />}/> 
-          <Route path="/usuario/reclamos" element={<UserReclamoListContainer/>}/>
-          <Route path="/usuario/reclamos/:id" element={<ReclamoUser />}/> 
+          <Route path="/usuario/unidades" element={<UserUnidadListContainer  fromPerfil={true}  /> }/>
+          <Route path="/usuario/unidades/:id" element={<Unidad  fromPerfil={true} />}/> 
+          <Route path="/usuario/areas" element={<UserAreaListContainer  fromPerfil={true} />}/>
+          <Route path="/usuario/areas/:id" element={<Area fromPerfil={true}  />}/> 
+          <Route path="/usuario/reclamos" element={<UserReclamoListContainer  fromPerfil={true}  />}/>
+          <Route path="/usuario/reclamos/:id" element={<Reclamo  fromPerfil={true}  />}/> 
 
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
