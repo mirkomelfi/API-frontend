@@ -27,7 +27,7 @@ export const Logout = () => {
     
     return (
 
-        <div className="tarjetaProducto">
+        <div className="tarjetaListado">
             <Mensaje msj={mensaje} />
             <button class="button btnPrimary" onClick={()=>navigateTo(`/login`)}><span class="btnText">Inicio de Sesion</span></button>
         

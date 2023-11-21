@@ -1,5 +1,4 @@
 import React from "react";
-import "./EdificioListContainer.css";
 import { useState, useEffect } from "react";
 import {EdificioList} from "../EdificioList/EdificioList"
 import {useParams,Link} from "react-router-dom";

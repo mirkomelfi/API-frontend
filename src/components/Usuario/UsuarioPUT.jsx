@@ -97,7 +97,7 @@ export const UsuarioPut = ({fromPerfil}) => {
                             <input type="password" className="form-control" name="password" />
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                        <button type="submit" className="button btnPrimary">Actualizar</button>
                         </form>
 
                     </div>

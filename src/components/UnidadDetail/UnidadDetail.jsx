@@ -1,4 +1,4 @@
-import "./UnidadDetail.css";
+
 import {Link, useNavigate} from "react-router-dom";
 
 const UnidadDetail =({unidad})=>{

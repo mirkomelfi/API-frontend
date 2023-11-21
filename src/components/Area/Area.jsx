@@ -1,5 +1,3 @@
-import "./Area.css";
-import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getToken } from "../../utils/auth-utils";
@@ -101,7 +99,8 @@ useEffect(() => {
                 <h2>Piso: {area.piso}</h2>
                 <h2>Descripcion: {area.descripcion}</h2>
               </div>
-              <div className="button-view">
+
+             {!fromReclamo&&<div className="button-view">
                 {fromPerfil||rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
                 :
                 <div>
@@ -109,7 +108,8 @@ useEffect(() => {
                   <button onClick={()=>eliminar()} className="button btnPrimary"><span class="btnText">Eliminar</span></button>
                 </div>
                 }
-              </div>
+              </div>}
+
             </div>
                  
                 :(<Mensaje msj={mensaje} />)

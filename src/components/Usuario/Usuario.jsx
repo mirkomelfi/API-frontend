@@ -1,4 +1,4 @@
-import "./Usuario.css";
+
 import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";

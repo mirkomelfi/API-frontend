@@ -14,7 +14,7 @@ const UsuarioDetail =({usuario})=>{
         <>
             <div className="tarjetaListado">
                 <h1>DNI: {usuario.dni}</h1>
-                <h2>Apellido: {usuario.apellido}</h2>
+                <h2>Username: {usuario.username}</h2>
                 <button class="button btnPrimary" onClick={()=>navigateTo(`${usuario.dni}`)}><span class="btnText">Ver usuario</span></button>
 
             </div>

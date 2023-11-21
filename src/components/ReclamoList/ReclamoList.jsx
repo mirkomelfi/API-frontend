@@ -1,5 +1,5 @@
 import {ReclamoDetail} from "../ReclamoDetail/ReclamoDetail"
-import "../ReclamoDetail/ReclamoDetail.css";
+
 
 const ReclamoList = ({listaReclamos})=>{
     console.log("ReclamoList",listaReclamos)

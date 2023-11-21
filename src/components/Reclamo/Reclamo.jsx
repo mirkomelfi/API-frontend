@@ -1,4 +1,4 @@
-import "./Reclamo.css";
+
 import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
@@ -121,17 +121,17 @@ useEffect(() => {
                   {!fromPerfil&&
                     <div class="button-card">
                       <button class="button btnPrimary" onClick={()=>navigateTo(`/updateReclamo/${id}`)}><span class="btnText">Modificar</span></button>
-                      <button onClick={()=>eliminar()}  class="button btnPrimary">Eliminar</button>
+                      <button onClick={()=>eliminar()}  class="button btnPrimary"><span class="btnText">Eliminar</span></button>
                     </div>
                   }
                 </div>
                 <div class="button-view">
-                  {medidas&&<button onClick={()=>cambiarVistaMedidas()}  class="button btnPrimary">Ver Medidas</button>}
+                  {medidas&&<button onClick={()=>cambiarVistaMedidas()}  class="button btnPrimary"><span class="btnText">Ver Medidas</span></button>}
 
                   {fromPerfil?
                   <button class="button btnPrimary" onClick={()=>navigateTo(`/addImage/${id}`)}><span class="btnText">Agregar imagen</span></button>
                   :
-                  <button onClick={()=>cambiarEstado()}  class="button btnPrimary">Cambiar estado</button>
+                  <button onClick={()=>cambiarEstado()}  class="button btnPrimary"><span class="btnText">Cambiar estado</span></button>
                   }
 
                   <button class="button btnPrimary" onClick={()=>navigateTo(`/verImagenes/${id}`)}><span class="btnText">Ver imagenes</span></button>

@@ -1,5 +1,4 @@
 import {Edificio} from "../Edificio/Edificio"
-import "../Edificio/Edificio.css";
 import { Link } from "react-router-dom";
 
 const EdificioList = ({listaEdificios})=>{

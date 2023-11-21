@@ -1,5 +1,5 @@
 
-/* V1 */
+/* V2 */
 
 .contenedorBotones{
     display:flex;
@@ -205,4 +205,14 @@ header h1,h2 {
 
 div .tarjetaListado{
     background-color: rgb(231, 71, 71);
+}
+.greeting{
+    text-align: center;
+}
+h1.greeting {
+    background-color: #ed6e6e;
+}
+div{
+    display: flex;
+    flex-direction: column;
 }

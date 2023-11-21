@@ -76,7 +76,7 @@ const UnidadListContainer = ({greeting}) =>{
       {!add ?
   <>
       <h1 className="greeting">{greeting}</h1>
-      <button onClick={()=>agregar()} className="btn btn-primary"><span class="btnText">Agregar Unidad</span></button>
+      <button onClick={()=>agregar()} className="button btnPrimary"><span class="btnText">Agregar Unidad</span></button>
       {!mensaje?(
       <div> 
 

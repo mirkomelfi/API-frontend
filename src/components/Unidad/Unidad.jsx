@@ -1,4 +1,4 @@
-import "./Unidad.css";
+
 import {Link, useNavigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
@@ -132,7 +132,7 @@ const Unidad =({fromReclamo,fromPerfil})=>{
                     </>
                     }
                 </div>
-                <div className="button-view">
+                {!fromReclamo&&<div className="button-view">
                     {fromPerfil||rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
                     :
                     <div>
@@ -143,7 +143,7 @@ const Unidad =({fromReclamo,fromPerfil})=>{
                     </div>
                 }
                 </div>
-                
+                }
             </div>
             :(<Mensaje msj={mensaje} />)
             :(<ReclamoPost isUnit={true} />)

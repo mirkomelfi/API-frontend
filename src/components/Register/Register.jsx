@@ -92,9 +92,9 @@ export const Register = () => {
 
             </div>
         </>):<><Mensaje msj={mensaje} />
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios`)}><span class="btnText">Volver</span></button>
         </>
         }
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/usuarios`)}><span class="btnText">Volver</span></button>
         </div>
     )
 }

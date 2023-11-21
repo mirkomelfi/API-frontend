@@ -90,7 +90,7 @@ export const AreaPut = () => {
                 ):    <Mensaje msj={mensaje} />
                     
         }
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${state}/unidades/${id}`)}><span class="btnText">Volver</span></button>
+        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${state}/areas/${id}`)}><span class="btnText">Volver</span></button>
 
         </div>
         

@@ -1,5 +1,4 @@
 import React from "react";
-import "./ReclamoListContainer.css";
 import { useState, useEffect } from "react";
 import {ReclamoList} from "../ReclamoList/ReclamoList"
 import { Link } from "react-router-dom";

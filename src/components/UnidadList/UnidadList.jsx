@@ -1,5 +1,4 @@
 import {Edificio} from "../Edificio/Edificio"
-import "../Edificio/Edificio.css";
 import { UnidadDetail } from "../UnidadDetail/UnidadDetail";
 import { Link } from "react-router-dom";
 

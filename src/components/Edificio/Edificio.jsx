@@ -1,4 +1,4 @@
-import "./Edificio.css";
+
 import {Link} from "react-router-dom";
 import { useState } from "react";
 import { getToken } from "../../utils/auth-utils";

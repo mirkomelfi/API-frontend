@@ -93,8 +93,8 @@ const Imagen =()=>{
     return( 
         <>
             {!mensaje? <>
-            (<div className="tarjetaProducto">
-                <div>
+            (<div>
+                <div className="tarjetaListado">
                 <h1>Imagen N°{num}</h1>
                 <img src={`data:image/jpeg;base64,${bytes}`} alt="" />
                 <button onClick={()=>eliminarImg()} className="button btnPrimary"><span class="btnText">Eliminar imagen</span></button>

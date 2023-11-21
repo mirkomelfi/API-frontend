@@ -1,4 +1,4 @@
-import "./AreaDetail.css";
+
 import {Link, useNavigate} from "react-router-dom";
 
 const AreaDetail =({area})=>{
