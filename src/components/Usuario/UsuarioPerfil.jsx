@@ -1,68 +1,68 @@
 import "./Usuario.css";
-import {Link} from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { useState,useEffect } from "react";
-import { getToken } from "../../utils/auth-utils";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Mensaje } from "../Mensaje/Mensaje";
+import { useUser } from "../../context/UserContext";
 
-const UsuarioPerfil =()=>{
-    console.log("Usuariodni",dni)
-    const [usuario,setUsuario]= useState([]);
-    console.log(usuario)
-    const [loading,setLoading]= useState(true);
+const UsuarioPerfil = () => {
+  const [usuario, setUsuario] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [mensaje, setMensaje] = useState(null);
 
-    const [mensaje,setMensaje]=useState(null)
+  const navigate = useNavigate();
+  const { tokenState, clearAuthData } = useUser();
 
-    const ejecutarFetch=async () =>{ 
-    
-        const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/miperfil`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`
-            }
-            
-          })
-        
-        const rol=validateRol(response)
-        if (!rol){
-            deleteToken()
-            navigate("/login",{state:{from:actualLocation}} )
-            
-        }else{
-            const data = await response.json()
-            setRol(isRolUser(getToken()))
-            if(data.msj){
-                setMensaje(data.msj)
-            }else{
-                setUsuario(data)
-            }
-        }
+  const ejecutarFetch = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/usuarios/miperfil`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenState}`,
+        },
+      });
+
+      const data = await response.json();
+      if (data.msj) {
+        setMensaje(data.msj);
+      } else {
+        setUsuario(data);
+      }
+    } catch (error) {
+      console.error("Error al cargar perfil:", error);
+      setMensaje("Error al conectar con el servidor");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    useEffect(() => { 
-        ejecutarFetch()
-        .catch(error => console.error(error))
-        .finally(()=>{
-          setLoading(false)
-        })
-      },[])
+  const navigateTo = (url) => navigate(url);
 
+  useEffect(() => {
+    ejecutarFetch();
+  }, [tokenState]);
 
+  return (
+    <>
+      <h1>Mi perfil</h1>
+      {!mensaje ? (
+        <div className="tarjetaProducto">
+          <h1>DNI: {usuario.dni}</h1>
+          <h2>Username: {usuario.username}</h2>
+          <h2>Nombre: {usuario.nombre}</h2>
+          <h2>Apellido: {usuario.apellido}</h2>
+          <button className="button btnPrimary" onClick={() => navigateTo(`/updateUsuario`)}>
+            <span className="btnText">Modificar</span>
+          </button>
+        </div>
+      ) : (
+        <Mensaje msj={mensaje} />
+      )}
+      <button className="button btnPrimary" onClick={() => navigateTo(`/`)}>
+        <span className="btnText">Volver</span>
+      </button>
+    </>
+  );
+};
 
-    return(
-        <>
-            <h1>Mi perfil</h1>
-            {!mensaje?(<div className="tarjetaProducto">
-            <h1>DNI: {usuario.dni}</h1>
-                <h2>Username: {usuario.username}</h2>
-                <h2>Nombre: {usuario.nombre}</h2>
-                <h2>Apellido: {usuario.apellido}</h2>
-                <button class="button btnPrimary" onClick={()=>navigateTo(`/updateUsuario`)}><span class="btnText">Modificar</span></button>
-            </div>):(<Mensaje msj={mensaje} />)}
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
-        </>
-    )
-}
-
-export {UsuarioPerfil}
+export { UsuarioPerfil };

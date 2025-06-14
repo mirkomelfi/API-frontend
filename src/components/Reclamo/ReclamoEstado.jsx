@@ -1,110 +1,98 @@
-import { useRef } from "react"
-import { Mensaje } from "../Mensaje/Mensaje"
-import { useState } from "react"
-import { useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { getToken } from "../../utils/auth-utils"
-
-import {useNavigate} from "react-router-dom";
-import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
-
+import { useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Mensaje } from "../Mensaje/Mensaje";
+import { useUser } from "../../context/UserContext";
 
 export const ReclamoEstado = () => {
+  const { id } = useParams();
+  const { token, rol } = useUser();
+  const navigate = useNavigate();
 
-    const {id}= useParams();
-    
-    const [mensaje,setMensaje]=useState(null)
-    const [rol,setRol]=useState(undefined);    
-    const navigate=useNavigate()
+  const [mensaje, setMensaje] = useState(null);
+  const datForm = useRef();
 
-    const options = [
-        {value: 1, text: 'Nuevo'},
-        {value: 2, text: 'Abierto'},
-        {value: 3, text: 'En proceso'},
-        {value: 4, text: 'Anulado'},
-        {value: 5, text: 'Desestimado'},
-        {value: 6, text: 'Terminado'}
-        ];
-      
-    const [estado, setEstado] = useState(options[0].value);
-    
-    const handleChange = event => {
-        setEstado(event.target.value);
-    };
+  const options = [
+    { value: 1, text: 'Nuevo' },
+    { value: 2, text: 'Abierto' },
+    { value: 3, text: 'En proceso' },
+    { value: 4, text: 'Anulado' },
+    { value: 5, text: 'Desestimado' },
+    { value: 6, text: 'Terminado' }
+  ];
 
-    const navigateTo=(url)=>{
-        navigate(url)
+  const [estado, setEstado] = useState(options[0].value);
+
+  const handleChange = (event) => {
+    setEstado(event.target.value);
+  };
+
+  const consultarForm = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(datForm.current);
+    const { medida } = Object.fromEntries(formData);
+
+    const response = await fetch(
+      `${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}/estado/${estado}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ medida }),
+      }
+    );
+
+    if (!response.ok) {
+      const data = await response.json();
+      setMensaje(data?.msj || "No posee los permisos necesarios");
+      return;
     }
-    const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
 
-    const consultarForm = async(e) => {
-        //Consultar los datos del formulario
-        e.preventDefault()
+    const data = await response.json();
+    if (data.msj) setMensaje(data.msj);
 
-        const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
-        const reclamo = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        console.log(reclamo)
+    e.target.reset();
+  };
 
-        const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/reclamos/${id}/estado/${estado}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getToken()}`
-            },
-            body: reclamo.medida
-        })
+  return (
+    <div>
+      {!mensaje ? (
+        <div className="container divForm">
+          <h1>Cambio en el estado del Reclamo</h1>
+          <div>
+            <h3>Seleccione el nuevo estado del reclamo</h3>
+            <select value={estado} onChange={handleChange}>
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.text}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        const rol=validateRol(response)
-        if (!rol){
-          if (isRolUser(getToken())){
-            console.log("rol user")
-              setMensaje("No posee los permisos necesarios")
-          }else{
-            deleteToken()
-            navigate("/login")
-          }
-        }else{
-        const data = await response.json()
-        if (data.msj){
-          setMensaje(data.msj)
-        }
-        }
-            
-        e.target.reset() //Reset form
-            
-        }
+          <form onSubmit={consultarForm} ref={datForm}>
+            <div className="mb-3">
+              <label htmlFor="medida" className="form-label">
+                Medida tomada
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="medida"
+                required
+              />
+            </div>
 
-    return (
-
-        <div>
-            {!mensaje?(
-                
-                <div className="container divForm" >
-                    <h1>Cambio en el estado del Reclamo</h1>
-                    <div>
-                        <h3>Seleccione el nuevo estado del reclamo</h3>
-                        <select value={estado} onChange={handleChange}>
-                            {options.map(option => (
-                            <option key={option.value} value={option.value}>
-                                {option.text}
-                            </option>
-                            ))}
-                        </select>
-                    </div>
-                        <form onSubmit={consultarForm} ref={datForm}>
-
-                            <div className="mb-3">
-                                <label htmlFor="medida" className="form-label">Medida tomada</label>
-                                <input type="text" className="form-control" name="medida" required/>
-                            </div>
-
-                            <button type="submit" className="button btnPrimary" >Actualizar</button>
-                        </form>
-                </div>
-                ):    <Mensaje msj={mensaje} />
-                    
-        }
+            <button type="submit" className="button btnPrimary">
+              Actualizar
+            </button>
+          </form>
         </div>
-        
-    )
-}
+      ) : (
+        <Mensaje msj={mensaje} />
+      )}
+    </div>
+  );
+};

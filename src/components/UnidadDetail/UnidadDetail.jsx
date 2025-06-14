@@ -1,8 +1,6 @@
-
 import {Link, useNavigate} from "react-router-dom";
 
 const UnidadDetail =({unidad})=>{
-    console.log(unidad)
     const navigate=useNavigate()
     const navigateTo=(url)=>{
         navigate(url)

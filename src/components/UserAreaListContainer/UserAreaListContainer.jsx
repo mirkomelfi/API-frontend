@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { UnidadList } from "../UnidadList/UnidadList";
+import { AreaList } from "../AreaList/AreaList";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useUser } from "../../context/UserContext";
 
-const UserUnidadListContainer = ({ greeting }) => {
-  const [listaUnidades, setListaUnidades] = useState([]);
+const UserAreaListContainer = ({ greeting }) => {
+  const [listaAreas, setListaAreas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState(null);
 
-  const navigate = useNavigate();
   const { tokenState } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const ejecutarFetch = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/misUnidades`, {
+        const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/misAreas`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -27,10 +27,10 @@ const UserUnidadListContainer = ({ greeting }) => {
         if (data.msj) {
           setMensaje(data.msj);
         } else {
-          setListaUnidades(data);
+          setListaAreas(data);
         }
       } catch (error) {
-        console.error("Error al cargar unidades:", error);
+        console.error("Error al cargar áreas:", error);
         setMensaje("Error al conectar con el servidor");
       } finally {
         setLoading(false);
@@ -47,11 +47,12 @@ const UserUnidadListContainer = ({ greeting }) => {
       ) : !mensaje ? (
         <>
           <h1 className="greeting">{greeting}</h1>
-          <UnidadList listaUnidades={listaUnidades} />
+          <AreaList listaAreas={listaAreas} />
         </>
       ) : (
         <Mensaje msj={mensaje} />
       )}
+
       <button className="button btnPrimary" onClick={() => navigate("/")}>
         <span className="btnText">Volver</span>
       </button>
@@ -59,4 +60,4 @@ const UserUnidadListContainer = ({ greeting }) => {
   );
 };
 
-export default UserUnidadListContainer;
+export default UserAreaListContainer;

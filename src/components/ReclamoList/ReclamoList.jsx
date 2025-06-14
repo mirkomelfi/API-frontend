@@ -2,7 +2,7 @@ import {ReclamoDetail} from "../ReclamoDetail/ReclamoDetail"
 
 
 const ReclamoList = ({listaReclamos})=>{
-    console.log("ReclamoList",listaReclamos)
+
     return (
         <>
         {listaReclamos&&

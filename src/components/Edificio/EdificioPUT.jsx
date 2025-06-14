@@ -1,104 +1,93 @@
-import { useRef } from "react"
-import { Mensaje } from "../Mensaje/Mensaje"
-import { useState } from "react"
-import { useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { getToken } from "../../utils/auth-utils"
-import {useNavigate} from "react-router-dom";
-import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
+import { useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Mensaje } from "../Mensaje/Mensaje";
+import { useUser } from "../../context/UserContext";
 
 export const EdificioPut = () => {
+  const { id } = useParams();
+  const [mensaje, setMensaje] = useState(null);
+  const navigate = useNavigate();
+  const { tokenState, rol } = useUser();
+  const isAdmin = rol === "ROL_ADMIN";
+  const datForm = useRef();
 
-    const {id}= useParams();
+  const consultarForm = async (e) => {
+    e.preventDefault();
 
-    const [mensaje,setMensaje]=useState(null)
-    const [rol,setRol]=useState(undefined);    
-    const navigate=useNavigate()
-    const navigateTo=(url)=>{
-        navigate(url)
+    const datosFormulario = new FormData(datForm.current);
+    const edificio = Object.fromEntries(datosFormulario);
+
+    // Campos vacíos se transforman en null
+    if (edificio.calle === "") edificio.calle = null;
+    if (edificio.ciudad === "") edificio.ciudad = null;
+    if (edificio.numero === "") edificio.numero = null;
+    if (edificio.codigoPostal === "") edificio.codigoPostal = null;
+
+    if (!edificio.calle && !edificio.ciudad && !edificio.numero && !edificio.codigoPostal) {
+      setMensaje("No se ingresaron valores para actualizar");
+      return;
     }
 
-    const datForm = useRef() //Crear una referencia para consultar los valoresa actuales del form
+    try {
+      const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${tokenState}`,
+        },
+        body: JSON.stringify(edificio),
+      });
 
-    const consultarForm = async(e) => {
-        //Consultar los datos del formulario
-        e.preventDefault()
-
-        const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
-        const edificio = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
-        if (edificio.calle==""){edificio.calle=null;}
-        if (edificio.ciudad==""){edificio.ciudad=null;}
-        if (edificio.numero==""){edificio.numero=null;}
-        if (edificio.codigoPostal==""){edificio.codigoPostal=null;}
-        if (!edificio.calle&&!edificio.ciudad&&!edificio.numero&&!edificio.codigoPostal){ setMensaje("No se ingresaron valores para actualizar")}
-        else{
-
-            const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/edificios/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${getToken()}`
-                },
-                body: JSON.stringify(edificio)
-            })
-
-            const rol=validateRol(response)
-      if (!rol){
-        if (isRolUser(getToken())){
-          console.log("rol user")
-            setMensaje("No posee los permisos necesarios")
-        }else{
-          deleteToken()
-          navigate("/login")
-        }
-      }else{
-      const data = await response.json()
-      if (data.msj){
-        setMensaje(data.msj)
+      const data = await response.json();
+      if (data.msj) {
+        setMensaje(data.msj);
       }
-      }
-                
-            e.target.reset() //Reset form
-                
-            }
-        }
+    } catch (error) {
+      console.error("Error al actualizar edificio:", error);
+      setMensaje("Error al actualizar edificio.");
+    }
 
-    return (
+    e.target.reset();
+  };
 
-        <div>
-            {!mensaje?(
-                
-                <div className="container divForm" >
-                    <h2>Cambio en los datos del Edificio</h2>
-                    <h3>Ingrese solo los campos que desea modificar</h3>
-                    <form onSubmit={consultarForm} ref={datForm}>
-                        <div className="mb-3">
-                            <label htmlFor="calle" className="form-label">Calle</label>
-                            <input type="text" className="form-control" name="calle" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="numero" className="form-label">Numero</label>
-                            <input type="number" className="form-control" name="numero" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="ciudad" className="form-label">Ciudad</label>
-                            <input type="text" className="form-control" name="ciudad" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="codigoPostal" className="form-label">Codigo Postal</label>
-                            <input type="number" className="form-control" name="codigoPostal" />
-                        </div>
+  const navigateTo = (url) => {
+    navigate(url);
+  };
 
-                        <button type="submit" class="button btnPrimary">Actualizar</button>
-                        </form>
+  return (
+    <div>
+      {!mensaje ? (
+        <div className="container divForm">
+          <h2>Cambio en los datos del Edificio</h2>
+          <h3>Ingrese solo los campos que desea modificar</h3>
+          <form onSubmit={consultarForm} ref={datForm}>
+            <div className="mb-3">
+              <label htmlFor="calle" className="form-label">Calle</label>
+              <input type="text" className="form-control" name="calle" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="numero" className="form-label">Número</label>
+              <input type="number" className="form-control" name="numero" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="ciudad" className="form-label">Ciudad</label>
+              <input type="text" className="form-control" name="ciudad" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="codigoPostal" className="form-label">Código Postal</label>
+              <input type="number" className="form-control" name="codigoPostal" />
+            </div>
 
-                    </div>
-                ):    <Mensaje msj={mensaje} />
-                    
-        }
-        <button class="button btnPrimary" onClick={()=>navigateTo(`/edificios`)}><span class="btnText">Volver</span></button>
-
+            <button type="submit" className="button btnPrimary">Actualizar</button>
+          </form>
         </div>
-        
-    )
-}
+      ) : (
+        <Mensaje msj={mensaje} />
+      )}
+
+      <button className="button btnPrimary" onClick={() => navigateTo(`/edificios`)}>
+        <span className="btnText">Volver</span>
+      </button>
+    </div>
+  );
+};

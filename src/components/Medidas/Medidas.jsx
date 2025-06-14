@@ -1,5 +1,5 @@
 const Medidas = ({medidas})=>{
-    console.log(medidas)
+
     return (
         <>
         {medidas&&

@@ -2,7 +2,7 @@ import { UsuarioDetail } from "../UsuarioDetail/UnidadDetail"
 import { Link } from "react-router-dom"
 
 const UsuarioList = ({listaUsuarios})=>{
-    console.log("usuariolist",listaUsuarios)
+
     return (
         <> 
            {// <Link to={``}>Agregar Usuario</Link>

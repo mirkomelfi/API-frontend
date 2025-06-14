@@ -2,13 +2,11 @@ import "./UsuarioDetail.css";
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 const UsuarioDetail =({usuario})=>{
-    console.log("vUsuarioDetail",usuario)
 
     const navigate=useNavigate()
     const navigateTo=(url)=>{
         navigate(url)
     }
-
 
     return(
         <>

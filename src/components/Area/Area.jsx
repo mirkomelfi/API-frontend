@@ -1,134 +1,140 @@
-import { useParams } from "react-router-dom";
-import { useState,useEffect } from "react";
-import { getToken } from "../../utils/auth-utils";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Mensaje } from "../Mensaje/Mensaje";
-import {useNavigate} from "react-router-dom";
-import { validateRol,isRolUser,deleteToken } from "../../utils/auth-utils";
 import { ReclamoPost } from "../Reclamo/ReclamoPOST";
+import { useUser } from "../../context/UserContext";
 
-const Area =({fromReclamo,fromPerfil})=>{
-    const {idRec,id}= useParams();
+const Area = ({ fromReclamo, fromPerfil }) => {
+  const { idRec, id } = useParams();
+  const [area, setArea] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [mensaje, setMensaje] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
 
-    const [area,setArea]= useState([]);
-    console.log(area)
-    const [loading,setLoading]= useState(true);
-    const [mensaje,setMensaje]=useState(null)
-    const [add,setAdd]=useState(null)
-    const [rol,setRol]=useState(undefined);    
-    const navigate=useNavigate()
-    const navigateTo=(url)=>{
-      navigate(url,{state:area.idEdificio})
-    }
+  const { tokenState, rol } = useUser();
+  const isAdmin = rol === "ROL_ADMIN";
 
-    const generarReclamo= ()=>{
-      setAdd(true)
-  }
-    
-    const eliminar=async()=>{
-      const response= await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/areas/${id}`, {
-          method: "DELETE",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${getToken()}`
-          }
-      })
-      const rol=validateRol(response)
-      if (!rol){
-        if (isRolUser(getToken())){
-          console.log("rol user")
-            setMensaje("No posee los permisos necesarios")
-        }else{
-          deleteToken()
-          navigate("/login")
-        }
-      }else{
-      const data = await response.json()
-      if (data.msj){
-        setMensaje(data.msj)
-      }
-      }
+  const navigateTo = (url) => {
+    navigate(url, { state: area?.idEdificio });
+  };
 
-  }
+  const generarReclamo = () => {
+    setShowForm(true);
+  };
 
-
-  const ejecutarFetch=async () =>{ 
-    
-    const response= await  fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
-      method: "GET",
-      headers: {
+  const eliminar = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/admin/areas/${id}`, {
+        method: "DELETE",
+        headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${getToken()}`
-          
+          Authorization: `Bearer ${tokenState}`,
+        },
+      });
+
+      const data = await response.json();
+      if (data.msj) {
+        setMensaje(data.msj);
       }
-      
-    })
-    
-    const rol=validateRol(response)
-    if (!rol){
-        deleteToken()
-        navigate("/login")
-        
-    }else{
-        const data = await response.json()
-        setRol(isRolUser(getToken()))
-        if(data.msj){
-            setMensaje(data.msj)
-        }else{
-          setArea(data)
-        }
+    } catch (err) {
+      setMensaje("Ocurrió un error al intentar eliminar el área.");
     }
-}
+  };
 
-useEffect(() => { 
-  ejecutarFetch()
-  .catch(error => console.error(error))
-  .finally(()=>{
-    setLoading(false)
-  })
-},[])
+  const ejecutarFetch = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/areas/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenState}`,
+        },
+      });
 
-    return(
-        <>
-        {
-         !add?
-         !mensaje?
-            <div className="tarjetaProducto">
-              <div>
-                <h1>Area N°{area.id}</h1>
-                <h2>Nombre: {area.nombre}</h2>
-                <h2>Piso: {area.piso}</h2>
-                <h2>Descripcion: {area.descripcion}</h2>
-              </div>
-
-             {!fromReclamo&&<div className="button-view">
-                {fromPerfil||rol?<button onClick={()=>generarReclamo()} className="button btnPrimary"><span class="btnText">Generar reclamo</span></button>
-                :
-                <div>
-                  <button class="button btnPrimary" onClick={()=>navigateTo(`/updateArea/${id}`)}><span class="btnText">Modificar</span></button>
-                  <button onClick={()=>eliminar()} className="button btnPrimary"><span class="btnText">Eliminar</span></button>
-                </div>
-                }
-              </div>}
-
-            </div>
-                 
-                :(<Mensaje msj={mensaje} />)
-          :
-          (<ReclamoPost isUnit={false} />)
+      const data = await response.json();
+      if (data.msj) {
+        setMensaje(data.msj);
+      } else {
+        setArea(data);
       }
-            {
-            fromPerfil? <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/areas`)}><span class="btnText">Volver</span></button>
-            :
-            !fromReclamo?<button class="button btnPrimary" onClick={()=>navigateTo(`/edificios/${area.idEdificio}/areas`)}><span class="btnText">Volver</span></button>
-            :
-            rol?
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/usuario/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
-            :
-            <button class="button btnPrimary" onClick={()=>navigateTo(`/reclamos/${idRec}`)}><span class="btnText">Volver</span></button>
+    } catch (err) {
+      console.error("Error al obtener área:", err);
+      setMensaje("Error al obtener datos del área.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            }
-        </>
-    )
-}
+  useEffect(() => {
+    ejecutarFetch();
+  }, []);
 
-export {Area}
+  if (loading) return <p>Cargando área...</p>;
+
+  return (
+    <>
+      {!showForm ? (
+        !mensaje ? (
+          <div className="tarjetaProducto">
+            <div>
+              <h1>Área N°{area?.id}</h1>
+              <h2>Nombre: {area?.nombre}</h2>
+              <h2>Piso: {area?.piso}</h2>
+              <h2>Descripción: {area?.descripcion}</h2>
+            </div>
+
+            {!fromReclamo && (
+              <div className="button-view">
+                {fromPerfil || isAdmin ? (
+                  <button onClick={generarReclamo} className="button btnPrimary">
+                    <span className="btnText">Generar reclamo</span>
+                  </button>
+                ) : (
+                  <div>
+                    <button
+                      className="button btnPrimary"
+                      onClick={() => navigateTo(`/updateArea/${id}`)}
+                    >
+                      <span className="btnText">Modificar</span>
+                    </button>
+                    <button onClick={eliminar} className="button btnPrimary">
+                      <span className="btnText">Eliminar</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ) : (
+          <Mensaje msj={mensaje} />
+        )
+      ) : (
+        <ReclamoPost isUnit={false} />
+      )}
+
+      {fromPerfil ? (
+        <button className="button btnPrimary" onClick={() => navigateTo(`/usuario/areas`)}>
+          <span className="btnText">Volver</span>
+        </button>
+      ) : !fromReclamo ? (
+        <button
+          className="button btnPrimary"
+          onClick={() => navigateTo(`/edificios/${area?.idEdificio}/areas`)}
+        >
+          <span className="btnText">Volver</span>
+        </button>
+      ) : isAdmin ? (
+        <button className="button btnPrimary" onClick={() => navigateTo(`/usuario/reclamos/${idRec}`)}>
+          <span className="btnText">Volver</span>
+        </button>
+      ) : (
+        <button className="button btnPrimary" onClick={() => navigateTo(`/reclamos/${idRec}`)}>
+          <span className="btnText">Volver</span>
+        </button>
+      )}
+    </>
+  );
+};
+
+export { Area };
